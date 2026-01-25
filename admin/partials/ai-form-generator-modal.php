@@ -170,22 +170,22 @@ $rate_status = RT_FA_Generator::get_rate_limit_status();
 			<div class="smartforms-ai-rate-info">
 				<span class="smartforms-ai-rate-badge">
 					<?php
-					echo sprintf(
+					echo esc_html( sprintf(
 						/* translators: 1: Used requests, 2: Total limit */
-						esc_html__( 'API Usage: %1$d / %2$d requests this hour', 'raztech-form-architect' ),
-						esc_html( $rate_status['used'] ),
-						esc_html( $rate_status['limit'] )
-					);
+						__( 'API Usage: %1$d / %2$d requests this hour', 'raztech-form-architect' ),
+						$rate_status['used'],
+						$rate_status['limit']
+					) );
 					?>
 				</span>
 				<?php if ( $rate_status['remaining'] <= 5 && $rate_status['remaining'] > 0 ) : ?>
 					<span class="smartforms-ai-rate-warning">
 						<?php
-						echo sprintf(
+						echo esc_html( sprintf(
 							/* translators: %d: Remaining requests */
-							esc_html__( '⚠️ Only %d requests remaining', 'raztech-form-architect' ),
-							esc_html( $rate_status['remaining'] )
-						);
+							__( '⚠️ Only %d requests remaining', 'raztech-form-architect' ),
+							$rate_status['remaining']
+						) );
 						?>
 					</span>
 				<?php endif; ?>

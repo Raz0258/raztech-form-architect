@@ -219,8 +219,8 @@ class RT_FA_Admin {
 	public function add_admin_menu() {
 		// Main menu
 		add_menu_page(
-			__( 'SmartForms AI', 'raztech-form-architect' ),
-			__( 'SmartForms AI', 'raztech-form-architect' ),
+			__( 'RazTech Forms', 'raztech-form-architect' ),
+			__( 'RazTech Forms', 'raztech-form-architect' ),
 			'manage_options',
 			'raztech-form-architect',
 			array( $this, 'display_dashboard' ),
@@ -281,7 +281,7 @@ class RT_FA_Admin {
 		// PHASE 8: Welcome page (hidden from menu)
 		add_submenu_page(
 			'', // No parent = hidden from menu
-			__( 'Welcome to SmartForms AI', 'raztech-form-architect' ),
+			__( 'Welcome to RazTech Form Architect', 'raztech-form-architect' ),
 			__( 'Welcome', 'raztech-form-architect' ),
 			'manage_options',
 			'raztech-form-architect-welcome',
@@ -931,7 +931,7 @@ class RT_FA_Admin {
 		?>
 		<div class="notice notice-info is-dismissible smartforms-smtp-notice" data-notice="smtp">
 			<p>
-				<strong><?php esc_html_e( 'SmartForms AI - Email Delivery Tip', 'raztech-form-architect' ); ?></strong>
+				<strong><?php esc_html_e( 'RazTech Form Architect - Email Delivery Tip', 'raztech-form-architect' ); ?></strong>
 			</p>
 			<p>
 				<?php esc_html_e( 'For reliable auto-response email delivery, we recommend configuring SMTP. This is standard practice for WordPress (used by WooCommerce, Contact Form 7, etc.).', 'raztech-form-architect' ); ?>

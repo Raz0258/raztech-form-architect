@@ -474,7 +474,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 					<?php
 					$form = RT_FA_Form_Builder::get_form( $submission->form_id );
 					?>
-					<tr class="<?php echo $submission->is_spam ? 'smartforms-spam-row' : ''; ?>">
+					<tr class="<?php echo esc_attr( $submission->is_spam ? 'smartforms-spam-row' : '' ); ?>">
 						<th scope="row" class="check-column">
 							<input type="checkbox" name="submission_ids[]" value="<?php echo esc_attr( $submission->id ); ?>" />
 						</th>
@@ -491,16 +491,26 @@ function rt_fa_get_pagination_url( $page_num ) {
 							<div class="smartforms-submission-data" style="display:none;" data-submission-id="<?php echo esc_attr( $submission->id ); ?>">
 								<?php
 								if ( ! empty( $submission->submission_data ) && is_array( $submission->submission_data ) ) {
-									echo '<dl class="smartforms-data-list">';
+									?>
+									<dl class="smartforms-data-list">
+									<?php
 									foreach ( $submission->submission_data as $key => $value ) {
-										echo '<dt>' . esc_html( ucfirst( str_replace( '_', ' ', $key ) ) ) . ':</dt>';
+										?>
+										<dt><?php echo esc_html( ucfirst( str_replace( '_', ' ', $key ) ) ); ?>:</dt>
+										<?php
 										if ( is_array( $value ) ) {
-											echo '<dd>' . esc_html( implode( ', ', $value ) ) . '</dd>';
+											?>
+											<dd><?php echo esc_html( implode( ', ', $value ) ); ?></dd>
+											<?php
 										} else {
-											echo '<dd>' . esc_html( $value ) . '</dd>';
+											?>
+											<dd><?php echo esc_html( $value ); ?></dd>
+											<?php
 										}
 									}
-									echo '</dl>';
+									?>
+									</dl>
+									<?php
 								}
 								?>
 							</div>
@@ -541,7 +551,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 							}
 							?>
 							<span class="spam-badge <?php echo esc_attr( $spam_class ); ?>" title="<?php echo esc_attr( sprintf( __( 'Spam Score: %d', 'raztech-form-architect' ), $spam_score ) ); ?>">
-								<span class="spam-icon"><?php echo $spam_icon; ?></span>
+								<span class="spam-icon"><?php echo esc_html( $spam_icon ); ?></span>
 								<span class="spam-text"><?php echo esc_html( $spam_text ); ?></span>
 							</span>
 						</td>

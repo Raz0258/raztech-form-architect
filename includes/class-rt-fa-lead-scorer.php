@@ -514,12 +514,13 @@ class RT_FA_Lead_Scorer {
 		if ( $form_id > 0 ) {
 			$average = $wpdb->get_var(
 				$wpdb->prepare(
-					"SELECT AVG(lead_score) FROM $table_name WHERE form_id = %d",
+					"SELECT AVG(lead_score) FROM {$wpdb->prefix}rt_fa_submissions WHERE form_id = %d",
 					$form_id
 				)
 			);
 		} else {
-			$average = $wpdb->get_var( "SELECT AVG(lead_score) FROM $table_name" );
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe, comes from $wpdb->prefix
+			$average = $wpdb->get_var( "SELECT AVG(lead_score) FROM {$wpdb->prefix}rt_fa_submissions" );
 		}
 
 		return $average ? intval( round( $average ) ) : 0;

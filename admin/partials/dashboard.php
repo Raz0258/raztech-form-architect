@@ -35,19 +35,19 @@ foreach ( $all_submissions as $submission ) {
 ?>
 
 <div class="wrap smartforms-dashboard">
-	<h1><?php echo esc_html__( 'SmartForms AI Dashboard', 'raztech-form-architect' ); ?></h1>
+	<h1><?php echo esc_html__( 'RazTech Form Architect Dashboard', 'raztech-form-architect' ); ?></h1>
 
 	<div class="smartforms-welcome-panel">
 		<?php if ( $total_forms === 0 ) : ?>
-			<h2><?php echo esc_html__( 'Welcome to SmartForms AI', 'raztech-form-architect' ); ?></h2>
+			<h2><?php echo esc_html__( 'Welcome to RazTech Form Architect', 'raztech-form-architect' ); ?></h2>
 			<p><?php echo esc_html__( 'Create optimized forms in seconds using AI, automatically score lead quality, and provide conversational form experiences—all without coding.', 'raztech-form-architect' ); ?></p>
 		<?php else : ?>
 			<h2><?php echo esc_html__( 'Welcome Back!', 'raztech-form-architect' ); ?></h2>
 			<p>
 				<?php
-				echo sprintf(
+				echo esc_html( sprintf(
 					/* translators: 1: Number of forms, 2: Number of submissions */
-					esc_html__( 'You have %1$d %2$s and %3$d %4$s. Keep up the great work!', 'raztech-form-architect' ),
+					__( 'You have %1$d %2$s and %3$d %4$s. Keep up the great work!', 'raztech-form-architect' ),
 					$total_forms,
 					$total_forms === 1 ? esc_html__( 'form', 'raztech-form-architect' ) : esc_html__( 'forms', 'raztech-form-architect' ),
 					$total_submissions,
@@ -168,13 +168,13 @@ foreach ( $all_submissions as $submission ) {
 						<?php
 						switch ( $insight['type'] ) {
 							case 'success':
-								echo '✅';
+								echo esc_html( '✅' );
 								break;
 							case 'warning':
-								echo '⚠️';
+								echo esc_html( '⚠️' );
 								break;
 							case 'danger':
-								echo '🚨';
+								echo esc_html( '🚨' );
 								break;
 						}
 						?>
@@ -209,7 +209,7 @@ foreach ( $all_submissions as $submission ) {
 						<td><?php echo esc_html( number_format( $stats['views'] ) ); ?></td>
 						<td><?php echo esc_html( number_format( $stats['submissions'] ) ); ?></td>
 						<td>
-							<span class="smartforms-conversion-badge smartforms-conversion-<?php echo $stats['conversion_rate'] >= 30 ? 'good' : ( $stats['conversion_rate'] >= 15 ? 'medium' : 'low' ); ?>">
+							<span class="smartforms-conversion-badge smartforms-conversion-<?php echo esc_attr( $stats['conversion_rate'] >= 30 ? 'good' : ( $stats['conversion_rate'] >= 15 ? 'medium' : 'low' ) ); ?>">
 								<?php echo esc_html( $stats['conversion_rate'] ); ?>%
 							</span>
 						</td>

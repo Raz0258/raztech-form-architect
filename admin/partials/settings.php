@@ -18,7 +18,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 ?>
 
 <div class="wrap smartforms-settings">
-	<h1><?php echo esc_html__( 'SmartForms AI Settings', 'raztech-form-architect' ); ?></h1>
+	<h1><?php echo esc_html__( 'RazTech Form Architect Settings', 'raztech-form-architect' ); ?></h1>
 
 	<?php if ( isset( $_GET['updated'] ) ) : ?>
 		<div class="notice notice-success is-dismissible">
@@ -104,7 +104,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 							<?php esc_html_e( 'About Email Delivery', 'raztech-form-architect' ); ?>
 						</h3>
 						<p>
-							<?php esc_html_e( 'SmartForms AI uses WordPress\'s email system to send auto-responses. For reliable delivery:', 'raztech-form-architect' ); ?>
+							<?php esc_html_e( 'RazTech Form Architect uses WordPress\'s email system to send auto-responses. For reliable delivery:', 'raztech-form-architect' ); ?>
 						</p>
 						<ul>
 							<li><?php esc_html_e( 'Configure SMTP using a plugin like WP Mail SMTP (free)', 'raztech-form-architect' ); ?></li>
@@ -292,7 +292,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 				</div>
 
 				<div class="smartforms-card smartforms-info-card">
-					<h3><?php echo esc_html__( 'About SmartForms AI', 'raztech-form-architect' ); ?></h3>
+					<h3><?php echo esc_html__( 'About RazTech Form Architect', 'raztech-form-architect' ); ?></h3>
 					<p><?php echo esc_html__( 'Create intelligent forms with AI-powered features.', 'raztech-form-architect' ); ?></p>
 					<p><strong><?php echo esc_html__( 'Features:', 'raztech-form-architect' ); ?></strong></p>
 					<ul>

@@ -122,6 +122,7 @@ class RT_FA_Activator {
 
 		// Add form_settings column if it doesn't exist
 		if ( empty( $column_exists ) ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe, constructed from $wpdb->prefix
 			$wpdb->query(
 				"ALTER TABLE $forms_table
 				ADD COLUMN form_settings text DEFAULT NULL
@@ -143,6 +144,7 @@ class RT_FA_Activator {
 
 		// Add created_at column to submissions table if it doesn't exist
 		if ( empty( $created_at_exists ) ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe, constructed from $wpdb->prefix
 			$wpdb->query(
 				"ALTER TABLE $submissions_table
 				ADD COLUMN created_at datetime DEFAULT CURRENT_TIMESTAMP
@@ -164,6 +166,7 @@ class RT_FA_Activator {
 
 		// Add created_at column to analytics table if it doesn't exist
 		if ( empty( $analytics_created_at_exists ) ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe, constructed from $wpdb->prefix
 			$wpdb->query(
 				"ALTER TABLE $analytics_table
 				ADD COLUMN created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -185,6 +188,7 @@ class RT_FA_Activator {
 
 		// Add updated_at column to analytics table if it doesn't exist
 		if ( empty( $analytics_updated_at_exists ) ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe, constructed from $wpdb->prefix
 			$wpdb->query(
 				"ALTER TABLE $analytics_table
 				ADD COLUMN updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

@@ -24,6 +24,7 @@ class RT_FA_Deactivator {
 	public static function deactivate() {
 		// Clean up transients
 		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Intentional cleanup on deactivation
 		$wpdb->query(
 			"DELETE FROM {$wpdb->options}
 			WHERE option_name LIKE '_transient_rt_fa_%'

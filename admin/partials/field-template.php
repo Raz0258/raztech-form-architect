@@ -75,7 +75,7 @@ $field_options     = isset( $field['options'] ) && is_array( $field['options'] )
 					<input type="text" class="regular-text smartforms-field-input" data-field="placeholder" value="<?php echo esc_attr( $field_placeholder ); ?>" />
 				</td>
 			</tr>
-			<tr class="smartforms-options-row" style="<?php echo in_array( $field_type, array( 'select', 'radio', 'checkbox' ) ) ? '' : 'display:none;'; ?>">
+			<tr class="smartforms-options-row" style="<?php echo esc_attr( in_array( $field_type, array( 'select', 'radio', 'checkbox' ) ) ? '' : 'display:none;' ); ?>">
 				<th>
 					<label><?php echo esc_html__( 'Options', 'raztech-form-architect' ); ?></label>
 				</th>

@@ -31,11 +31,11 @@ if ( ! defined( 'WPINC' ) ) {
 				</a>
 				<p class="rt-fa-step-note">
 					<?php
-					echo sprintf(
+					echo wp_kses_post( sprintf(
 						/* translators: %s: OpenAI API keys URL */
-						esc_html__( 'Don\'t have an API key? Get one at %s', 'raztech-form-architect' ),
+						__( 'Don\'t have an API key? Get one at %s', 'raztech-form-architect' ),
 						'<a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>'
-					);
+					) );
 					?>
 				</p>
 			</div>
@@ -155,11 +155,11 @@ if ( ! defined( 'WPINC' ) ) {
 	<div class="rt-fa-welcome-footer">
 		<p>
 			<?php
-			echo sprintf(
+			echo wp_kses_post( sprintf(
 				/* translators: %s: Dashboard URL */
-				esc_html__( 'Ready to go? %s to see your analytics.', 'raztech-form-architect' ),
+				__( 'Ready to go? %s to see your analytics.', 'raztech-form-architect' ),
 				'<a href="' . esc_url( admin_url( 'admin.php?page=smartforms-ai' ) ) . '">' . esc_html__( 'Visit the Dashboard', 'raztech-form-architect' ) . '</a>'
-			);
+			) );
 			?>
 		</p>
 	</div>

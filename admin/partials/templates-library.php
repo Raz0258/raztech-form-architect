@@ -74,7 +74,7 @@ if (!defined('ABSPATH')) {
                         <?php foreach ($category['templates'] as $template):
                             $is_recommended = in_array($template['template_id'], $recommended_ids);
                         ?>
-                            <div class="template-card <?php echo $is_recommended ? 'recommended' : ''; ?>"
+                            <div class="template-card <?php echo esc_attr( $is_recommended ? 'recommended' : '' ); ?>"
                                  data-template-id="<?php echo esc_attr($template['template_id']); ?>">
 
                                 <?php if ($is_recommended): ?>
@@ -86,7 +86,7 @@ if (!defined('ABSPATH')) {
                                            class="template-checkbox"
                                            name="templates[]"
                                            value="<?php echo esc_attr($template['template_id']); ?>"
-                                           <?php echo $is_recommended ? 'checked' : ''; ?>>
+                                           <?php checked( $is_recommended, true ); ?>>
 
                                     <div class="template-icon-wrapper">
                                         <span class="template-icon"><?php echo esc_html($template['icon']); ?></span>
@@ -418,7 +418,7 @@ if (!defined('ABSPATH')) {
         <div class="info-card">
             <span class="dashicons dashicons-calendar-alt"></span>
             <strong><?php esc_html_e('Date Range:', 'raztech-form-architect'); ?></strong>
-            <span id="preview-date-range"><?php echo date('M j', strtotime('-30 days')) . ' - ' . date('M j, Y'); ?></span>
+            <span id="preview-date-range"><?php echo esc_html( date_i18n( 'M j', strtotime( '-30 days' ) ) . ' - ' . date_i18n( 'M j, Y' ) ); ?></span>
         </div>
 
         <!-- Warning Notice -->
@@ -464,7 +464,7 @@ if (!defined('ABSPATH')) {
                 <?php if ($sample_stats['last_installed']): ?>
                     <div class="management-stat">
                         <strong><?php esc_html_e('Last installed:', 'raztech-form-architect'); ?></strong>
-                        <?php echo date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($sample_stats['last_installed'])); ?>
+                        <?php echo esc_html( date_i18n( get_option('date_format') . ' ' . get_option('time_format'), strtotime( $sample_stats['last_installed'] ) ) ); ?>
                     </div>
                 <?php endif; ?>
             </div>
