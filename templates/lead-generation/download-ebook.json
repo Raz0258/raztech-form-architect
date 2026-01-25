@@ -1,0 +1,79 @@
+{
+  "template_id": "download-ebook",
+  "name": "Download Free eBook",
+  "description": "Simple lead capture form for content marketing and lead magnets.",
+  "category": "lead-generation",
+  "industry": "marketing",
+  "icon": "📚",
+  "fields": [
+    {
+      "type": "text",
+      "label": "First Name",
+      "name": "first_name",
+      "required": true,
+      "placeholder": "John",
+      "validation": "text"
+    },
+    {
+      "type": "text",
+      "label": "Last Name",
+      "name": "last_name",
+      "required": true,
+      "placeholder": "Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@company.com",
+      "validation": "email"
+    },
+    {
+      "type": "text",
+      "label": "Company (Optional)",
+      "name": "company",
+      "required": false,
+      "placeholder": "Your Company",
+      "validation": "text"
+    },
+    {
+      "type": "checkbox",
+      "label": "Email Preferences",
+      "name": "email_preferences",
+      "required": false,
+      "options": ["Send me tips and updates", "Notify me about new resources"]
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "first_name": ["Michael", "Sarah", "Jennifer", "David"],
+      "last_name": ["Anderson", "Thompson", "Martinez", "Chen"],
+      "email": ["{first}.{last}@company.com", "{first}{last}@corporation.com"],
+      "company": ["TechCorp Inc", "Digital Solutions", "Innovation Partners"],
+      "email_preferences": ["Send me tips and updates", "Notify me about new resources"]
+    },
+    "good": {
+      "first_name": ["John", "Mary", "Robert"],
+      "last_name": ["Smith", "Johnson", "Brown"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@email.com"],
+      "company": [""],
+      "email_preferences": ["Send me tips and updates"]
+    },
+    "fair": {
+      "first_name": ["mike", "sarah"],
+      "last_name": ["w", "jones"],
+      "email": ["{first}{rand}@gmail.com"],
+      "company": [""],
+      "email_preferences": []
+    },
+    "poor": {
+      "first_name": ["test", "user"],
+      "last_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@tempmail.com"],
+      "company": [""],
+      "email_preferences": []
+    }
+  }
+}

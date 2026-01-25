@@ -1,0 +1,112 @@
+{
+  "template_id": "customer-feedback",
+  "name": "Customer Feedback Survey",
+  "description": "Collect valuable customer feedback and satisfaction ratings.",
+  "category": "business",
+  "industry": "general",
+  "icon": "⭐",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Name (Optional)",
+      "name": "customer_name",
+      "required": false,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email (Optional)",
+      "name": "email",
+      "required": false,
+      "placeholder": "john@example.com",
+      "validation": "email"
+    },
+    {
+      "type": "select",
+      "label": "Overall Satisfaction",
+      "name": "satisfaction",
+      "required": true,
+      "options": ["Very Satisfied", "Satisfied", "Neutral", "Unsatisfied", "Very Unsatisfied"]
+    },
+    {
+      "type": "select",
+      "label": "How likely are you to recommend us?",
+      "name": "nps_score",
+      "required": true,
+      "options": ["10 - Extremely Likely", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0 - Not at all likely"]
+    },
+    {
+      "type": "checkbox",
+      "label": "What did you like most?",
+      "name": "liked",
+      "required": false,
+      "options": ["Product Quality", "Customer Service", "Value for Money", "Ease of Use", "Fast Delivery", "Nothing in particular"]
+    },
+    {
+      "type": "checkbox",
+      "label": "What could we improve?",
+      "name": "improvements",
+      "required": false,
+      "options": ["Product Quality", "Customer Service", "Pricing", "Website/App", "Delivery Speed", "Communication", "Nothing"]
+    },
+    {
+      "type": "textarea",
+      "label": "Additional Comments",
+      "name": "comments",
+      "required": false,
+      "placeholder": "Please share any additional feedback...",
+      "rows": 4,
+      "validation": "text"
+    },
+    {
+      "type": "checkbox",
+      "label": "Follow-up",
+      "name": "followup",
+      "required": false,
+      "options": ["You may contact me about this feedback"]
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "customer_name": ["Michael Thompson", "Sarah Anderson", "Jennifer Martinez"],
+      "email": ["{first}.{last}@email.com", "{first}{last}@gmail.com"],
+      "satisfaction": ["Very Satisfied"],
+      "nps_score": ["10 - Extremely Likely", "9"],
+      "liked": ["Product Quality", "Customer Service", "Value for Money", "Ease of Use"],
+      "improvements": ["Nothing"],
+      "comments": ["Excellent experience from start to finish! The product exceeded my expectations and customer service was outstanding. I've already recommended you to colleagues. Keep up the great work!"],
+      "followup": ["You may contact me about this feedback"]
+    },
+    "good": {
+      "customer_name": ["John Smith", "Mary Johnson"],
+      "email": ["{first}{last}@gmail.com"],
+      "satisfaction": ["Satisfied"],
+      "nps_score": ["8", "7"],
+      "liked": ["Product Quality", "Customer Service"],
+      "improvements": ["Delivery Speed"],
+      "comments": ["Overall good experience. Product quality is great but delivery took a bit longer than expected."],
+      "followup": []
+    },
+    "fair": {
+      "customer_name": [""],
+      "email": [""],
+      "satisfaction": ["Neutral"],
+      "nps_score": ["6", "5"],
+      "liked": ["Value for Money"],
+      "improvements": ["Customer Service", "Website/App"],
+      "comments": ["ok experience"],
+      "followup": []
+    },
+    "poor": {
+      "customer_name": [""],
+      "email": [""],
+      "satisfaction": ["Unsatisfied"],
+      "nps_score": ["3", "2"],
+      "liked": ["Nothing in particular"],
+      "improvements": ["Product Quality", "Customer Service", "Pricing"],
+      "comments": ["not happy"],
+      "followup": []
+    }
+  }
+}

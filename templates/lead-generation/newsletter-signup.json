@@ -1,0 +1,66 @@
+{
+  "template_id": "newsletter-signup",
+  "name": "Newsletter Signup",
+  "description": "Simple newsletter subscription form with optional interest selection.",
+  "category": "lead-generation",
+  "industry": "general",
+  "icon": "✉️",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com",
+      "validation": "email"
+    },
+    {
+      "type": "checkbox",
+      "label": "I'm interested in",
+      "name": "interests",
+      "required": false,
+      "options": ["Product Updates", "Industry News", "Tips & Tutorials", "Special Offers", "Events & Webinars"]
+    },
+    {
+      "type": "select",
+      "label": "Email Frequency",
+      "name": "frequency",
+      "required": false,
+      "options": ["Daily digest", "Weekly roundup", "Monthly newsletter", "Important updates only"]
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Michael Anderson", "Sarah Thompson", "Jennifer Martinez", "David Chen"],
+      "email": ["{first}.{last}@company.com", "{first}{last}@business.com"],
+      "interests": ["Product Updates", "Industry News", "Tips & Tutorials"],
+      "frequency": ["Weekly roundup", "Monthly newsletter"]
+    },
+    "good": {
+      "full_name": ["John Smith", "Mary Johnson", "Robert Brown"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@email.com"],
+      "interests": ["Product Updates", "Special Offers"],
+      "frequency": ["Weekly roundup"]
+    },
+    "fair": {
+      "full_name": ["mike", "sarah j"],
+      "email": ["{first}{rand}@gmail.com"],
+      "interests": [],
+      "frequency": [""]
+    },
+    "poor": {
+      "full_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@mailinator.com"],
+      "interests": [],
+      "frequency": [""]
+    }
+  }
+}

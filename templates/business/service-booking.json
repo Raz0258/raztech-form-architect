@@ -1,0 +1,137 @@
+{
+  "template_id": "service-booking",
+  "name": "Service Booking Form",
+  "description": "Book appointments and services with preferred date/time selection.",
+  "category": "business",
+  "industry": "service",
+  "icon": "📅",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com",
+      "validation": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567",
+      "validation": "phone"
+    },
+    {
+      "type": "select",
+      "label": "Service Type",
+      "name": "service_type",
+      "required": true,
+      "options": ["Consultation", "Standard Service", "Premium Service", "Custom Service", "Emergency Service"]
+    },
+    {
+      "type": "text",
+      "label": "Preferred Date",
+      "name": "preferred_date",
+      "required": true,
+      "placeholder": "MM/DD/YYYY",
+      "validation": "text"
+    },
+    {
+      "type": "select",
+      "label": "Preferred Time",
+      "name": "preferred_time",
+      "required": true,
+      "options": ["Morning (9am-12pm)", "Afternoon (12pm-3pm)", "Late Afternoon (3pm-6pm)", "Evening (6pm-9pm)", "Flexible"]
+    },
+    {
+      "type": "text",
+      "label": "Alternative Date",
+      "name": "alternative_date",
+      "required": false,
+      "placeholder": "MM/DD/YYYY",
+      "validation": "text"
+    },
+    {
+      "type": "select",
+      "label": "Location Preference",
+      "name": "location",
+      "required": false,
+      "options": ["Main Office", "Branch Office", "On-site at my location", "Virtual/Remote", "No preference"]
+    },
+    {
+      "type": "textarea",
+      "label": "Service Details / Special Requests",
+      "name": "service_details",
+      "required": false,
+      "placeholder": "Please describe your needs or any special requirements...",
+      "rows": 4,
+      "validation": "text"
+    },
+    {
+      "type": "select",
+      "label": "How did you hear about us?",
+      "name": "referral_source",
+      "required": false,
+      "options": ["Google Search", "Social Media", "Friend/Family Referral", "Advertisement", "Existing Customer", "Other"]
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Michael Anderson", "Sarah Thompson", "David Martinez", "Jennifer Wilson"],
+      "email": ["{first}.{last}@company.com", "{first}{last}@email.com"],
+      "phone": ["(555) 123-4567", "(555) 234-5678"],
+      "service_type": ["Premium Service", "Standard Service"],
+      "preferred_date": ["12/15/2025", "12/20/2025", "01/05/2026"],
+      "preferred_time": ["Morning (9am-12pm)", "Afternoon (12pm-3pm)"],
+      "alternative_date": ["12/22/2025", "01/08/2026"],
+      "location": ["Main Office", "On-site at my location"],
+      "service_details": ["I need a comprehensive service for our office. We have specific requirements including accessibility considerations and would like to discuss customization options. I'm flexible with dates but prefer morning appointments if possible."],
+      "referral_source": ["Friend/Family Referral", "Existing Customer"]
+    },
+    "good": {
+      "full_name": ["John Smith", "Mary Johnson", "Robert Brown"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@email.com"],
+      "phone": ["555-123-4567", "(555) 234-5678"],
+      "service_type": ["Standard Service", "Consultation"],
+      "preferred_date": ["12/10/2025", "12/12/2025"],
+      "preferred_time": ["Flexible", "Afternoon (12pm-3pm)"],
+      "alternative_date": [""],
+      "location": ["No preference"],
+      "service_details": ["Need standard service, no special requirements."],
+      "referral_source": ["Google Search"]
+    },
+    "fair": {
+      "full_name": ["mike", "sarah jones"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "service_type": ["Standard Service"],
+      "preferred_date": ["next week"],
+      "preferred_time": ["Flexible"],
+      "alternative_date": [""],
+      "location": [""],
+      "service_details": [""],
+      "referral_source": [""]
+    },
+    "poor": {
+      "full_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@mailinator.com"],
+      "phone": ["1234567890"],
+      "service_type": ["Consultation"],
+      "preferred_date": ["asap"],
+      "preferred_time": ["Flexible"],
+      "alternative_date": [""],
+      "location": [""],
+      "service_details": ["test"],
+      "referral_source": [""]
+    }
+  }
+}

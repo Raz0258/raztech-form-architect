@@ -1,0 +1,98 @@
+{
+  "template_id": "real-estate-inquiry",
+  "name": "Property Inquiry Form",
+  "description": "Real estate inquiry form for buyers, sellers, and renters.",
+  "category": "industry",
+  "industry": "real-estate",
+  "icon": "🏠",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567"
+    },
+    {
+      "type": "select",
+      "label": "I'm interested in",
+      "name": "interest_type",
+      "required": true,
+      "options": ["Buying a home", "Selling my property", "Renting a property", "Just exploring"]
+    },
+    {
+      "type": "select",
+      "label": "Property Type",
+      "name": "property_type",
+      "required": true,
+      "options": ["Single Family Home", "Condo/Apartment", "Townhouse", "Commercial", "Not sure yet"]
+    },
+    {
+      "type": "select",
+      "label": "Budget Range",
+      "name": "budget",
+      "required": false,
+      "options": ["Under $200k", "$200k-$400k", "$400k-$600k", "$600k+", "Not sure yet"]
+    },
+    {
+      "type": "textarea",
+      "label": "Additional Details",
+      "name": "additional_details",
+      "required": false,
+      "placeholder": "Tell us more about your needs...",
+      "rows": 4
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Michael Anderson", "Sarah Thompson"],
+      "email": ["{first}.{last}@email.com"],
+      "phone": ["(555) 123-4567"],
+      "interest_type": ["Buying a home"],
+      "property_type": ["Single Family Home"],
+      "budget": ["$400k-$600k"],
+      "additional_details": ["We're relocating for work and need to find a home within 2-3 months. We're pre-approved for financing."]
+    },
+    "good": {
+      "full_name": ["John Smith"],
+      "email": ["{first}{last}@gmail.com"],
+      "phone": ["555-123-4567"],
+      "interest_type": ["Buying a home"],
+      "property_type": ["Townhouse"],
+      "budget": ["$200k-$400k"],
+      "additional_details": ["Looking to buy our first home."]
+    },
+    "fair": {
+      "full_name": ["sarah"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "interest_type": ["Just exploring"],
+      "property_type": ["Not sure yet"],
+      "budget": ["Not sure yet"],
+      "additional_details": ["interested"]
+    },
+    "poor": {
+      "full_name": ["test"],
+      "email": ["test@test.com"],
+      "phone": ["1234567890"],
+      "interest_type": ["Just exploring"],
+      "property_type": ["Not sure yet"],
+      "budget": ["Not sure yet"],
+      "additional_details": [""]
+    }
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "template_id": "restaurant-catering",
+  "name": "Catering Request Form",
+  "description": "Catering and event food service request form for restaurants.",
+  "category": "industry",
+  "industry": "hospitality",
+  "icon": "🍽️",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com",
+      "validation": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567",
+      "validation": "phone"
+    },
+    {
+      "type": "select",
+      "label": "Event Type",
+      "name": "event_type",
+      "required": true,
+      "options": ["Corporate Event", "Wedding", "Birthday Party", "Holiday Party", "Meeting/Conference", "Private Party", "Other"]
+    },
+    {
+      "type": "text",
+      "label": "Event Date",
+      "name": "event_date",
+      "required": true,
+      "placeholder": "MM/DD/YYYY",
+      "validation": "text"
+    },
+    {
+      "type": "select",
+      "label": "Event Time",
+      "name": "event_time",
+      "required": true,
+      "options": ["Breakfast (7am-10am)", "Brunch (10am-1pm)", "Lunch (11am-2pm)", "Afternoon (2pm-5pm)", "Dinner (5pm-9pm)", "Late Night (9pm+)", "All Day"]
+    },
+    {
+      "type": "text",
+      "label": "Number of Guests",
+      "name": "guest_count",
+      "required": true,
+      "placeholder": "Approximate number",
+      "validation": "text"
+    },
+    {
+      "type": "select",
+      "label": "Service Style",
+      "name": "service_style",
+      "required": true,
+      "options": ["Buffet", "Plated Service", "Family Style", "Stations", "Cocktail/Appetizers Only", "Not sure"]
+    },
+    {
+      "type": "checkbox",
+      "label": "Dietary Considerations",
+      "name": "dietary",
+      "required": false,
+      "options": ["Vegetarian Options", "Vegan Options", "Gluten-Free", "Dairy-Free", "Nut Allergies", "Halal", "Kosher"]
+    },
+    {
+      "type": "select",
+      "label": "Budget per Person",
+      "name": "budget",
+      "required": false,
+      "options": ["Under $20", "$20-$30", "$30-$50", "$50-$75", "$75+", "Need guidance"]
+    },
+    {
+      "type": "text",
+      "label": "Event Location/Venue",
+      "name": "venue",
+      "required": false,
+      "placeholder": "Address or venue name",
+      "validation": "text"
+    },
+    {
+      "type": "textarea",
+      "label": "Additional Details",
+      "name": "additional_details",
+      "required": false,
+      "placeholder": "Menu preferences, special requests, equipment needs, etc...",
+      "rows": 4,
+      "validation": "text"
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Michael Anderson", "Sarah Thompson", "Jennifer Martinez", "David Chen"],
+      "email": ["{first}.{last}@company.com", "{first}{last}@email.com"],
+      "phone": ["(555) 123-4567", "(555) 234-5678"],
+      "event_type": ["Corporate Event", "Wedding", "Holiday Party"],
+      "event_date": ["12/15/2025", "01/20/2026", "02/14/2026"],
+      "event_time": ["Lunch (11am-2pm)", "Dinner (5pm-9pm)"],
+      "guest_count": ["75", "100", "50"],
+      "service_style": ["Plated Service", "Buffet"],
+      "dietary": ["Vegetarian Options", "Gluten-Free", "Nut Allergies"],
+      "budget": ["$50-$75", "$75+"],
+      "venue": ["Corporate Conference Center, 123 Business Plaza", "Grand Ballroom at Hotel Luxe"],
+      "additional_details": ["We're hosting our annual company holiday party and need full catering service for 100 guests. We'd like a mix of appetizers, main courses, and desserts with vegetarian and gluten-free options. We'll need tables, linens, and serving staff. Our venue has full kitchen facilities available."]
+    },
+    "good": {
+      "full_name": ["John Smith", "Mary Johnson", "Robert Wilson"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@email.com"],
+      "phone": ["555-123-4567", "(555) 234-5678"],
+      "event_type": ["Birthday Party", "Private Party"],
+      "event_date": ["12/20/2025", "01/15/2026"],
+      "event_time": ["Dinner (5pm-9pm)", "Afternoon (2pm-5pm)"],
+      "guest_count": ["30", "25"],
+      "service_style": ["Buffet", "Family Style"],
+      "dietary": ["Vegetarian Options"],
+      "budget": ["$30-$50", "$20-$30"],
+      "venue": ["My home - 456 Oak Street"],
+      "additional_details": ["Planning a birthday party for 30 people. Looking for buffet style catering with a variety of options."]
+    },
+    "fair": {
+      "full_name": ["mike brown", "sarah"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "event_type": ["Other"],
+      "event_date": ["next month"],
+      "event_time": ["Dinner (5pm-9pm)"],
+      "guest_count": ["20"],
+      "service_style": ["Not sure"],
+      "dietary": [],
+      "budget": ["Need guidance"],
+      "venue": [""],
+      "additional_details": ["need catering for party"]
+    },
+    "poor": {
+      "full_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@mailinator.com"],
+      "phone": ["1234567890"],
+      "event_type": ["Other"],
+      "event_date": ["asap"],
+      "event_time": ["Dinner (5pm-9pm)"],
+      "guest_count": ["10"],
+      "service_style": ["Not sure"],
+      "dietary": [],
+      "budget": ["Need guidance"],
+      "venue": [""],
+      "additional_details": ["test"]
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "template_id": "medical-patient-intake",
+  "name": "Patient Intake Form",
+  "description": "Medical practice patient intake and information collection form.",
+  "category": "industry",
+  "industry": "healthcare",
+  "icon": "🏥",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "patient_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "text",
+      "label": "Date of Birth",
+      "name": "date_of_birth",
+      "required": true,
+      "placeholder": "MM/DD/YYYY",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com",
+      "validation": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567",
+      "validation": "phone"
+    },
+    {
+      "type": "text",
+      "label": "Address",
+      "name": "address",
+      "required": true,
+      "placeholder": "123 Main St, City, State ZIP",
+      "validation": "text"
+    },
+    {
+      "type": "text",
+      "label": "Emergency Contact Name",
+      "name": "emergency_contact",
+      "required": true,
+      "placeholder": "Jane Doe",
+      "validation": "text"
+    },
+    {
+      "type": "phone",
+      "label": "Emergency Contact Phone",
+      "name": "emergency_phone",
+      "required": true,
+      "placeholder": "(555) 987-6543",
+      "validation": "phone"
+    },
+    {
+      "type": "text",
+      "label": "Insurance Provider",
+      "name": "insurance_provider",
+      "required": false,
+      "placeholder": "Blue Cross, United Healthcare, etc.",
+      "validation": "text"
+    },
+    {
+      "type": "text",
+      "label": "Insurance ID Number",
+      "name": "insurance_id",
+      "required": false,
+      "placeholder": "Policy number",
+      "validation": "text"
+    },
+    {
+      "type": "select",
+      "label": "Reason for Visit",
+      "name": "visit_reason",
+      "required": true,
+      "options": ["New Patient Consultation", "Annual Check-up", "Specific Concern", "Follow-up Visit", "Preventive Care", "Other"]
+    },
+    {
+      "type": "textarea",
+      "label": "Current Symptoms or Concerns",
+      "name": "symptoms",
+      "required": false,
+      "placeholder": "Please describe any current health concerns...",
+      "rows": 4,
+      "validation": "text"
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "patient_name": ["Michael Anderson", "Sarah Thompson", "Jennifer Martinez", "David Chen"],
+      "date_of_birth": ["05/15/1985", "08/22/1978", "11/30/1992"],
+      "email": ["{first}.{last}@email.com", "{first}{last}@gmail.com"],
+      "phone": ["(555) 123-4567", "(555) 234-5678"],
+      "address": ["123 Oak Street, Springfield, IL 62701", "456 Elm Avenue, Chicago, IL 60601"],
+      "emergency_contact": ["Jane Anderson", "Robert Thompson", "Maria Martinez"],
+      "emergency_phone": ["(555) 987-6543", "(555) 876-5432"],
+      "insurance_provider": ["Blue Cross Blue Shield", "United Healthcare", "Aetna"],
+      "insurance_id": ["ABC123456789", "XYZ987654321"],
+      "visit_reason": ["New Patient Consultation", "Annual Check-up"],
+      "symptoms": ["I've been experiencing persistent headaches over the past few weeks, typically in the afternoon. I'd like to discuss this and also do my annual check-up since it's been over a year."]
+    },
+    "good": {
+      "patient_name": ["John Smith", "Mary Johnson", "Robert Wilson"],
+      "date_of_birth": ["06/10/1980", "03/25/1975"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@email.com"],
+      "phone": ["555-123-4567", "(555) 234-5678"],
+      "address": ["789 Main St, City, ST 12345"],
+      "emergency_contact": ["Jane Smith", "Tom Johnson"],
+      "emergency_phone": ["555-987-6543"],
+      "insurance_provider": ["Cigna", "Humana"],
+      "insurance_id": ["123456789"],
+      "visit_reason": ["Specific Concern", "Follow-up Visit"],
+      "symptoms": ["Having some back pain for the past week. Need to get it checked."]
+    },
+    "fair": {
+      "patient_name": ["mike brown", "sarah"],
+      "date_of_birth": ["1/1/1990"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "address": ["123 main st"],
+      "emergency_contact": ["mom"],
+      "emergency_phone": ["5559876543"],
+      "insurance_provider": [""],
+      "insurance_id": [""],
+      "visit_reason": ["Other"],
+      "symptoms": ["not feeling well"]
+    },
+    "poor": {
+      "patient_name": ["test user"],
+      "date_of_birth": ["1/1/2000"],
+      "email": ["test@test.com"],
+      "phone": ["1234567890"],
+      "address": ["test"],
+      "emergency_contact": ["test"],
+      "emergency_phone": ["1234567890"],
+      "insurance_provider": [""],
+      "insurance_id": [""],
+      "visit_reason": ["Other"],
+      "symptoms": [""]
+    }
+  }
+}

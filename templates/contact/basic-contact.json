@@ -1,0 +1,81 @@
+{
+  "template_id": "basic-contact",
+  "name": "Basic Contact Form",
+  "description": "Simple, professional contact form with essential fields. Perfect for general inquiries.",
+  "category": "contact",
+  "industry": "general",
+  "icon": "📞",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com",
+      "validation": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": false,
+      "placeholder": "(555) 123-4567",
+      "validation": "phone"
+    },
+    {
+      "type": "text",
+      "label": "Subject",
+      "name": "subject",
+      "required": true,
+      "placeholder": "How can we help you?",
+      "validation": "text"
+    },
+    {
+      "type": "textarea",
+      "label": "Message",
+      "name": "message",
+      "required": true,
+      "placeholder": "Tell us more about your inquiry...",
+      "rows": 5,
+      "validation": "text"
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Sarah Mitchell", "James Anderson", "Emily Rodriguez", "Michael Chen", "Jennifer Thompson"],
+      "email": ["{first}.{last}@company.com", "{first}{last}@business.com"],
+      "phone": ["(555) 123-4567", "(555) 234-5678"],
+      "subject": ["Partnership Opportunity", "Project Consultation", "Service Inquiry"],
+      "message": ["I'm interested in discussing a potential partnership opportunity. Our company has been following your work and we believe there's strong synergy. Would you be available for a call next week?"]
+    },
+    "good": {
+      "full_name": ["John Smith", "Mary Johnson", "David Brown"],
+      "email": ["{first}{last}@gmail.com"],
+      "phone": ["555-123-4567"],
+      "subject": ["Question", "Need information"],
+      "message": ["Hi, I'm interested in your services. Can you provide more information? Thanks."]
+    },
+    "fair": {
+      "full_name": ["john", "sarah m"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": [""],
+      "subject": ["info"],
+      "message": ["need more info"]
+    },
+    "poor": {
+      "full_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@tempmail.com"],
+      "phone": [""],
+      "subject": [""],
+      "message": ["test"]
+    }
+  }
+}

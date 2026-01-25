@@ -1,0 +1,147 @@
+{
+  "template_id": "education-enrollment",
+  "name": "Course Enrollment Form",
+  "description": "Student enrollment and registration form for educational institutions.",
+  "category": "industry",
+  "industry": "education",
+  "icon": "🎓",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Student Name",
+      "name": "student_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com",
+      "validation": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567",
+      "validation": "phone"
+    },
+    {
+      "type": "text",
+      "label": "Date of Birth",
+      "name": "date_of_birth",
+      "required": false,
+      "placeholder": "MM/DD/YYYY",
+      "validation": "text"
+    },
+    {
+      "type": "select",
+      "label": "Program/Course Interest",
+      "name": "program",
+      "required": true,
+      "options": ["Undergraduate Program", "Graduate Program", "Certificate Program", "Professional Development", "Online Course", "Workshop/Seminar", "Not sure yet"]
+    },
+    {
+      "type": "select",
+      "label": "Field of Study",
+      "name": "field_of_study",
+      "required": true,
+      "options": ["Business", "Technology/Computer Science", "Healthcare", "Arts & Design", "Education", "Engineering", "Social Sciences", "Other"]
+    },
+    {
+      "type": "select",
+      "label": "Enrollment Term",
+      "name": "enrollment_term",
+      "required": true,
+      "options": ["Spring 2026", "Summer 2026", "Fall 2026", "Winter 2026", "ASAP/Rolling", "Exploring options"]
+    },
+    {
+      "type": "select",
+      "label": "Attendance Preference",
+      "name": "attendance",
+      "required": true,
+      "options": ["Full-time", "Part-time", "Online only", "Hybrid (online + in-person)", "Flexible"]
+    },
+    {
+      "type": "select",
+      "label": "Current Education Level",
+      "name": "education_level",
+      "required": false,
+      "options": ["High School Graduate", "Some College", "Associate's Degree", "Bachelor's Degree", "Master's Degree", "Doctoral Degree", "Other"]
+    },
+    {
+      "type": "checkbox",
+      "label": "Interests/Goals",
+      "name": "goals",
+      "required": false,
+      "options": ["Career change", "Career advancement", "Personal enrichment", "Certification/License", "Skill development", "Degree completion"]
+    },
+    {
+      "type": "textarea",
+      "label": "Questions or Additional Information",
+      "name": "additional_info",
+      "required": false,
+      "placeholder": "Tell us about your educational goals, questions about programs, etc...",
+      "rows": 4,
+      "validation": "text"
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "student_name": ["Michael Anderson", "Sarah Thompson", "Jennifer Martinez", "David Chen"],
+      "email": ["{first}.{last}@email.com", "{first}{last}@gmail.com"],
+      "phone": ["(555) 123-4567", "(555) 234-5678"],
+      "date_of_birth": ["05/15/1995", "08/22/1988", "11/30/1992"],
+      "program": ["Graduate Program", "Certificate Program", "Professional Development"],
+      "field_of_study": ["Business", "Technology/Computer Science", "Healthcare"],
+      "enrollment_term": ["Fall 2026", "Spring 2026"],
+      "attendance": ["Part-time", "Hybrid (online + in-person)"],
+      "education_level": ["Bachelor's Degree", "Master's Degree"],
+      "goals": ["Career advancement", "Certification/License", "Skill development"],
+      "additional_info": ["I'm currently working full-time in the tech industry and looking to advance my career through an MBA program. I'm specifically interested in your evening and weekend options, as well as online courses that would allow me to balance work and education. I have a bachelor's in computer science and 5 years of professional experience."]
+    },
+    "good": {
+      "student_name": ["John Smith", "Mary Johnson", "Robert Wilson"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@email.com"],
+      "phone": ["555-123-4567", "(555) 234-5678"],
+      "date_of_birth": ["06/10/1998", "03/25/1990"],
+      "program": ["Undergraduate Program", "Online Course"],
+      "field_of_study": ["Business", "Education"],
+      "enrollment_term": ["Fall 2026", "Exploring options"],
+      "attendance": ["Online only", "Part-time"],
+      "education_level": ["High School Graduate", "Some College"],
+      "goals": ["Career change", "Degree completion"],
+      "additional_info": ["Interested in learning more about your business programs and online options."]
+    },
+    "fair": {
+      "student_name": ["mike brown", "sarah"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "date_of_birth": [""],
+      "program": ["Not sure yet"],
+      "field_of_study": ["Other"],
+      "enrollment_term": ["Exploring options"],
+      "attendance": ["Flexible"],
+      "education_level": [""],
+      "goals": [],
+      "additional_info": ["want to learn more about classes"]
+    },
+    "poor": {
+      "student_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@mailinator.com"],
+      "phone": ["1234567890"],
+      "date_of_birth": [""],
+      "program": ["Not sure yet"],
+      "field_of_study": ["Other"],
+      "enrollment_term": ["Exploring options"],
+      "attendance": ["Flexible"],
+      "education_level": [""],
+      "goals": [],
+      "additional_info": [""]
+    }
+  }
+}

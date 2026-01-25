@@ -1,0 +1,92 @@
+{
+  "template_id": "free-consultation",
+  "name": "Free Consultation Request",
+  "description": "Lead generation form for offering free consultations or discovery calls.",
+  "category": "lead-generation",
+  "industry": "general",
+  "icon": "🎯",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@company.com",
+      "validation": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567",
+      "validation": "phone"
+    },
+    {
+      "type": "text",
+      "label": "Company Name",
+      "name": "company",
+      "required": false,
+      "placeholder": "Your Company",
+      "validation": "text"
+    },
+    {
+      "type": "select",
+      "label": "What best describes your situation?",
+      "name": "situation",
+      "required": true,
+      "options": ["Need immediate help", "Planning for future", "Exploring options", "Comparing providers", "Other"]
+    },
+    {
+      "type": "textarea",
+      "label": "What would you like to discuss?",
+      "name": "consultation_topic",
+      "required": true,
+      "placeholder": "Tell us about your goals and challenges...",
+      "rows": 4,
+      "validation": "text"
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Michael Anderson", "Sarah Thompson", "David Martinez", "Jennifer Wilson"],
+      "email": ["{first}.{last}@company.com", "{first}{last}@corporation.com"],
+      "phone": ["(555) 123-4567", "(555) 234-5678"],
+      "company": ["TechVision Inc", "Strategic Solutions LLC", "Innovation Partners", "Growth Dynamics"],
+      "situation": ["Need immediate help", "Planning for future"],
+      "consultation_topic": ["We're experiencing rapid growth and need expert guidance on scaling our operations. I'd like to discuss our current challenges and explore how your consulting services can help us achieve our Q1 2026 goals."]
+    },
+    "good": {
+      "full_name": ["John Smith", "Mary Johnson", "Robert Brown"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@business.com"],
+      "phone": ["555-123-4567", "(555) 234-5678"],
+      "company": ["Smith Consulting", "Johnson & Associates"],
+      "situation": ["Exploring options", "Comparing providers"],
+      "consultation_topic": ["Interested in learning more about your services and pricing. Would like to schedule a call to discuss our needs."]
+    },
+    "fair": {
+      "full_name": ["mike", "sarah jones"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "company": [""],
+      "situation": ["Other"],
+      "consultation_topic": ["want to know more about services"]
+    },
+    "poor": {
+      "full_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@mailinator.com"],
+      "phone": ["1234567890"],
+      "company": [""],
+      "situation": ["Other"],
+      "consultation_topic": ["test"]
+    }
+  }
+}

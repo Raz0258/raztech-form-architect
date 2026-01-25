@@ -1,0 +1,103 @@
+{
+  "template_id": "contact-with-budget",
+  "name": "Contact Form with Budget",
+  "description": "Contact form with budget range selector for better lead qualification.",
+  "category": "contact",
+  "industry": "general",
+  "icon": "💰",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@company.com",
+      "validation": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": false,
+      "placeholder": "(555) 123-4567",
+      "validation": "phone"
+    },
+    {
+      "type": "text",
+      "label": "Company Name",
+      "name": "company",
+      "required": false,
+      "placeholder": "Your Company Inc.",
+      "validation": "text"
+    },
+    {
+      "type": "select",
+      "label": "Project Budget",
+      "name": "budget",
+      "required": true,
+      "options": ["Under $5,000", "$5,000 - $10,000", "$10,000 - $25,000", "$25,000 - $50,000", "$50,000+", "Not sure yet"]
+    },
+    {
+      "type": "select",
+      "label": "Timeline",
+      "name": "timeline",
+      "required": false,
+      "options": ["Urgent (within 2 weeks)", "Soon (1-2 months)", "Flexible (3+ months)", "Just exploring"]
+    },
+    {
+      "type": "textarea",
+      "label": "Project Details",
+      "name": "message",
+      "required": true,
+      "placeholder": "Tell us about your project...",
+      "rows": 5,
+      "validation": "text"
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Sarah Mitchell", "Robert Anderson", "Emily Chen", "Michael Thompson"],
+      "email": ["{first}.{last}@company.com", "{first}{last}@corporation.com"],
+      "phone": ["(555) 123-4567", "(555) 234-5678"],
+      "company": ["TechCorp Solutions", "Digital Innovations Inc", "Premier Business Group", "Global Ventures LLC"],
+      "budget": ["$25,000 - $50,000", "$50,000+", "$10,000 - $25,000"],
+      "timeline": ["Soon (1-2 months)", "Urgent (within 2 weeks)"],
+      "message": ["We're looking to redesign our entire web presence including a new website, mobile app, and customer portal. We have a clear vision and budget approved. Our timeline is flexible but we'd like to start within the next 2 months."]
+    },
+    "good": {
+      "full_name": ["John Smith", "Mary Johnson", "David Wilson"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@business.com"],
+      "phone": ["555-123-4567"],
+      "company": ["My Company", "Smith Consulting"],
+      "budget": ["$5,000 - $10,000", "$10,000 - $25,000"],
+      "timeline": ["Flexible (3+ months)", "Soon (1-2 months)"],
+      "message": ["Need a new website for our small business. We have some ideas but would like to discuss options and pricing."]
+    },
+    "fair": {
+      "full_name": ["mike brown", "sarah"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567", ""],
+      "company": [""],
+      "budget": ["Not sure yet", "Under $5,000"],
+      "timeline": ["Just exploring"],
+      "message": ["interested in website"]
+    },
+    "poor": {
+      "full_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@tempmail.com"],
+      "phone": [""],
+      "company": [""],
+      "budget": ["Not sure yet"],
+      "timeline": ["Just exploring"],
+      "message": ["test"]
+    }
+  }
+}

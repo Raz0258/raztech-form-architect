@@ -1,0 +1,114 @@
+{
+  "template_id": "multi-location-contact",
+  "name": "Multi-Location Contact Form",
+  "description": "Contact form for businesses with multiple locations or service areas.",
+  "category": "contact",
+  "industry": "general",
+  "icon": "📍",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com",
+      "validation": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567",
+      "validation": "phone"
+    },
+    {
+      "type": "select",
+      "label": "Preferred Location",
+      "name": "location",
+      "required": true,
+      "options": ["New York Office", "Los Angeles Office", "Chicago Office", "Miami Office", "Remote/Virtual"]
+    },
+    {
+      "type": "select",
+      "label": "Service Interest",
+      "name": "service",
+      "required": true,
+      "options": ["Consultation", "Service A", "Service B", "Service C", "Multiple Services", "Not Sure"]
+    },
+    {
+      "type": "select",
+      "label": "Best Time to Contact",
+      "name": "contact_time",
+      "required": false,
+      "options": ["Morning (9am-12pm)", "Afternoon (12pm-5pm)", "Evening (5pm-8pm)", "Anytime"]
+    },
+    {
+      "type": "text",
+      "label": "Subject",
+      "name": "subject",
+      "required": true,
+      "placeholder": "What can we help you with?",
+      "validation": "text"
+    },
+    {
+      "type": "textarea",
+      "label": "Message",
+      "name": "message",
+      "required": true,
+      "placeholder": "Please provide details about your inquiry...",
+      "rows": 5,
+      "validation": "text"
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Jennifer Martinez", "Robert Johnson", "Amanda Wilson", "Christopher Lee"],
+      "email": ["{first}.{last}@company.com", "{first}{last}@business.com"],
+      "phone": ["(555) 123-4567", "(555) 234-5678", "(555) 345-6789"],
+      "location": ["New York Office", "Los Angeles Office", "Chicago Office"],
+      "service": ["Multiple Services", "Service A", "Consultation"],
+      "contact_time": ["Morning (9am-12pm)", "Afternoon (12pm-5pm)"],
+      "subject": ["Comprehensive Service Inquiry", "Enterprise Solution Discussion"],
+      "message": ["I'm reaching out on behalf of our organization to discuss a comprehensive service package. We operate in multiple markets and need coordinated support across our locations. I'd like to schedule a call to discuss our requirements in detail."]
+    },
+    "good": {
+      "full_name": ["John Smith", "Mary Davis", "Tom Brown"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@email.com"],
+      "phone": ["555-123-4567", "(555) 234-5678"],
+      "location": ["Chicago Office", "Miami Office"],
+      "service": ["Service B", "Consultation"],
+      "contact_time": ["Anytime"],
+      "subject": ["Service Inquiry", "Need Information"],
+      "message": ["I'm interested in learning more about your services at the Chicago location. Can someone contact me to discuss pricing and availability?"]
+    },
+    "fair": {
+      "full_name": ["mike wilson", "sarah"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "location": ["Remote/Virtual"],
+      "service": ["Not Sure"],
+      "contact_time": [""],
+      "subject": ["question"],
+      "message": ["need info"]
+    },
+    "poor": {
+      "full_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@tempmail.com"],
+      "phone": ["1234567890"],
+      "location": ["Remote/Virtual"],
+      "service": ["Not Sure"],
+      "contact_time": [""],
+      "subject": [""],
+      "message": ["test"]
+    }
+  }
+}

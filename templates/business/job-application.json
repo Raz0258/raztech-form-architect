@@ -1,0 +1,87 @@
+{
+  "template_id": "job-application",
+  "name": "Job Application Form",
+  "description": "Comprehensive application form for job candidates.",
+  "category": "business",
+  "industry": "hr",
+  "icon": "💼",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567"
+    },
+    {
+      "type": "select",
+      "label": "Position Applied For",
+      "name": "position",
+      "required": true,
+      "options": ["Software Engineer", "Product Manager", "Marketing Manager", "Sales Representative", "Other"]
+    },
+    {
+      "type": "select",
+      "label": "Years of Experience",
+      "name": "experience",
+      "required": true,
+      "options": ["0-2 years", "2-5 years", "5-10 years", "10+ years"]
+    },
+    {
+      "type": "textarea",
+      "label": "Cover Letter",
+      "name": "cover_letter",
+      "required": true,
+      "placeholder": "Tell us why you're interested...",
+      "rows": 6
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Alexandra Thompson", "Michael Chen", "Sarah Rodriguez"],
+      "email": ["{first}.{last}@email.com"],
+      "phone": ["(555) 123-4567"],
+      "position": ["Software Engineer", "Product Manager"],
+      "experience": ["5-10 years", "10+ years"],
+      "cover_letter": ["I'm excited to apply for this position as it aligns perfectly with my career goals. With over 8 years of experience, I've successfully led multiple projects and consistently delivered results."]
+    },
+    "good": {
+      "full_name": ["John Smith", "Mary Johnson"],
+      "email": ["{first}{last}@gmail.com"],
+      "phone": ["555-123-4567"],
+      "position": ["Sales Representative"],
+      "experience": ["2-5 years"],
+      "cover_letter": ["I'm interested in this position and believe I have relevant experience."]
+    },
+    "fair": {
+      "full_name": ["mike brown"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "position": ["Other"],
+      "experience": ["0-2 years"],
+      "cover_letter": ["looking for job"]
+    },
+    "poor": {
+      "full_name": ["test"],
+      "email": ["test@test.com"],
+      "phone": ["1234567890"],
+      "position": ["Other"],
+      "experience": ["0-2 years"],
+      "cover_letter": ["test"]
+    }
+  }
+}

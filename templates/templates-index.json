@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "total_templates": 15,
+  "categories": {
+    "contact": {
+      "name": "Contact Forms",
+      "icon": "📞",
+      "description": "Professional contact forms for general inquiries",
+      "templates": [
+        "basic-contact",
+        "contact-with-budget",
+        "multi-location-contact"
+      ]
+    },
+    "lead-generation": {
+      "name": "Lead Generation",
+      "icon": "🎯",
+      "description": "Forms designed to capture and qualify leads",
+      "templates": [
+        "free-consultation",
+        "get-quote-web-design",
+        "download-ebook",
+        "newsletter-signup"
+      ]
+    },
+    "business": {
+      "name": "Business Forms",
+      "icon": "💼",
+      "description": "Essential forms for business operations",
+      "templates": [
+        "job-application",
+        "customer-feedback",
+        "service-booking"
+      ]
+    },
+    "industry": {
+      "name": "Industry-Specific",
+      "icon": "🏢",
+      "description": "Specialized forms for specific industries",
+      "templates": [
+        "medical-patient-intake",
+        "legal-consultation",
+        "real-estate-inquiry",
+        "restaurant-catering",
+        "education-enrollment"
+      ]
+    }
+  },
+  "recommended_set": [
+    "basic-contact",
+    "contact-with-budget",
+    "free-consultation",
+    "get-quote-web-design",
+    "customer-feedback"
+  ]
+}

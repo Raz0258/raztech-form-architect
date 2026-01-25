@@ -1,0 +1,126 @@
+{
+  "template_id": "get-quote-web-design",
+  "name": "Get a Quote - Web Design",
+  "description": "Detailed quote request form for web design and development projects.",
+  "category": "lead-generation",
+  "industry": "technology",
+  "icon": "💻",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "full_name",
+      "required": true,
+      "placeholder": "John Doe",
+      "validation": "text"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@company.com",
+      "validation": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567",
+      "validation": "phone"
+    },
+    {
+      "type": "text",
+      "label": "Company/Organization",
+      "name": "company",
+      "required": false,
+      "placeholder": "Your Company Name",
+      "validation": "text"
+    },
+    {
+      "type": "text",
+      "label": "Current Website (if applicable)",
+      "name": "current_website",
+      "required": false,
+      "placeholder": "https://www.yoursite.com",
+      "validation": "url"
+    },
+    {
+      "type": "select",
+      "label": "Project Type",
+      "name": "project_type",
+      "required": true,
+      "options": ["New Website", "Website Redesign", "E-commerce Site", "Web Application", "Landing Page", "Not Sure Yet"]
+    },
+    {
+      "type": "checkbox",
+      "label": "Features Needed",
+      "name": "features",
+      "required": false,
+      "options": ["Custom Design", "E-commerce", "Blog/CMS", "User Accounts", "Payment Integration", "API Integration", "Mobile App", "SEO Optimization"]
+    },
+    {
+      "type": "select",
+      "label": "Estimated Budget",
+      "name": "budget",
+      "required": true,
+      "options": ["Under $5,000", "$5,000 - $10,000", "$10,000 - $25,000", "$25,000 - $50,000", "$50,000+", "Need guidance"]
+    },
+    {
+      "type": "textarea",
+      "label": "Project Description",
+      "name": "project_description",
+      "required": true,
+      "placeholder": "Tell us about your project, goals, and any specific requirements...",
+      "rows": 5,
+      "validation": "text"
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "full_name": ["Alexandra Thompson", "Michael Chen", "Sarah Rodriguez", "James Anderson"],
+      "email": ["{first}.{last}@company.com", "{first}{last}@business.com"],
+      "phone": ["(555) 123-4567", "(555) 234-5678"],
+      "company": ["Digital Innovations Corp", "TechStart Solutions", "Global Commerce Inc", "Future Vision LLC"],
+      "current_website": ["https://oldsite.example.com", "https://company-site.com"],
+      "project_type": ["Website Redesign", "E-commerce Site", "Web Application"],
+      "features": ["Custom Design", "E-commerce", "User Accounts", "Payment Integration", "API Integration"],
+      "budget": ["$25,000 - $50,000", "$50,000+"],
+      "project_description": ["We're a rapidly growing e-commerce company looking to completely rebuild our online presence. Our current site is outdated and can't handle our traffic. We need a modern, scalable platform with custom features including user accounts, subscription management, and integration with our CRM. We have detailed requirements and are ready to start in Q1 2026."]
+    },
+    "good": {
+      "full_name": ["John Smith", "Mary Johnson", "Robert Wilson"],
+      "email": ["{first}{last}@gmail.com", "{first}.{last}@smallbiz.com"],
+      "phone": ["555-123-4567", "(555) 234-5678"],
+      "company": ["Smith Consulting", "Johnson Services", "Wilson Associates"],
+      "current_website": ["www.myoldsite.com", ""],
+      "project_type": ["New Website", "Website Redesign"],
+      "features": ["Custom Design", "Blog/CMS"],
+      "budget": ["$5,000 - $10,000", "$10,000 - $25,000"],
+      "project_description": ["Need a new professional website for our small business. Looking for modern design with blog and contact form. Would like to discuss options and get a detailed quote."]
+    },
+    "fair": {
+      "full_name": ["mike brown", "sarah"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "company": [""],
+      "current_website": [""],
+      "project_type": ["Not Sure Yet"],
+      "features": ["Custom Design"],
+      "budget": ["Need guidance"],
+      "project_description": ["need a website for business"]
+    },
+    "poor": {
+      "full_name": ["test", "user"],
+      "email": ["test@test.com", "temp{rand}@tempmail.com"],
+      "phone": ["1234567890"],
+      "company": [""],
+      "current_website": [""],
+      "project_type": ["Not Sure Yet"],
+      "features": [],
+      "budget": ["Need guidance"],
+      "project_description": ["test website"]
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "template_id": "legal-consultation",
+  "name": "Legal Consultation Request",
+  "description": "Initial consultation form for law firms and legal practices.",
+  "category": "industry",
+  "industry": "legal",
+  "icon": "⚖️",
+  "fields": [
+    {
+      "type": "text",
+      "label": "Full Name",
+      "name": "client_name",
+      "required": true,
+      "placeholder": "John Doe"
+    },
+    {
+      "type": "email",
+      "label": "Email Address",
+      "name": "email",
+      "required": true,
+      "placeholder": "john@example.com"
+    },
+    {
+      "type": "phone",
+      "label": "Phone Number",
+      "name": "phone",
+      "required": true,
+      "placeholder": "(555) 123-4567"
+    },
+    {
+      "type": "select",
+      "label": "Legal Matter Type",
+      "name": "matter_type",
+      "required": true,
+      "options": ["Family Law", "Criminal Defense", "Business Law", "Estate Planning", "Personal Injury", "Other"]
+    },
+    {
+      "type": "select",
+      "label": "Urgency Level",
+      "name": "urgency",
+      "required": true,
+      "options": ["Urgent - Need help immediately", "Important - Within 2 weeks", "Normal - Within a month", "Planning ahead"]
+    },
+    {
+      "type": "textarea",
+      "label": "Case Description",
+      "name": "case_description",
+      "required": true,
+      "placeholder": "Please provide details about your legal matter...",
+      "rows": 6
+    }
+  ],
+  "sample_data_profiles": {
+    "excellent": {
+      "client_name": ["Michael Anderson", "Sarah Thompson"],
+      "email": ["{first}.{last}@company.com"],
+      "phone": ["(555) 123-4567"],
+      "matter_type": ["Business Law", "Estate Planning"],
+      "urgency": ["Important - Within 2 weeks"],
+      "case_description": ["I'm establishing a new business and need guidance on corporate structure. I have all relevant documents prepared."]
+    },
+    "good": {
+      "client_name": ["John Smith"],
+      "email": ["{first}{last}@gmail.com"],
+      "phone": ["555-123-4567"],
+      "matter_type": ["Family Law"],
+      "urgency": ["Normal - Within a month"],
+      "case_description": ["I need legal advice regarding a family matter. Would like to discuss options."]
+    },
+    "fair": {
+      "client_name": ["mike"],
+      "email": ["{first}{rand}@gmail.com"],
+      "phone": ["5551234567"],
+      "matter_type": ["Other"],
+      "urgency": ["Planning ahead"],
+      "case_description": ["need legal help"]
+    },
+    "poor": {
+      "client_name": ["test"],
+      "email": ["test@test.com"],
+      "phone": ["1234567890"],
+      "matter_type": ["Other"],
+      "urgency": ["Planning ahead"],
+      "case_description": ["test"]
+    }
+  }
+}
