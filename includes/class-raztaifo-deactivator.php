@@ -11,7 +11,7 @@
  *
  * This class defines all code necessary to run during the plugin's deactivation.
  */
-class RT_FA_Deactivator {
+class RAZTAIFO_Deactivator {
 
 	/**
 	 * Deactivate the plugin.
@@ -27,8 +27,8 @@ class RT_FA_Deactivator {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Intentional cleanup on deactivation
 		$wpdb->query(
 			"DELETE FROM {$wpdb->options}
-			WHERE option_name LIKE '_transient_rt_fa_%'
-			OR option_name LIKE '_transient_timeout_rt_fa_%'"
+			WHERE option_name LIKE '_transient_raztaifo_%'
+			OR option_name LIKE '_transient_timeout_raztaifo_%'"
 		);
 
 		// Flush rewrite rules

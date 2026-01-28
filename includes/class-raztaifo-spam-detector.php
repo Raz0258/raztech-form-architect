@@ -19,7 +19,7 @@
  * Achieves 95%+ accuracy with pattern analysis alone,
  * 99%+ with AI analysis enabled.
  */
-class RT_FA_Spam_Detector {
+class RAZTAIFO_Spam_Detector {
 
 	/**
 	 * Analyze submission for spam
@@ -32,7 +32,7 @@ class RT_FA_Spam_Detector {
 	 */
 	public static function analyze_submission( $submission_id, $submission_data, $form_id ) {
 		// Check if spam detection is enabled
-		if ( ! get_option( 'rt_fa_spam_detection', 1 ) ) {
+		if ( ! get_option( 'raztaifo_spam_detection', 1 ) ) {
 			return array(
 				'spam_score' => 0,
 				'is_spam'    => false,
@@ -54,7 +54,7 @@ class RT_FA_Spam_Detector {
 		$spam_score += self::check_submission_behavior( $submission_id, $form_id );
 
 		// Factor 5: AI Analysis (0-10 points) - Optional
-		if ( get_option( 'rt_fa_spam_ai_check', 0 ) ) {
+		if ( get_option( 'raztaifo_spam_ai_check', 0 ) ) {
 			$spam_score += self::ai_spam_analysis( $submission_data );
 		}
 
@@ -62,7 +62,7 @@ class RT_FA_Spam_Detector {
 		$spam_score = min( $spam_score, 100 );
 
 		// Determine if spam based on threshold
-		$threshold = get_option( 'rt_fa_spam_threshold', 60 );
+		$threshold = get_option( 'raztaifo_spam_threshold', 60 );
 		$is_spam   = $spam_score >= $threshold;
 
 		return array(
@@ -286,7 +286,7 @@ class RT_FA_Spam_Detector {
 
 		// Check for rapid submissions from same IP
 		$ip_address = self::get_user_ip();
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		if ( ! empty( $ip_address ) ) {
 			$recent_count = $wpdb->get_var(
@@ -321,13 +321,13 @@ class RT_FA_Spam_Detector {
 	 */
 	private static function ai_spam_analysis( $data ) {
 		// Check API key
-		$api_key = get_option( 'rt_fa_api_key', '' );
+		$api_key = get_option( 'raztaifo_api_key', '' );
 		if ( empty( $api_key ) ) {
 			return 0;
 		}
 
 		// Rate limit check (100 per hour per site)
-		$rate_limit_key = 'rt_fa_spam_ai_global';
+		$rate_limit_key = 'raztaifo_spam_ai_global';
 		$attempts       = get_transient( $rate_limit_key );
 		if ( $attempts && $attempts >= 100 ) {
 			return 0; // Rate limit exceeded
@@ -342,7 +342,7 @@ class RT_FA_Spam_Detector {
 		}
 
 		// Quick GPT-3.5 call (cheap and fast)
-		$api_provider = get_option( 'rt_fa_api_provider', 'openai' );
+		$api_provider = get_option( 'raztaifo_api_provider', 'openai' );
 
 		if ( $api_provider === 'openai' ) {
 			$response = wp_remote_post(
@@ -448,7 +448,7 @@ class RT_FA_Spam_Detector {
 	public static function get_submissions_by_spam_status( $status = 'all', $form_id = 0, $score_range = 'all', $args = array() ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		// Sanitize and validate status parameter
 		$status           = sanitize_text_field( $status );
@@ -480,7 +480,7 @@ class RT_FA_Spam_Detector {
 
 		// Add spam status filter (score-based)
 		// IMPORTANT: Wrap OR conditions in parentheses to ensure correct precedence when combined with other filters
-		$spam_threshold = get_option( 'rt_fa_spam_threshold', 60 );
+		$spam_threshold = get_option( 'raztaifo_spam_threshold', 60 );
 		switch ( $status ) {
 			case 'spam':
 				// Spam = score >= threshold OR manually marked as spam

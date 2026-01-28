@@ -1,11 +1,11 @@
 === RazTech AI Form Architect ===
-Contributors: raztechnologies
-Donate link: https://raztechnologies.com/
+Contributors: raztech
+Donate link: https://raz-technologies.com/
 Tags: forms, ai form builder, contact form, lead scoring, ai generator
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 8.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,12 +54,7 @@ This plugin CAN connect to external services. All are optional and require your 
 * Privacy: https://www.anthropic.com/legal/privacy
 * Terms: https://www.anthropic.com/legal/terms
 
-**jsDelivr CDN** (https://cdn.jsdelivr.net/)
-
-* Used for: Loading Chart.js library for analytics
-* Privacy: https://www.jsdelivr.com/privacy-policy
-
-The plugin works completely without any external services. AI features are optional.
+The plugin works completely without any external services. AI features are optional. All assets including Chart.js are bundled locally.
 
 = Perfect For =
 
@@ -137,6 +132,16 @@ Yes. All data stored in your WordPress database. Disclose AI usage in your priva
 5. Settings panel
 
 == Changelog ==
+
+= 1.0.2 =
+* Security: Added SQL query whitelisting for orderby parameters
+* Security: Implemented recursive JSON sanitization for form fields
+* Security: Localized Chart.js library (removed CDN dependency)
+* Security: Moved inline scripts to proper WordPress enqueue system
+* Fix: Late escaping in templates-library.php
+* Enhancement: Complete prefix migration from rt_fa to raztaifo
+* Enhancement: Updated domain to raz-technologies.com
+* WordPress.org reviewer feedback implemented
 
 = 1.0.1 =
 * Fix: Removed Plugin URI to resolve conflict with Author URI

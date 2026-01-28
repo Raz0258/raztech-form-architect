@@ -21,7 +21,7 @@
  *
  * @since    1.0.0
  */
-class RT_FA_Generator {
+class RAZTAIFO_Generator {
 
 	/**
 	 * Generate form structure from description using AI
@@ -58,8 +58,8 @@ class RT_FA_Generator {
 		}
 
 		// Get API configuration
-		$api_provider = get_option( 'rt_fa_api_provider', 'openai' );
-		$api_key      = get_option( 'rt_fa_api_key', '' );
+		$api_provider = get_option( 'raztaifo_api_provider', 'openai' );
+		$api_key      = get_option( 'raztaifo_api_key', '' );
 
 		if ( empty( $api_key ) ) {
 			return new WP_Error(
@@ -109,14 +109,14 @@ class RT_FA_Generator {
 	 * @return   array Rate limit status with keys: used, limit, remaining, reset_in.
 	 */
 	public static function get_rate_limit_status() {
-		$limit     = intval( get_option( 'rt_fa_rate_limit', 50 ) );
-		$used_data = get_transient( 'rt_fa_generator_requests' );
+		$limit     = intval( get_option( 'raztaifo_rate_limit', 50 ) );
+		$used_data = get_transient( 'raztaifo_generator_requests' );
 
 		// If no data or expired, start fresh
 		if ( false === $used_data ) {
 			$used      = 0;
 			$timestamp = time();
-			set_transient( 'rt_fa_generator_requests', array( 'count' => 0, 'timestamp' => $timestamp ), HOUR_IN_SECONDS );
+			set_transient( 'raztaifo_generator_requests', array( 'count' => 0, 'timestamp' => $timestamp ), HOUR_IN_SECONDS );
 		} else {
 			$used      = intval( $used_data['count'] );
 			$timestamp = intval( $used_data['timestamp'] );
@@ -495,7 +495,7 @@ class RT_FA_Generator {
 	 * @return   void
 	 */
 	private static function increment_rate_limit() {
-		$used_data = get_transient( 'rt_fa_generator_requests' );
+		$used_data = get_transient( 'raztaifo_generator_requests' );
 
 		if ( false === $used_data ) {
 			$count     = 1;
@@ -506,7 +506,7 @@ class RT_FA_Generator {
 		}
 
 		set_transient(
-			'rt_fa_generator_requests',
+			'raztaifo_generator_requests',
 			array(
 				'count'     => $count,
 				'timestamp' => $timestamp,

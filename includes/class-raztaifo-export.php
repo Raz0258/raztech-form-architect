@@ -11,7 +11,7 @@
  *
  * Handles CSV export of submissions and JSON export of settings.
  */
-class RT_FA_Export {
+class RAZTAIFO_Export {
 
 	/**
 	 * Export submissions to CSV
@@ -27,12 +27,12 @@ class RT_FA_Export {
 		}
 
 		// Verify nonce
-		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'rt_fa_export_csv' ) ) {
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'raztaifo_export_csv' ) ) {
 			wp_die( esc_html__( 'Security check failed.', 'raztech-form-architect' ) );
 		}
 
 		// Get submissions
-		$submissions = RT_FA_Form_Builder::get_submissions( $form_id );
+		$submissions = RAZTAIFO_Form_Builder::get_submissions( $form_id );
 
 		if ( empty( $submissions ) ) {
 			wp_die( esc_html__( 'No submissions to export.', 'raztech-form-architect' ) );
@@ -80,11 +80,11 @@ class RT_FA_Export {
 		// CSV Rows
 		foreach ( $submissions as $submission ) {
 			// Get form name
-			$form      = RT_FA_Form_Builder::get_form( $submission->form_id );
+			$form      = RAZTAIFO_Form_Builder::get_form( $submission->form_id );
 			$form_name = $form ? $form->form_name : 'Unknown';
 
 			// Get lead quality category
-			$lead_quality = RT_FA_Lead_Scorer::get_score_category( $submission->lead_score );
+			$lead_quality = RAZTAIFO_Lead_Scorer::get_score_category( $submission->lead_score );
 
 			// Format date and time
 			$date_time = strtotime( $submission->submitted_at );
@@ -140,24 +140,24 @@ class RT_FA_Export {
 		}
 
 		// Verify nonce
-		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'rt_fa_export_settings' ) ) {
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'raztaifo_export_settings' ) ) {
 			wp_die( esc_html__( 'Security check failed.', 'raztech-form-architect' ) );
 		}
 
 		// Gather all plugin settings
 		$settings = array(
-			'api_provider'          => get_option( 'rt_fa_api_provider', 'openai' ),
-			'rate_limit'            => get_option( 'rt_fa_rate_limit', 50 ),
-			'spam_detection'        => get_option( 'rt_fa_spam_detection', 1 ),
-			'spam_threshold'        => get_option( 'rt_fa_spam_threshold', 60 ),
-			'spam_ai_check'         => get_option( 'rt_fa_spam_ai_check', 0 ),
-			'auto_response'         => get_option( 'rt_fa_auto_response', 0 ),
-			'from_name'             => get_option( 'rt_fa_from_name', get_bloginfo( 'name' ) ),
-			'from_email'            => get_option( 'rt_fa_from_email', get_option( 'admin_email' ) ),
-			'reply_to_email'        => get_option( 'rt_fa_reply_to_email', get_option( 'admin_email' ) ),
-			'skip_low_scores'       => get_option( 'rt_fa_skip_low_scores', 0 ),
+			'api_provider'          => get_option( 'raztaifo_api_provider', 'openai' ),
+			'rate_limit'            => get_option( 'raztaifo_rate_limit', 50 ),
+			'spam_detection'        => get_option( 'raztaifo_spam_detection', 1 ),
+			'spam_threshold'        => get_option( 'raztaifo_spam_threshold', 60 ),
+			'spam_ai_check'         => get_option( 'raztaifo_spam_ai_check', 0 ),
+			'auto_response'         => get_option( 'raztaifo_auto_response', 0 ),
+			'from_name'             => get_option( 'raztaifo_from_name', get_bloginfo( 'name' ) ),
+			'from_email'            => get_option( 'raztaifo_from_email', get_option( 'admin_email' ) ),
+			'reply_to_email'        => get_option( 'raztaifo_reply_to_email', get_option( 'admin_email' ) ),
+			'skip_low_scores'       => get_option( 'raztaifo_skip_low_scores', 0 ),
 			'export_date'           => gmdate( 'Y-m-d H:i:s' ),
-			'plugin_version'        => RT_FA_VERSION,
+			'plugin_version'        => RAZTAIFO_VERSION,
 			'wordpress_version'     => get_bloginfo( 'version' ),
 		);
 
@@ -186,7 +186,7 @@ class RT_FA_Export {
 		}
 
 		// Verify nonce
-		if ( ! isset( $_POST['rt_fa_import_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['rt_fa_import_nonce'] ) ), 'rt_fa_import_settings' ) ) {
+		if ( ! isset( $_POST['raztaifo_import_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['raztaifo_import_nonce'] ) ), 'raztaifo_import_settings' ) ) {
 			wp_die( esc_html__( 'Security check failed.', 'raztech-form-architect' ) );
 		}
 
@@ -242,7 +242,7 @@ class RT_FA_Export {
 					$value = sanitize_text_field( $value );
 				}
 
-				update_option( 'rt_fa_' . $setting_key, $value );
+				update_option( 'raztaifo_' . $setting_key, $value );
 				$imported_count++;
 			}
 		}

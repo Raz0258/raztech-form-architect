@@ -4,12 +4,12 @@
  *
  * Handles form template loading, installation, and sample data generation.
  *
- * @package    RT_FA_AI
- * @subpackage RT_FA_AI/includes
+ * @package    RAZTAIFO_AI
+ * @subpackage RAZTAIFO_AI/includes
  * @since      1.0.0
  */
 
-class RT_FA_Templates {
+class RAZTAIFO_Templates {
 
     /**
      * Path to templates directory
@@ -185,7 +185,7 @@ class RT_FA_Templates {
 
         // Insert form
         $result = $wpdb->insert(
-            $wpdb->prefix . 'rt_fa_forms',
+            $wpdb->prefix . 'raztaifo_forms',
             $form_data,
             array('%s', '%s', '%s', '%s', '%s')
         );
@@ -211,7 +211,7 @@ class RT_FA_Templates {
                 'created_by' => 'template'
             );
 
-            $page_id = RT_FA_Page_Creator::create_page_for_form($form_id, $page_options);
+            $page_id = RAZTAIFO_Page_Creator::create_page_for_form($form_id, $page_options);
             
             // Store page ID in options for return data
             if (!is_wp_error($page_id)) {
@@ -250,7 +250,7 @@ class RT_FA_Templates {
         $options = wp_parse_args($options, $defaults);
 
         $created_count = 0;
-        $sample_data_generator = new RT_FA_Sample_Data_Generator();
+        $sample_data_generator = new RAZTAIFO_Sample_Data_Generator();
 
         for ($i = 0; $i < $count; $i++) {
             // Determine quality level based on distribution
@@ -274,11 +274,11 @@ class RT_FA_Templates {
             $submission_date = $this->generate_random_date($options['date_distribution']);
 
             // Calculate lead score (using existing lead scorer)
-            $lead_scorer = new RT_FA_Lead_Scorer();
+            $lead_scorer = new RAZTAIFO_Lead_Scorer();
             $lead_score = $lead_scorer->calculate_score(0, $submission_data, $form_id);
 
             // Calculate spam score (using existing spam detector)
-            $spam_analysis = RT_FA_Spam_Detector::analyze_submission(0, $submission_data, $form_id);
+            $spam_analysis = RAZTAIFO_Spam_Detector::analyze_submission(0, $submission_data, $form_id);
             $spam_score = $spam_analysis['spam_score'];
 
             // If marked as spam, ensure spam score reflects that
@@ -288,7 +288,7 @@ class RT_FA_Templates {
 
             // Insert submission
             $result = $wpdb->insert(
-                $wpdb->prefix . 'rt_fa_submissions',
+                $wpdb->prefix . 'raztaifo_submissions',
                 array(
                     'form_id' => $form_id,
                     'submission_data' => json_encode($submission_data),
@@ -410,7 +410,7 @@ class RT_FA_Templates {
 
         // Find all forms created from templates
         $forms = $wpdb->get_results(
-            "SELECT id, form_settings FROM {$wpdb->prefix}rt_fa_forms 
+            "SELECT id, form_settings FROM {$wpdb->prefix}raztaifo_forms 
              WHERE form_settings LIKE '%created_from_template%'"
         );
 
@@ -423,7 +423,7 @@ class RT_FA_Templates {
             if (isset($settings['created_from_template'])) {
                 // Delete submissions for this form
                 $deleted = $wpdb->delete(
-                    $wpdb->prefix . 'rt_fa_submissions',
+                    $wpdb->prefix . 'raztaifo_submissions',
                     array('form_id' => $form->id),
                     array('%d')
                 );
@@ -434,7 +434,7 @@ class RT_FA_Templates {
 
                 // Delete the form
                 $wpdb->delete(
-                    $wpdb->prefix . 'rt_fa_forms',
+                    $wpdb->prefix . 'raztaifo_forms',
                     array('id' => $form->id),
                     array('%d')
                 );
@@ -458,7 +458,7 @@ class RT_FA_Templates {
         global $wpdb;
 
         $forms = $wpdb->get_results(
-            "SELECT id, form_name, created_at FROM {$wpdb->prefix}rt_fa_forms 
+            "SELECT id, form_name, created_at FROM {$wpdb->prefix}raztaifo_forms 
              WHERE form_settings LIKE '%created_from_template%'
              ORDER BY created_at DESC"
         );
@@ -472,7 +472,7 @@ class RT_FA_Templates {
             
             $total_submissions = $wpdb->get_var(
                 $wpdb->prepare(
-                    "SELECT COUNT(*) FROM {$wpdb->prefix}rt_fa_submissions 
+                    "SELECT COUNT(*) FROM {$wpdb->prefix}raztaifo_submissions 
                      WHERE form_id IN ($placeholders)",
                     ...$form_ids
                 )

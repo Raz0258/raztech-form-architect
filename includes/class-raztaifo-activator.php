@@ -11,7 +11,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  */
-class RT_FA_Activator {
+class RAZTAIFO_Activator {
 
 	/**
 	 * Activate the plugin.
@@ -26,9 +26,9 @@ class RT_FA_Activator {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		// Table names
-		$forms_table       = $wpdb->prefix . 'rt_fa_forms';
-		$submissions_table = $wpdb->prefix . 'rt_fa_submissions';
-		$analytics_table   = $wpdb->prefix . 'rt_fa_analytics';
+		$forms_table       = $wpdb->prefix . 'raztaifo_forms';
+		$submissions_table = $wpdb->prefix . 'raztaifo_submissions';
+		$analytics_table   = $wpdb->prefix . 'raztaifo_analytics';
 
 		// SQL for forms table
 		$sql_forms = "CREATE TABLE IF NOT EXISTS $forms_table (
@@ -89,10 +89,10 @@ class RT_FA_Activator {
 		self::upgrade_database( $wpdb, $forms_table, $submissions_table, $analytics_table );
 
 		// Set default options
-		add_option( 'rt_fa_version', RT_FA_VERSION );
-		add_option( 'rt_fa_api_provider', 'openai' );
-		add_option( 'rt_fa_api_key', '' );
-		add_option( 'rt_fa_rate_limit', 50 );
+		add_option( 'raztaifo_version', RAZTAIFO_VERSION );
+		add_option( 'raztaifo_api_provider', 'openai' );
+		add_option( 'raztaifo_api_key', '' );
+		add_option( 'raztaifo_rate_limit', 50 );
 
 		// Flush rewrite rules
 		flush_rewrite_rules();

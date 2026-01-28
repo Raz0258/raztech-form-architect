@@ -132,13 +132,13 @@ if ( ! defined( 'WPINC' ) ) {
 				<p><?php echo esc_html__( 'View form responses', 'raztech-form-architect' ); ?></p>
 			</a>
 
-			<a href="https://raztechnologies.com/docs/smartforms-ai" target="_blank" class="rt-fa-resource-card">
+			<a href="https://raz-technologies.com/docs/smartforms-ai" target="_blank" class="rt-fa-resource-card">
 				<span class="rt-fa-resource-icon">📖</span>
 				<h4><?php echo esc_html__( 'Documentation', 'raztech-form-architect' ); ?></h4>
 				<p><?php echo esc_html__( 'Guides and tutorials', 'raztech-form-architect' ); ?></p>
 			</a>
 
-			<a href="https://raztechnologies.com/support" target="_blank" class="rt-fa-resource-card">
+			<a href="https://raz-technologies.com/support" target="_blank" class="rt-fa-resource-card">
 				<span class="rt-fa-resource-icon">💬</span>
 				<h4><?php echo esc_html__( 'Support', 'raztech-form-architect' ); ?></h4>
 				<p><?php echo esc_html__( 'Get help from our team', 'raztech-form-architect' ); ?></p>

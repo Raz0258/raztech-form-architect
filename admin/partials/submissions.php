@@ -35,11 +35,11 @@ $count_args = array(
 );
 
 if ( $filter_spam !== 'all' ) {
-	$all_submissions = RT_FA_Spam_Detector::get_submissions_by_spam_status( $filter_spam, $filter_form_id, $filter_score, $count_args );
+	$all_submissions = RAZTAIFO_Spam_Detector::get_submissions_by_spam_status( $filter_spam, $filter_form_id, $filter_score, $count_args );
 } elseif ( $filter_score !== 'all' ) {
-	$all_submissions = RT_FA_Lead_Scorer::get_submissions_by_score( $filter_score, $filter_form_id, $count_args );
+	$all_submissions = RAZTAIFO_Lead_Scorer::get_submissions_by_score( $filter_score, $filter_form_id, $count_args );
 } else {
-	$all_submissions = RT_FA_Form_Builder::get_submissions( $filter_form_id, $count_args );
+	$all_submissions = RAZTAIFO_Form_Builder::get_submissions( $filter_form_id, $count_args );
 }
 
 $total_items = count( $all_submissions );
@@ -54,11 +54,11 @@ $query_args = array(
 );
 
 if ( $filter_spam !== 'all' ) {
-	$submissions = RT_FA_Spam_Detector::get_submissions_by_spam_status( $filter_spam, $filter_form_id, $filter_score, $query_args );
+	$submissions = RAZTAIFO_Spam_Detector::get_submissions_by_spam_status( $filter_spam, $filter_form_id, $filter_score, $query_args );
 } elseif ( $filter_score !== 'all' ) {
-	$submissions = RT_FA_Lead_Scorer::get_submissions_by_score( $filter_score, $filter_form_id, $query_args );
+	$submissions = RAZTAIFO_Lead_Scorer::get_submissions_by_score( $filter_score, $filter_form_id, $query_args );
 } else {
-	$submissions = RT_FA_Form_Builder::get_submissions( $filter_form_id, $query_args );
+	$submissions = RAZTAIFO_Form_Builder::get_submissions( $filter_form_id, $query_args );
 }
 
 // Debug: Log filter queries (uncomment to debug)
@@ -112,14 +112,14 @@ if ( ! empty( $search_query ) ) {
 }
 
 // Get all forms for filter dropdown
-$forms = RT_FA_Form_Builder::get_forms();
+$forms = RAZTAIFO_Form_Builder::get_forms();
 
 // Get spam threshold from settings for consistent display
-$spam_threshold = get_option( 'rt_fa_spam_threshold', 60 );
+$spam_threshold = get_option( 'raztaifo_spam_threshold', 60 );
 
 // Get accurate filter counts for dropdown (considering active filters)
 global $wpdb;
-$submissions_table = $wpdb->prefix . 'rt_fa_submissions';
+$submissions_table = $wpdb->prefix . 'raztaifo_submissions';
 
 // Build base WHERE clause for counts (include form and search filters if active)
 $count_where_parts = array( '1=1' );
@@ -212,7 +212,7 @@ if ( $filter_score !== 'all' ) {
 }
 
 // Helper function to generate sortable column URLs
-function rt_fa_get_sort_url( $column, $current_orderby, $current_order ) {
+function raztaifo_get_sort_url( $column, $current_orderby, $current_order ) {
 	$new_order = 'desc';
 	$arrow     = '';
 
@@ -252,7 +252,7 @@ function rt_fa_get_sort_url( $column, $current_orderby, $current_order ) {
 }
 
 // Helper function to generate pagination URLs
-function rt_fa_get_pagination_url( $page_num ) {
+function raztaifo_get_pagination_url( $page_num ) {
 	$url_params = array(
 		'page'  => 'raztech-form-architect-submissions',
 		'paged' => $page_num,
@@ -393,7 +393,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 
 		<!-- PHASE 8: Export Button -->
 		<?php if ( ! empty( $submissions ) ) : ?>
-			<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=raztech-form-architect-submissions&action=export_csv&form_id=' . $filter_form_id ), 'rt_fa_export_csv' ) ); ?>" class="button button-primary" style="margin-left: 15px;">
+			<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=raztech-form-architect-submissions&action=export_csv&form_id=' . $filter_form_id ), 'raztaifo_export_csv' ) ); ?>" class="button button-primary" style="margin-left: 15px;">
 				📥 <?php echo esc_html__( 'Export to CSV', 'raztech-form-architect' ); ?>
 			</a>
 		<?php endif; ?>
@@ -401,7 +401,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 
 	<?php if ( ! empty( $submissions ) ) : ?>
 		<form id="smartforms-bulk-actions-form" method="post">
-			<?php wp_nonce_field( 'rt_fa_bulk_actions', 'rt_fa_bulk_nonce' ); ?>
+			<?php wp_nonce_field( 'raztaifo_bulk_actions', 'raztaifo_bulk_nonce' ); ?>
 			<div class="tablenav top">
 				<div class="alignleft actions bulkactions">
 					<select name="action" id="bulk-action-selector-top">
@@ -422,7 +422,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 					</th>
 					<th style="width: 50px;" class="column-id sortable">
 						<?php
-						$sort_data = rt_fa_get_sort_url( 'id', $orderby, $order );
+						$sort_data = raztaifo_get_sort_url( 'id', $orderby, $order );
 						?>
 						<a href="<?php echo esc_url( $sort_data['url'] ); ?>">
 							<span><?php echo esc_html__( 'ID', 'raztech-form-architect' ); ?></span>
@@ -431,7 +431,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 					</th>
 					<th class="column-form sortable">
 						<?php
-						$sort_data = rt_fa_get_sort_url( 'form_id', $orderby, $order );
+						$sort_data = raztaifo_get_sort_url( 'form_id', $orderby, $order );
 						?>
 						<a href="<?php echo esc_url( $sort_data['url'] ); ?>">
 							<span><?php echo esc_html__( 'Form', 'raztech-form-architect' ); ?></span>
@@ -441,7 +441,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 					<th><?php echo esc_html__( 'Data', 'raztech-form-architect' ); ?></th>
 					<th style="width: 100px;" class="column-lead-score sortable">
 						<?php
-						$sort_data = rt_fa_get_sort_url( 'lead_score', $orderby, $order );
+						$sort_data = raztaifo_get_sort_url( 'lead_score', $orderby, $order );
 						?>
 						<a href="<?php echo esc_url( $sort_data['url'] ); ?>">
 							<span><?php echo esc_html__( 'Lead Score', 'raztech-form-architect' ); ?></span>
@@ -450,7 +450,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 					</th>
 					<th style="width: 100px;" class="column-spam sortable">
 						<?php
-						$sort_data = rt_fa_get_sort_url( 'spam_score', $orderby, $order );
+						$sort_data = raztaifo_get_sort_url( 'spam_score', $orderby, $order );
 						?>
 						<a href="<?php echo esc_url( $sort_data['url'] ); ?>">
 							<span><?php echo esc_html__( 'Spam', 'raztech-form-architect' ); ?></span>
@@ -459,7 +459,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 					</th>
 					<th style="width: 150px;" class="column-submitted sortable">
 						<?php
-						$sort_data = rt_fa_get_sort_url( 'submitted_at', $orderby, $order );
+						$sort_data = raztaifo_get_sort_url( 'submitted_at', $orderby, $order );
 						?>
 						<a href="<?php echo esc_url( $sort_data['url'] ); ?>">
 							<span><?php echo esc_html__( 'Submitted', 'raztech-form-architect' ); ?></span>
@@ -472,7 +472,7 @@ function rt_fa_get_pagination_url( $page_num ) {
 			<tbody>
 				<?php foreach ( $submissions as $submission ) : ?>
 					<?php
-					$form = RT_FA_Form_Builder::get_form( $submission->form_id );
+					$form = RAZTAIFO_Form_Builder::get_form( $submission->form_id );
 					?>
 					<tr class="<?php echo esc_attr( $submission->is_spam ? 'smartforms-spam-row' : '' ); ?>">
 						<th scope="row" class="check-column">
@@ -518,8 +518,8 @@ function rt_fa_get_pagination_url( $page_num ) {
 						<td>
 							<?php
 							// PHASE 3: Get score color class for visual display
-							$score_color = RT_FA_Lead_Scorer::get_score_color( $submission->lead_score );
-							$score_category = RT_FA_Lead_Scorer::get_score_category( $submission->lead_score );
+							$score_color = RAZTAIFO_Lead_Scorer::get_score_color( $submission->lead_score );
+							$score_category = RAZTAIFO_Lead_Scorer::get_score_category( $submission->lead_score );
 							?>
 							<span class="smartforms-score-badge smartforms-score-<?php echo esc_attr( $score_color ); ?>" title="<?php echo esc_attr( ucfirst( $score_category ) . ' quality lead' ); ?>">
 								<?php echo esc_html( $submission->lead_score ); ?>
@@ -595,10 +595,10 @@ function rt_fa_get_pagination_url( $page_num ) {
 						</span>
 						<span class="pagination-links">
 							<?php if ( $current_page > 1 ) : ?>
-								<a class="first-page button" href="<?php echo esc_url( rt_fa_get_pagination_url( 1 ) ); ?>">
+								<a class="first-page button" href="<?php echo esc_url( raztaifo_get_pagination_url( 1 ) ); ?>">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
-								<a class="prev-page button" href="<?php echo esc_url( rt_fa_get_pagination_url( $current_page - 1 ) ); ?>">
+								<a class="prev-page button" href="<?php echo esc_url( raztaifo_get_pagination_url( $current_page - 1 ) ); ?>">
 									<span aria-hidden="true">&lsaquo;</span>
 								</a>
 							<?php else : ?>
@@ -616,10 +616,10 @@ function rt_fa_get_pagination_url( $page_num ) {
 							</span>
 
 							<?php if ( $current_page < $total_pages ) : ?>
-								<a class="next-page button" href="<?php echo esc_url( rt_fa_get_pagination_url( $current_page + 1 ) ); ?>">
+								<a class="next-page button" href="<?php echo esc_url( raztaifo_get_pagination_url( $current_page + 1 ) ); ?>">
 									<span aria-hidden="true">&rsaquo;</span>
 								</a>
-								<a class="last-page button" href="<?php echo esc_url( rt_fa_get_pagination_url( $total_pages ) ); ?>">
+								<a class="last-page button" href="<?php echo esc_url( raztaifo_get_pagination_url( $total_pages ) ); ?>">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							<?php else : ?>

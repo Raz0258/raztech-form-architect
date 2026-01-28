@@ -12,7 +12,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get rate limit status
-$rate_status = RT_FA_Generator::get_rate_limit_status();
+$rate_status = RAZTAIFO_Generator::get_rate_limit_status();
 ?>
 
 <!-- AI Form Generator Modal -->

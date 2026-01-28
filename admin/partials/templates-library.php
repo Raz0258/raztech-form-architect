@@ -2,8 +2,8 @@
 /**
  * Form Templates Library View - 3-Step Wizard
  *
- * @package    RT_FA_AI
- * @subpackage RT_FA_AI/admin/partials
+ * @package    RAZTAIFO_AI
+ * @subpackage RAZTAIFO_AI/admin/partials
  * @since      1.0.0
  */
 
@@ -454,10 +454,13 @@ if (!defined('ABSPATH')) {
                 <div class="management-stat">
                     <strong><?php esc_html_e('Sample data installed:', 'raztech-form-architect'); ?></strong>
                     <?php
-                    printf(
-                        __('%d forms, %d submissions', 'raztech-form-architect'),
-                        $sample_stats['forms_count'],
-                        $sample_stats['submissions_count']
+                    echo esc_html(
+                        sprintf(
+                            /* translators: 1: Number of forms, 2: Number of submissions */
+                            __('%d forms, %d submissions', 'raztech-form-architect'),
+                            $sample_stats['forms_count'],
+                            $sample_stats['submissions_count']
+                        )
                     );
                     ?>
                 </div>

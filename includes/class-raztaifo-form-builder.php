@@ -11,7 +11,7 @@
  *
  * Handles form creation, updating, and deletion.
  */
-class RT_FA_Form_Builder {
+class RAZTAIFO_Form_Builder {
 
 	/**
 	 * Create a new form
@@ -23,7 +23,7 @@ class RT_FA_Form_Builder {
 	public static function create_form( $form_data ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_forms';
+		$table_name = $wpdb->prefix . 'raztaifo_forms';
 
 		// Sanitize form data
 		$form_name        = isset( $form_data['form_name'] ) ? sanitize_text_field( $form_data['form_name'] ) : '';
@@ -65,7 +65,7 @@ class RT_FA_Form_Builder {
 	public static function update_form( $form_id, $form_data ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_forms';
+		$table_name = $wpdb->prefix . 'raztaifo_forms';
 		$form_id    = absint( $form_id );
 
 		if ( ! $form_id ) {
@@ -124,7 +124,7 @@ class RT_FA_Form_Builder {
 	public static function get_form( $form_id ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_forms';
+		$table_name = $wpdb->prefix . 'raztaifo_forms';
 		$form_id    = absint( $form_id );
 
 		if ( ! $form_id ) {
@@ -162,7 +162,7 @@ class RT_FA_Form_Builder {
 	public static function get_forms( $args = array() ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_forms';
+		$table_name = $wpdb->prefix . 'raztaifo_forms';
 
 		$defaults = array(
 			'orderby' => 'id',
@@ -173,7 +173,11 @@ class RT_FA_Form_Builder {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$orderby = sanitize_text_field( $args['orderby'] );
+		// Whitelist valid orderby columns
+		$allowed_orderby = array( 'id', 'form_name', 'created_at', 'updated_at', 'conversational_mode' );
+		$orderby         = in_array( $args['orderby'], $allowed_orderby, true ) ? $args['orderby'] : 'id';
+
+		// Validate order direction
 		$order   = strtoupper( $args['order'] ) === 'ASC' ? 'ASC' : 'DESC';
 		$limit   = intval( $args['limit'] );
 		$offset  = intval( $args['offset'] );
@@ -209,7 +213,7 @@ class RT_FA_Form_Builder {
 	public static function delete_form( $form_id ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_forms';
+		$table_name = $wpdb->prefix . 'raztaifo_forms';
 		$form_id    = absint( $form_id );
 
 		if ( ! $form_id ) {
@@ -225,7 +229,7 @@ class RT_FA_Form_Builder {
 
 		// Also delete submissions for this form
 		if ( $result !== false ) {
-			$submissions_table = $wpdb->prefix . 'rt_fa_submissions';
+			$submissions_table = $wpdb->prefix . 'raztaifo_submissions';
 			$wpdb->delete(
 				$submissions_table,
 				array( 'form_id' => $form_id ),
@@ -233,7 +237,7 @@ class RT_FA_Form_Builder {
 			);
 
 			// Delete analytics for this form
-			$analytics_table = $wpdb->prefix . 'rt_fa_analytics';
+			$analytics_table = $wpdb->prefix . 'raztaifo_analytics';
 			$wpdb->delete(
 				$analytics_table,
 				array( 'form_id' => $form_id ),
@@ -255,7 +259,7 @@ class RT_FA_Form_Builder {
 	public static function save_submission( $form_id, $submission_data ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 		$form_id    = absint( $form_id );
 
 		if ( ! $form_id ) {
@@ -289,10 +293,10 @@ class RT_FA_Form_Builder {
 		$submission_id = $wpdb->insert_id;
 
 		// PHASE 3: Calculate AI-powered lead score
-		$lead_score = RT_FA_Lead_Scorer::calculate_score( $submission_id, $submission_data, $form_id );
+		$lead_score = RAZTAIFO_Lead_Scorer::calculate_score( $submission_id, $submission_data, $form_id );
 
 		// PHASE 5: Detect spam
-		$spam_analysis = RT_FA_Spam_Detector::analyze_submission(
+		$spam_analysis = RAZTAIFO_Spam_Detector::analyze_submission(
 			$submission_id,
 			$submission_data,
 			$form_id
@@ -313,7 +317,7 @@ class RT_FA_Form_Builder {
 
 		// PHASE 6: Send auto-response (only for non-spam submissions)
 		if ( ! $spam_analysis['is_spam'] ) {
-			RT_FA_Auto_Responder::send_auto_response(
+			RAZTAIFO_Auto_Responder::send_auto_response(
 				$submission_id,
 				$submission_data,
 				$lead_score,
@@ -338,7 +342,7 @@ class RT_FA_Form_Builder {
 	public static function get_submissions( $form_id = 0, $args = array() ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		$defaults = array(
 			'orderby' => 'id',
@@ -349,7 +353,11 @@ class RT_FA_Form_Builder {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$orderby = sanitize_text_field( $args['orderby'] );
+		// Whitelist valid orderby columns
+		$allowed_orderby = array( 'id', 'form_id', 'submitted_at', 'lead_score', 'spam_score', 'is_spam', 'ip_address' );
+		$orderby         = in_array( $args['orderby'], $allowed_orderby, true ) ? $args['orderby'] : 'id';
+
+		// Validate order direction
 		$order   = strtoupper( $args['order'] ) === 'ASC' ? 'ASC' : 'DESC';
 		$limit   = intval( $args['limit'] );
 		$offset  = intval( $args['offset'] );
@@ -387,7 +395,7 @@ class RT_FA_Form_Builder {
 	public static function update_analytics( $form_id, $type = 'view' ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_analytics';
+		$table_name = $wpdb->prefix . 'raztaifo_analytics';
 		$form_id    = absint( $form_id );
 		$today      = current_time( 'Y-m-d' );
 

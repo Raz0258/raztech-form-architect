@@ -9,7 +9,7 @@
 /**
  * The public-facing functionality of the plugin.
  */
-class RT_FA_Public {
+class RAZTAIFO_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -49,7 +49,7 @@ class RT_FA_Public {
 	public function enqueue_styles() {
 		wp_enqueue_style(
 			$this->plugin_name,
-			RT_FA_URL . 'public/css/form-styles.css',
+			RAZTAIFO_URL . 'public/css/form-styles.css',
 			array(),
 			$this->version,
 			'all'
@@ -58,7 +58,7 @@ class RT_FA_Public {
 		// PHASE 4: Enqueue conversational form styles
 		wp_enqueue_style(
 			$this->plugin_name . '-conversational',
-			RT_FA_URL . 'public/css/conversational-form.css',
+			RAZTAIFO_URL . 'public/css/conversational-form.css',
 			array(),
 			$this->version,
 			'all'
@@ -73,7 +73,7 @@ class RT_FA_Public {
 	public function enqueue_scripts() {
 		wp_enqueue_script(
 			$this->plugin_name . '-form-handler',
-			RT_FA_URL . 'public/js/form-handler.js',
+			RAZTAIFO_URL . 'public/js/form-handler.js',
 			array( 'jquery' ),
 			$this->version,
 			false
@@ -81,7 +81,7 @@ class RT_FA_Public {
 
 		wp_enqueue_script(
 			$this->plugin_name . '-validation',
-			RT_FA_URL . 'public/js/validation.js',
+			RAZTAIFO_URL . 'public/js/validation.js',
 			array( 'jquery' ),
 			$this->version,
 			false
@@ -90,7 +90,7 @@ class RT_FA_Public {
 		// PHASE 4: Enqueue conversational form scripts
 		wp_enqueue_script(
 			$this->plugin_name . '-conversational',
-			RT_FA_URL . 'public/js/conversational-form.js',
+			RAZTAIFO_URL . 'public/js/conversational-form.js',
 			array( 'jquery' ),
 			$this->version,
 			false
@@ -99,7 +99,7 @@ class RT_FA_Public {
 		// Localize script
 		wp_localize_script(
 			$this->plugin_name . '-form-handler',
-			'smartformsPublic',
+			'raztaifo_public',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 			)
@@ -128,7 +128,7 @@ class RT_FA_Public {
 			return '<p class="smartforms-error">' . esc_html__( 'Please provide a form ID.', 'raztech-form-architect' ) . '</p>';
 		}
 
-		return RT_FA_Form_Renderer::render_form( $form_id );
+		return RAZTAIFO_Form_Renderer::render_form( $form_id );
 	}
 
 	/**
@@ -149,7 +149,7 @@ class RT_FA_Public {
 		}
 
 		// Get form
-		$form = RT_FA_Form_Builder::get_form( $form_id );
+		$form = RAZTAIFO_Form_Builder::get_form( $form_id );
 
 		if ( ! $form ) {
 			wp_send_json_error(
@@ -164,7 +164,7 @@ class RT_FA_Public {
 
 		if ( ! $is_conversational ) {
 			// Verify nonce for traditional forms
-			if ( ! isset( $_POST['rt_fa_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['rt_fa_nonce'] ) ), 'rt_fa_submit_' . $form_id ) ) {
+			if ( ! isset( $_POST['raztaifo_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['raztaifo_nonce'] ) ), 'raztaifo_submit_' . $form_id ) ) {
 				wp_send_json_error(
 					array(
 						'message' => __( 'Security check failed.', 'raztech-form-architect' ),
@@ -173,7 +173,7 @@ class RT_FA_Public {
 			}
 		} else {
 			// Verify token for conversational forms (CSRF protection)
-			if ( ! isset( $_POST['conversational_token'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['conversational_token'] ) ), 'rt_fa_conversational_' . $form_id ) ) {
+			if ( ! isset( $_POST['conversational_token'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['conversational_token'] ) ), 'raztaifo_conversational_' . $form_id ) ) {
 				wp_send_json_error(
 					array(
 						'message' => __( 'Security check failed. Please refresh the page and try again.', 'raztech-form-architect' ),
@@ -292,7 +292,7 @@ class RT_FA_Public {
 		}
 
 		// Save submission
-		$submission_id = RT_FA_Form_Builder::save_submission( $form_id, $submission_data );
+		$submission_id = RAZTAIFO_Form_Builder::save_submission( $form_id, $submission_data );
 
 		if ( ! $submission_id ) {
 			wp_send_json_error(

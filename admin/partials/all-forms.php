@@ -12,7 +12,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get all forms
-$forms = RT_FA_Form_Builder::get_forms();
+$forms = RAZTAIFO_Form_Builder::get_forms();
 ?>
 
 <div class="wrap smartforms-all-forms">
@@ -65,7 +65,7 @@ $forms = RT_FA_Form_Builder::get_forms();
 			<tbody>
 				<?php foreach ( $forms as $form ) : ?>
 					<?php
-					$submissions_count = count( RT_FA_Form_Builder::get_submissions( $form->id ) );
+					$submissions_count = count( RAZTAIFO_Form_Builder::get_submissions( $form->id ) );
 					?>
 					<tr>
 						<td><?php echo esc_html( $form->id ); ?></td>
@@ -96,7 +96,7 @@ $forms = RT_FA_Form_Builder::get_forms();
 							   class="button button-small button-link-delete smartforms-delete-form"
 							   data-form-id="<?php echo esc_attr( $form->id ); ?>"
 							   data-form-name="<?php echo esc_attr( $form->form_name ); ?>"
-							   data-nonce="<?php echo esc_attr( wp_create_nonce( 'rt_fa_delete_form_' . $form->id ) ); ?>">
+							   data-nonce="<?php echo esc_attr( wp_create_nonce( 'raztaifo_delete_form_' . $form->id ) ); ?>">
 								<?php echo esc_html__( 'Delete', 'raztech-form-architect' ); ?>
 							</a>
 						</td>

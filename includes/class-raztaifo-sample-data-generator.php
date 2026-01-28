@@ -4,12 +4,12 @@
  *
  * Generates realistic sample submission data based on quality profiles.
  *
- * @package    RT_FA_AI
- * @subpackage RT_FA_AI/includes
+ * @package    RAZTAIFO_AI
+ * @subpackage RAZTAIFO_AI/includes
  * @since      1.0.0
  */
 
-class RT_FA_Sample_Data_Generator {
+class RAZTAIFO_Sample_Data_Generator {
 
     /**
      * Disposable email domains for spam generation

@@ -15,7 +15,7 @@
  * - Medium priority (50-79): Standard acknowledgment with timeline
  * - Low priority (0-49): Basic confirmation with resources
  */
-class RT_FA_Auto_Responder {
+class RAZTAIFO_Auto_Responder {
 
 	/**
 	 * Send auto-response to form submission
@@ -29,17 +29,17 @@ class RT_FA_Auto_Responder {
 	 */
 	public static function send_auto_response( $submission_id, $submission_data, $lead_score, $form_id ) {
 		// Check if auto-responses enabled
-		if ( ! get_option( 'rt_fa_auto_response', 0 ) ) {
+		if ( ! get_option( 'raztaifo_auto_response', 0 ) ) {
 			return false;
 		}
 
 		// Check if we should skip low-quality leads
-		if ( get_option( 'rt_fa_skip_low_scores', 0 ) && $lead_score < 30 ) {
+		if ( get_option( 'raztaifo_skip_low_scores', 0 ) && $lead_score < 30 ) {
 			return false;
 		}
 
 		// Get form settings
-		$form = RT_FA_Form_Builder::get_form( $form_id );
+		$form = RAZTAIFO_Form_Builder::get_form( $form_id );
 		if ( ! $form ) {
 			return false;
 		}
@@ -99,8 +99,8 @@ class RT_FA_Auto_Responder {
 	 */
 	private static function generate_email_content( $submission_data, $lead_score, $response_type, $form ) {
 		// Check API configuration
-		$api_key      = get_option( 'rt_fa_api_key', '' );
-		$api_provider = get_option( 'rt_fa_api_provider', 'openai' );
+		$api_key      = get_option( 'raztaifo_api_key', '' );
+		$api_provider = get_option( 'raztaifo_api_provider', 'openai' );
 
 		if ( empty( $api_key ) ) {
 			// Fallback to generic templates if no API key
@@ -108,7 +108,7 @@ class RT_FA_Auto_Responder {
 		}
 
 		// Rate limit check (reuse spam detection limit)
-		$rate_limit_key = 'rt_fa_autoresponse_' . date( 'YmdH' );
+		$rate_limit_key = 'raztaifo_autoresponse_' . date( 'YmdH' );
 		$attempts       = get_transient( $rate_limit_key );
 		if ( $attempts && $attempts >= 50 ) {
 			// Fallback to template if rate limit exceeded
@@ -125,7 +125,7 @@ class RT_FA_Auto_Responder {
 		}
 
 		// Build AI prompt
-		$company_name   = get_option( 'rt_fa_from_name', get_bloginfo( 'name' ) );
+		$company_name   = get_option( 'raztaifo_from_name', get_bloginfo( 'name' ) );
 		$response_level = str_replace( '_', ' ', $response_type );
 
 		$system_prompt = "You are a professional email writer for {$company_name}. Generate a personalized email response to a form submission.
@@ -222,8 +222,8 @@ Return ONLY valid JSON with this exact structure:
 	 */
 	private static function get_fallback_template( $submission_data, $lead_score, $response_type ) {
 		$name         = self::extract_name( $submission_data );
-		$company_name = get_option( 'rt_fa_from_name', get_bloginfo( 'name' ) );
-		$from_name    = get_option( 'rt_fa_from_name', get_bloginfo( 'name' ) );
+		$company_name = get_option( 'raztaifo_from_name', get_bloginfo( 'name' ) );
+		$from_name    = get_option( 'raztaifo_from_name', get_bloginfo( 'name' ) );
 
 		switch ( $response_type ) {
 			case 'high_priority':
@@ -270,9 +270,9 @@ Return ONLY valid JSON with this exact structure:
 	 */
 	private static function send_email( $to, $subject, $message, $form ) {
 		// Get email settings
-		$from_name  = get_option( 'rt_fa_from_name', get_bloginfo( 'name' ) );
-		$from_email = get_option( 'rt_fa_from_email', get_option( 'admin_email' ) );
-		$reply_to   = get_option( 'rt_fa_reply_to_email', get_option( 'admin_email' ) );
+		$from_name  = get_option( 'raztaifo_from_name', get_bloginfo( 'name' ) );
+		$from_email = get_option( 'raztaifo_from_email', get_option( 'admin_email' ) );
+		$reply_to   = get_option( 'raztaifo_reply_to_email', get_option( 'admin_email' ) );
 
 		// CRITICAL: Sanitize from_name to prevent email header injection
 		$from_name = str_replace( array( "\r", "\n", "\r\n" ), '', $from_name );
@@ -363,7 +363,7 @@ Return ONLY valid JSON with this exact structure:
 	private static function log_auto_response( $submission_id, $recipient_email ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		// Update submission metadata to indicate auto-response was sent
 		// Note: This could be enhanced with a custom meta table in future phases
@@ -377,7 +377,7 @@ Return ONLY valid JSON with this exact structure:
 		);
 
 		// Increment auto-response counter
-		$counter = get_option( 'rt_fa_autoresponse_count', 0 );
-		update_option( 'rt_fa_autoresponse_count', $counter + 1 );
+		$counter = get_option( 'raztaifo_autoresponse_count', 0 );
+		update_option( 'raztaifo_autoresponse_count', $counter + 1 );
 	}
 }

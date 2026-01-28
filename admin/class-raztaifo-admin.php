@@ -9,7 +9,7 @@
 /**
  * The admin-specific functionality of the plugin.
  */
-class RT_FA_Admin {
+class RAZTAIFO_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -67,7 +67,7 @@ class RT_FA_Admin {
 				}
 
 				$form_id = intval( $_GET['form_id'] );
-				RT_FA_Form_Builder::delete_form( $form_id );
+				RAZTAIFO_Form_Builder::delete_form( $form_id );
 
 				// Redirect
 				wp_safe_redirect( admin_url( 'admin.php?page=raztech-form-architect-forms&deleted=1' ) );
@@ -84,7 +84,7 @@ class RT_FA_Admin {
 				}
 
 				$form_id = isset( $_GET['form_id'] ) ? intval( $_GET['form_id'] ) : 0;
-				RT_FA_Export::export_submissions_csv( $form_id );
+				RAZTAIFO_Export::export_submissions_csv( $form_id );
 				exit; // Stop execution after export
 			}
 		}
@@ -98,7 +98,7 @@ class RT_FA_Admin {
 	public function enqueue_styles() {
 		wp_enqueue_style(
 			$this->plugin_name,
-			RT_FA_URL . 'admin/css/admin-styles.css',
+			RAZTAIFO_URL . 'admin/css/admin-styles.css',
 			array(),
 			$this->version,
 			'all'
@@ -108,7 +108,7 @@ class RT_FA_Admin {
 		if ( isset( $_GET['page'] ) && $_GET['page'] === 'raztech-form-architect-welcome' ) {
 			wp_enqueue_style(
 				$this->plugin_name . '-welcome',
-				RT_FA_URL . 'admin/css/welcome.css',
+				RAZTAIFO_URL . 'admin/css/welcome.css',
 				array(),
 				$this->version,
 				'all'
@@ -124,15 +124,38 @@ class RT_FA_Admin {
 	public function enqueue_scripts() {
 		wp_enqueue_script(
 			$this->plugin_name . '-admin',
-			RT_FA_URL . 'admin/js/admin-dashboard.js',
+			RAZTAIFO_URL . 'admin/js/admin-dashboard.js',
 			array( 'jquery' ),
 			$this->version,
 			false
 		);
 
+		// Add inline script for notice dismissal
+		$inline_script = "
+		jQuery(document).ready(function($) {
+			$('.smartforms-dismiss-notice').on('click', function(e) {
+				e.preventDefault();
+				var notice = $(this).data('notice');
+
+				$.ajax({
+					url: ajaxurl,
+					type: 'POST',
+					data: {
+						action: 'raztaifo_dismiss_notice',
+						notice: notice,
+						nonce: '" . wp_create_nonce( 'raztaifo_dismiss_notice' ) . "'
+					}
+				});
+
+				$(this).closest('.notice').fadeOut();
+			});
+		});
+		";
+		wp_add_inline_script( $this->plugin_name . '-admin', $inline_script );
+
 		wp_enqueue_script(
 			$this->plugin_name . '-form-builder',
-			RT_FA_URL . 'admin/js/form-builder.js',
+			RAZTAIFO_URL . 'admin/js/form-builder.js',
 			array( 'jquery', 'jquery-ui-sortable' ),
 			$this->version,
 			false
@@ -141,16 +164,16 @@ class RT_FA_Admin {
 		// PHASE 2: Enqueue AI generator script
 		wp_enqueue_script(
 			$this->plugin_name . '-ai-generator',
-			RT_FA_URL . 'admin/js/ai-generator.js',
+			RAZTAIFO_URL . 'admin/js/ai-generator.js',
 			array( 'jquery', $this->plugin_name . '-form-builder' ),
 			$this->version,
 			false
 		);
 
-		// PHASE 7: Enqueue Chart.js for analytics dashboard
+		// PHASE 7: Enqueue Chart.js for analytics dashboard (local copy)
 		wp_enqueue_script(
 			'chartjs',
-			'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+			plugin_dir_url( __FILE__ ) . 'js/vendor/chart.min.js',
 			array(),
 			'4.4.0',
 			true
@@ -159,7 +182,7 @@ class RT_FA_Admin {
 		// PHASE 7: Enqueue analytics script
 		wp_enqueue_script(
 			$this->plugin_name . '-analytics',
-			RT_FA_URL . 'admin/js/analytics.js',
+			RAZTAIFO_URL . 'admin/js/analytics.js',
 			array( 'jquery', 'chartjs' ),
 			$this->version,
 			true
@@ -168,20 +191,20 @@ class RT_FA_Admin {
 		// Localize script for admin dashboard
 		wp_localize_script(
 			$this->plugin_name . '-admin',
-			'smartformsAjax',
+			'raztaifo_ajax',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'rt_fa_admin_nonce' ),
+				'nonce'    => wp_create_nonce( 'raztaifo_admin_nonce' ),
 			)
 		);
 
 		// PHASE 2: Localize script for AI generator
 		wp_localize_script(
 			$this->plugin_name . '-ai-generator',
-			'smartformsAjax',
+			'raztaifo_ajax',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'rt_fa_admin_nonce' ),
+				'nonce'    => wp_create_nonce( 'raztaifo_admin_nonce' ),
 			)
 		);
 
@@ -202,7 +225,7 @@ class RT_FA_Admin {
 		// PHASE 7: Pass analytics data to JavaScript
 		wp_localize_script(
 			$this->plugin_name . '-analytics',
-			'smartformsAnalytics',
+			'raztaifo_analytics',
 			array(
 				'submissionsData' => self::get_submissions_chart_data(),
 				'leadScoreData'   => self::get_lead_score_chart_data(),
@@ -299,7 +322,7 @@ class RT_FA_Admin {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'raztech-form-architect' ) );
 		}
 
-		require_once RT_FA_PATH . 'admin/partials/dashboard.php';
+		require_once RAZTAIFO_PATH . 'admin/partials/dashboard.php';
 	}
 
 	/**
@@ -315,7 +338,7 @@ class RT_FA_Admin {
 		// Form actions (like deletion) are now handled early in handle_form_actions()
 		// This method only loads the view
 
-		require_once RT_FA_PATH . 'admin/partials/all-forms.php';
+		require_once RAZTAIFO_PATH . 'admin/partials/all-forms.php';
 	}
 
 	/**
@@ -328,7 +351,7 @@ class RT_FA_Admin {
 	 */
 	public function process_form_save() {
 		// Only process if form is being submitted
-		if ( ! isset( $_POST['rt_fa_save_form'] ) ) {
+		if ( ! isset( $_POST['raztaifo_save_form'] ) ) {
 			return;
 		}
 
@@ -343,15 +366,16 @@ class RT_FA_Admin {
 		}
 
 		// Verify nonce
-		if ( ! isset( $_POST['rt_fa_form_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['rt_fa_form_nonce'] ) ), 'rt_fa_save_form' ) ) {
+		if ( ! isset( $_POST['raztaifo_form_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['raztaifo_form_nonce'] ) ), 'raztaifo_save_form' ) ) {
 			wp_die( esc_html__( 'Security check failed.', 'raztech-form-architect' ) );
 		}
 
 		// Sanitize and prepare form data
-		$form_data = array(
+		$raw_form_fields = isset( $_POST['form_fields'] ) ? json_decode( wp_unslash( $_POST['form_fields'] ), true ) : array();
+		$form_data       = array(
 			'form_name'           => isset( $_POST['form_name'] ) ? sanitize_text_field( wp_unslash( $_POST['form_name'] ) ) : '',
 			'form_description'    => isset( $_POST['form_description'] ) ? wp_kses_post( wp_unslash( $_POST['form_description'] ) ) : '',
-			'form_fields'         => isset( $_POST['form_fields'] ) ? json_decode( wp_unslash( $_POST['form_fields'] ), true ) : array(),
+			'form_fields'         => $this->sanitize_form_fields_array( $raw_form_fields ),
 			'conversational_mode' => isset( $_POST['conversational_mode'] ) ? 1 : 0, // PHASE 4
 			'settings'            => array(
 				'submit_button_text' => isset( $_POST['submit_button_text'] ) ? sanitize_text_field( wp_unslash( $_POST['submit_button_text'] ) ) : 'Submit',
@@ -378,11 +402,11 @@ class RT_FA_Admin {
 		if ( isset( $_GET['form_id'] ) ) {
 			// Update existing form (no page creation for updates)
 			$form_id      = intval( $_GET['form_id'] );
-			RT_FA_Form_Builder::update_form( $form_id, $form_data );
+			RAZTAIFO_Form_Builder::update_form( $form_id, $form_data );
 			$redirect_url = admin_url( 'admin.php?page=raztech-form-architect-new-form&form_id=' . $form_id . '&updated=1' );
 		} else {
 			// Create new form
-			$form_id = RT_FA_Form_Builder::create_form( $form_data );
+			$form_id = RAZTAIFO_Form_Builder::create_form( $form_data );
 
 			if ( is_wp_error( $form_id ) ) {
 				wp_die( esc_html__( 'Error creating form. Please try again.', 'raztech-form-architect' ) );
@@ -398,7 +422,7 @@ class RT_FA_Admin {
 					'created_by'    => 'manual',
 				);
 
-				$page_id = RT_FA_Page_Creator::create_page_for_form( $form_id, $page_options );
+				$page_id = RAZTAIFO_Page_Creator::create_page_for_form( $form_id, $page_options );
 			}
 
 			// Build redirect URL with success parameters
@@ -431,7 +455,7 @@ class RT_FA_Admin {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'raztech-form-architect' ) );
 		}
 
-		require_once RT_FA_PATH . 'admin/partials/form-builder.php';
+		require_once RAZTAIFO_PATH . 'admin/partials/form-builder.php';
 	}
 
 	/**
@@ -447,7 +471,7 @@ class RT_FA_Admin {
 		// CSV export is now handled early in handle_form_actions()
 		// This method only loads the view
 
-		require_once RT_FA_PATH . 'admin/partials/submissions.php';
+		require_once RAZTAIFO_PATH . 'admin/partials/submissions.php';
 	}
 
 	/**
@@ -460,7 +484,7 @@ class RT_FA_Admin {
 	 */
 	public function process_settings_save() {
 		// Only process if this is a settings page submission
-		if ( ! isset( $_POST['rt_fa_save_settings'] ) ) {
+		if ( ! isset( $_POST['raztaifo_save_settings'] ) ) {
 			return;
 		}
 
@@ -475,26 +499,26 @@ class RT_FA_Admin {
 		}
 
 		// Verify nonce
-		if ( ! isset( $_POST['rt_fa_settings_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['rt_fa_settings_nonce'] ) ), 'rt_fa_save_settings' ) ) {
+		if ( ! isset( $_POST['raztaifo_settings_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['raztaifo_settings_nonce'] ) ), 'raztaifo_save_settings' ) ) {
 			wp_die( esc_html__( 'Security check failed.', 'raztech-form-architect' ) );
 		}
 
 		// Save AI API settings
-		update_option( 'rt_fa_api_provider', isset( $_POST['api_provider'] ) ? sanitize_text_field( wp_unslash( $_POST['api_provider'] ) ) : 'openai' );
-		update_option( 'rt_fa_api_key', isset( $_POST['api_key'] ) ? sanitize_text_field( wp_unslash( $_POST['api_key'] ) ) : '' );
-		update_option( 'rt_fa_rate_limit', isset( $_POST['rate_limit'] ) ? intval( $_POST['rate_limit'] ) : 50 );
+		update_option( 'raztaifo_api_provider', isset( $_POST['api_provider'] ) ? sanitize_text_field( wp_unslash( $_POST['api_provider'] ) ) : 'openai' );
+		update_option( 'raztaifo_api_key', isset( $_POST['api_key'] ) ? sanitize_text_field( wp_unslash( $_POST['api_key'] ) ) : '' );
+		update_option( 'raztaifo_rate_limit', isset( $_POST['rate_limit'] ) ? intval( $_POST['rate_limit'] ) : 50 );
 
 		// PHASE 6: Save auto-response settings
-		update_option( 'rt_fa_auto_response', isset( $_POST['auto_response'] ) ? 1 : 0 );
-		update_option( 'rt_fa_from_name', isset( $_POST['from_name'] ) ? sanitize_text_field( wp_unslash( $_POST['from_name'] ) ) : get_bloginfo( 'name' ) );
-		update_option( 'rt_fa_from_email', isset( $_POST['from_email'] ) ? sanitize_email( wp_unslash( $_POST['from_email'] ) ) : get_option( 'admin_email' ) );
-		update_option( 'rt_fa_reply_to_email', isset( $_POST['reply_to_email'] ) ? sanitize_email( wp_unslash( $_POST['reply_to_email'] ) ) : get_option( 'admin_email' ) );
-		update_option( 'rt_fa_skip_low_scores', isset( $_POST['skip_low_scores'] ) ? 1 : 0 );
+		update_option( 'raztaifo_auto_response', isset( $_POST['auto_response'] ) ? 1 : 0 );
+		update_option( 'raztaifo_from_name', isset( $_POST['from_name'] ) ? sanitize_text_field( wp_unslash( $_POST['from_name'] ) ) : get_bloginfo( 'name' ) );
+		update_option( 'raztaifo_from_email', isset( $_POST['from_email'] ) ? sanitize_email( wp_unslash( $_POST['from_email'] ) ) : get_option( 'admin_email' ) );
+		update_option( 'raztaifo_reply_to_email', isset( $_POST['reply_to_email'] ) ? sanitize_email( wp_unslash( $_POST['reply_to_email'] ) ) : get_option( 'admin_email' ) );
+		update_option( 'raztaifo_skip_low_scores', isset( $_POST['skip_low_scores'] ) ? 1 : 0 );
 
 		// PHASE 5: Save spam detection settings
-		update_option( 'rt_fa_spam_detection', isset( $_POST['spam_detection'] ) ? 1 : 0 );
-		update_option( 'rt_fa_spam_threshold', isset( $_POST['spam_threshold'] ) ? intval( $_POST['spam_threshold'] ) : 60 );
-		update_option( 'rt_fa_spam_ai_check', isset( $_POST['spam_ai_check'] ) ? 1 : 0 );
+		update_option( 'raztaifo_spam_detection', isset( $_POST['spam_detection'] ) ? 1 : 0 );
+		update_option( 'raztaifo_spam_threshold', isset( $_POST['spam_threshold'] ) ? intval( $_POST['spam_threshold'] ) : 60 );
+		update_option( 'raztaifo_spam_ai_check', isset( $_POST['spam_ai_check'] ) ? 1 : 0 );
 
 		// Redirect to settings page with success message
 		wp_safe_redirect( admin_url( 'admin.php?page=raztech-form-architect-settings&updated=1' ) );
@@ -511,7 +535,7 @@ class RT_FA_Admin {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'raztech-form-architect' ) );
 		}
 
-		require_once RT_FA_PATH . 'admin/partials/settings.php';
+		require_once RAZTAIFO_PATH . 'admin/partials/settings.php';
 	}
 
 	/**
@@ -521,7 +545,7 @@ class RT_FA_Admin {
 	 */
 	public function handle_ai_form_generation() {
 		// Check nonce
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'rt_fa_admin_nonce' ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'raztaifo_admin_nonce' ) ) {
 			wp_send_json_error(
 				array(
 					'message' => __( 'Security check failed.', 'raztech-form-architect' ),
@@ -599,7 +623,7 @@ class RT_FA_Admin {
 		}
 
 		// Generate form with AI
-		$result = RT_FA_Generator::generate_form( $description, $options );
+		$result = RAZTAIFO_Generator::generate_form( $description, $options );
 
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error(
@@ -629,7 +653,7 @@ class RT_FA_Admin {
 	 */
 	private static function get_submissions_chart_data() {
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		$labels = array();
 		$values = array();
@@ -663,7 +687,7 @@ class RT_FA_Admin {
 	 */
 	private static function get_lead_score_chart_data() {
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		$high = $wpdb->get_var(
 			"SELECT COUNT(*) FROM $table_name WHERE lead_score >= 80"
@@ -690,7 +714,7 @@ class RT_FA_Admin {
 	 */
 	private static function get_spam_chart_data() {
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		$legitimate = $wpdb->get_var(
 			"SELECT COUNT(*) FROM $table_name WHERE is_spam = 0 AND spam_score < 40"
@@ -719,7 +743,7 @@ class RT_FA_Admin {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'raztech-form-architect' ) );
 		}
 
-		require_once RT_FA_PATH . 'admin/partials/welcome.php';
+		require_once RAZTAIFO_PATH . 'admin/partials/welcome.php';
 	}
 
 	/**
@@ -730,7 +754,7 @@ class RT_FA_Admin {
 	 */
 	public static function get_ai_insights() {
 		// Get all forms and their stats
-		$forms    = RT_FA_Form_Builder::get_forms();
+		$forms    = RAZTAIFO_Form_Builder::get_forms();
 		$insights = array();
 
 		foreach ( $forms as $form ) {
@@ -816,7 +840,7 @@ class RT_FA_Admin {
 	 */
 	public static function get_form_stats( $form_id ) {
 		// PHASE 8: Check cache first
-		$cache_key = 'rt_fa_stats_' . $form_id;
+		$cache_key = 'raztaifo_stats_' . $form_id;
 		$stats     = get_transient( $cache_key );
 
 		if ( false !== $stats ) {
@@ -824,10 +848,10 @@ class RT_FA_Admin {
 		}
 
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		// Get views from analytics table
-		$analytics_table = $wpdb->prefix . 'rt_fa_analytics';
+		$analytics_table = $wpdb->prefix . 'raztaifo_analytics';
 		$views_result    = $wpdb->get_row(
 			$wpdb->prepare(
 				"SELECT views FROM $analytics_table WHERE form_id = %d LIMIT 1",
@@ -912,7 +936,7 @@ class RT_FA_Admin {
 		}
 
 		// Check if user dismissed the notice
-		$dismissed = get_user_meta( get_current_user_id(), 'rt_fa_smtp_notice_dismissed', true );
+		$dismissed = get_user_meta( get_current_user_id(), 'raztaifo_smtp_notice_dismissed', true );
 		if ( $dismissed ) {
 			return;
 		}
@@ -923,7 +947,7 @@ class RT_FA_Admin {
 		}
 
 		// Check if auto-responses are enabled
-		$auto_response = get_option( 'rt_fa_auto_response', 0 );
+		$auto_response = get_option( 'raztaifo_auto_response', 0 );
 		if ( ! $auto_response ) {
 			return; // Don't show if auto-responses disabled
 		}
@@ -940,7 +964,7 @@ class RT_FA_Admin {
 				<a href="<?php echo esc_url( admin_url( 'plugin-install.php?s=WP+Mail+SMTP&tab=search&type=term' ) ); ?>" class="button button-primary">
 					<?php esc_html_e( 'Install WP Mail SMTP (Free)', 'raztech-form-architect' ); ?>
 				</a>
-				<a href="<?php echo esc_url( RT_FA_URL . 'docs/email-setup-guide.md' ); ?>" class="button" target="_blank">
+				<a href="<?php echo esc_url( RAZTAIFO_URL . 'docs/email-setup-guide.md' ); ?>" class="button" target="_blank">
 					<?php esc_html_e( 'View Setup Guide', 'raztech-form-architect' ); ?>
 				</a>
 				<a href="#" class="button smartforms-dismiss-notice" data-notice="smtp">
@@ -948,27 +972,6 @@ class RT_FA_Admin {
 				</a>
 			</p>
 		</div>
-
-		<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$('.smartforms-dismiss-notice').on('click', function(e) {
-				e.preventDefault();
-				var notice = $(this).data('notice');
-
-				$.ajax({
-					url: ajaxurl,
-					type: 'POST',
-					data: {
-						action: 'rt_fa_dismiss_notice',
-						notice: notice,
-						nonce: '<?php echo esc_js( wp_create_nonce( 'rt_fa_dismiss_notice' ) ); ?>'
-					}
-				});
-
-				$(this).closest('.notice').fadeOut();
-			});
-		});
-		</script>
 		<?php
 	}
 
@@ -978,7 +981,7 @@ class RT_FA_Admin {
 	 * @since    1.0.0
 	 */
 	public function handle_notice_dismissal() {
-		check_ajax_referer( 'rt_fa_dismiss_notice', 'nonce' );
+		check_ajax_referer( 'raztaifo_dismiss_notice', 'nonce' );
 
 		// Check permissions
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -988,7 +991,7 @@ class RT_FA_Admin {
 		$notice = isset( $_POST['notice'] ) ? sanitize_text_field( wp_unslash( $_POST['notice'] ) ) : '';
 
 		if ( $notice === 'smtp' ) {
-			update_user_meta( get_current_user_id(), 'rt_fa_smtp_notice_dismissed', true );
+			update_user_meta( get_current_user_id(), 'raztaifo_smtp_notice_dismissed', true );
 		}
 
 		wp_die();
@@ -1010,7 +1013,7 @@ class RT_FA_Admin {
 		$auto_pages = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT post_id FROM {$wpdb->postmeta}
-				WHERE meta_key = '_rt_fa_form_id'
+				WHERE meta_key = '_raztaifo_form_id'
 				AND meta_value = %d",
 				$form_id
 			)
@@ -1078,7 +1081,7 @@ class RT_FA_Admin {
 		}
 
 		$form_id = intval( $_POST['form_id'] );
-		check_ajax_referer( 'rt_fa_delete_form_' . $form_id, 'nonce' );
+		check_ajax_referer( 'raztaifo_delete_form_' . $form_id, 'nonce' );
 
 		// Check permissions
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -1087,7 +1090,7 @@ class RT_FA_Admin {
 
 		// Get submissions count
 		global $wpdb;
-		$submissions_table = $wpdb->prefix . 'rt_fa_submissions';
+		$submissions_table = $wpdb->prefix . 'raztaifo_submissions';
 		$submissions_count = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT COUNT(*) FROM {$submissions_table} WHERE form_id = %d",
@@ -1118,7 +1121,7 @@ class RT_FA_Admin {
 		}
 
 		$form_id = intval( $_POST['form_id'] );
-		check_ajax_referer( 'rt_fa_delete_form_' . $form_id, 'nonce' );
+		check_ajax_referer( 'raztaifo_delete_form_' . $form_id, 'nonce' );
 
 		// Check permissions
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -1140,7 +1143,7 @@ class RT_FA_Admin {
 		}
 
 		// Delete the form (this also deletes submissions via existing logic)
-		$result = RT_FA_Form_Builder::delete_form( $form_id );
+		$result = RAZTAIFO_Form_Builder::delete_form( $form_id );
 
 		if ( $result ) {
 			wp_send_json_success(
@@ -1161,7 +1164,7 @@ class RT_FA_Admin {
 	 */
 	public function ajax_bulk_actions() {
 		// Verify nonce
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'rt_fa_bulk_actions' ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'raztaifo_bulk_actions' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Security check failed', 'raztech-form-architect' ) ) );
 			return;
 		}
@@ -1188,7 +1191,7 @@ class RT_FA_Admin {
 		}
 
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		$success_count = 0;
 
@@ -1262,5 +1265,51 @@ class RT_FA_Admin {
 				'count'   => $success_count,
 			)
 		);
+	}
+
+	/**
+	 * Recursively sanitize form fields array
+	 *
+	 * Sanitizes JSON-decoded form_fields data to prevent XSS and injection attacks.
+	 * - Sanitizes string values with sanitize_text_field()
+	 * - Sanitizes IDs with absint()
+	 * - Recursively processes nested arrays
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @param    mixed $data The data to sanitize (array, string, int, etc).
+	 * @return   mixed       Sanitized data.
+	 */
+	private function sanitize_form_fields_array( $data ) {
+		// Handle arrays recursively
+		if ( is_array( $data ) ) {
+			$sanitized = array();
+			foreach ( $data as $key => $value ) {
+				// Sanitize the key
+				$clean_key = sanitize_key( $key );
+
+				// Recursively sanitize the value
+				$sanitized[ $clean_key ] = $this->sanitize_form_fields_array( $value );
+			}
+			return $sanitized;
+		}
+
+		// Handle strings
+		if ( is_string( $data ) ) {
+			return sanitize_text_field( $data );
+		}
+
+		// Handle integers (including IDs)
+		if ( is_numeric( $data ) ) {
+			return absint( $data );
+		}
+
+		// Handle booleans
+		if ( is_bool( $data ) ) {
+			return (bool) $data;
+		}
+
+		// Return null or other types as-is
+		return $data;
 	}
 }

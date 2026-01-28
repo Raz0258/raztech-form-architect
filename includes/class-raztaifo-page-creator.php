@@ -5,12 +5,12 @@
  * Handles automatic WordPress page creation for forms.
  * Creates professional pages with form shortcodes automatically.
  *
- * @package    RT_FA_AI
- * @subpackage RT_FA_AI/includes
+ * @package    RAZTAIFO_AI
+ * @subpackage RAZTAIFO_AI/includes
  * @since      1.0.0
  */
 
-class RT_FA_Page_Creator {
+class RAZTAIFO_Page_Creator {
 
     /**
      * Create a WordPress page for a form
@@ -24,7 +24,7 @@ class RT_FA_Page_Creator {
 
         // Get form details
         $form = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM {$wpdb->prefix}rt_fa_forms WHERE id = %d",
+            "SELECT * FROM {$wpdb->prefix}raztaifo_forms WHERE id = %d",
             $form_id
         ));
 
@@ -78,10 +78,10 @@ class RT_FA_Page_Creator {
         self::link_page_to_form($form_id, $page_id, $options);
 
         // Add custom meta
-        update_post_meta($page_id, '_rt_fa_form_id', $form_id);
-        update_post_meta($page_id, '_rt_fa_auto_created', true);
-        update_post_meta($page_id, '_rt_fa_created_by', $options['created_by']);
-        update_post_meta($page_id, '_rt_fa_created_date', current_time('mysql'));
+        update_post_meta($page_id, '_raztaifo_form_id', $form_id);
+        update_post_meta($page_id, '_raztaifo_auto_created', true);
+        update_post_meta($page_id, '_raztaifo_created_by', $options['created_by']);
+        update_post_meta($page_id, '_raztaifo_created_date', current_time('mysql'));
 
         return $page_id;
     }
@@ -212,7 +212,7 @@ class RT_FA_Page_Creator {
 
         // Get current form settings
         $form = $wpdb->get_row($wpdb->prepare(
-            "SELECT form_settings FROM {$wpdb->prefix}rt_fa_forms WHERE id = %d",
+            "SELECT form_settings FROM {$wpdb->prefix}raztaifo_forms WHERE id = %d",
             $form_id
         ));
 
@@ -229,7 +229,7 @@ class RT_FA_Page_Creator {
 
         // Update form settings
         $result = $wpdb->update(
-            $wpdb->prefix . 'rt_fa_forms',
+            $wpdb->prefix . 'raztaifo_forms',
             array('form_settings' => json_encode($settings)),
             array('id' => $form_id),
             array('%s'),
@@ -271,7 +271,7 @@ class RT_FA_Page_Creator {
         global $wpdb;
 
         $form = $wpdb->get_row($wpdb->prepare(
-            "SELECT form_settings FROM {$wpdb->prefix}rt_fa_forms WHERE id = %d",
+            "SELECT form_settings FROM {$wpdb->prefix}raztaifo_forms WHERE id = %d",
             $form_id
         ));
 
@@ -352,7 +352,7 @@ class RT_FA_Page_Creator {
 
         $forms = $wpdb->get_results(
             "SELECT id, form_name, form_settings 
-             FROM {$wpdb->prefix}rt_fa_forms 
+             FROM {$wpdb->prefix}raztaifo_forms 
              WHERE form_settings LIKE '%associated_page%'"
         );
 
@@ -427,11 +427,11 @@ class RT_FA_Page_Creator {
         global $wpdb;
 
         $total_forms = $wpdb->get_var(
-            "SELECT COUNT(*) FROM {$wpdb->prefix}rt_fa_forms"
+            "SELECT COUNT(*) FROM {$wpdb->prefix}raztaifo_forms"
         );
 
         $forms_with_pages = $wpdb->get_var(
-            "SELECT COUNT(*) FROM {$wpdb->prefix}rt_fa_forms 
+            "SELECT COUNT(*) FROM {$wpdb->prefix}raztaifo_forms 
              WHERE form_settings LIKE '%associated_page%'"
         );
 

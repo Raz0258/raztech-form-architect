@@ -11,7 +11,7 @@
  *
  * Handles rendering forms on the frontend.
  */
-class RT_FA_Form_Renderer {
+class RAZTAIFO_Form_Renderer {
 
 	/**
 	 * Render a form
@@ -21,7 +21,7 @@ class RT_FA_Form_Renderer {
 	 * @return   string       HTML output of the form.
 	 */
 	public static function render_form( $form_id ) {
-		$form = RT_FA_Form_Builder::get_form( $form_id );
+		$form = RAZTAIFO_Form_Builder::get_form( $form_id );
 
 		if ( ! $form ) {
 			return '<p class="smartforms-error">' . esc_html__( 'Form not found.', 'raztech-form-architect' ) . '</p>';
@@ -33,7 +33,7 @@ class RT_FA_Form_Renderer {
 		}
 
 		// Track form view
-		RT_FA_Form_Builder::update_analytics( $form_id, 'view' );
+		RAZTAIFO_Form_Builder::update_analytics( $form_id, 'view' );
 
 		// Start output buffering
 		ob_start();
@@ -72,7 +72,7 @@ class RT_FA_Form_Renderer {
 
 				<div class="smartforms-message" style="display:none;"></div>
 
-				<?php wp_nonce_field( 'rt_fa_submit_' . $form_id, 'rt_fa_nonce' ); ?>
+				<?php wp_nonce_field( 'raztaifo_submit_' . $form_id, 'raztaifo_nonce' ); ?>
 			</form>
 		</div>
 		<?php
@@ -272,20 +272,20 @@ class RT_FA_Form_Renderer {
 	 * @return   string       HTML for chat interface.
 	 */
 	public static function render_conversational_form( $form_id ) {
-		$form = RT_FA_Form_Builder::get_form( $form_id );
+		$form = RAZTAIFO_Form_Builder::get_form( $form_id );
 
 		if ( ! $form ) {
 			return '<p class="smartforms-error">' . esc_html__( 'Form not found.', 'raztech-form-architect' ) . '</p>';
 		}
 
 		// Track form view
-		RT_FA_Form_Builder::update_analytics( $form_id, 'view' );
+		RAZTAIFO_Form_Builder::update_analytics( $form_id, 'view' );
 
 		// Prepare fields data for JavaScript
 		$fields_json = wp_json_encode( $form->form_fields );
 
 		// Generate CSRF token for conversational form
-		$token = wp_create_nonce( 'rt_fa_conversational_' . $form_id );
+		$token = wp_create_nonce( 'raztaifo_conversational_' . $form_id );
 
 		// Prepare config
 		$config = array(

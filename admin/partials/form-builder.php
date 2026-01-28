@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 // Check if editing existing form
 $form_id = isset( $_GET['form_id'] ) ? intval( $_GET['form_id'] ) : 0;
-$form    = $form_id ? RT_FA_Form_Builder::get_form( $form_id ) : null;
+$form    = $form_id ? RAZTAIFO_Form_Builder::get_form( $form_id ) : null;
 
 // FIXED: Ensure all variables default to empty strings, never null
 $form_name        = ( $form && $form->form_name ) ? $form->form_name : '';
@@ -105,7 +105,7 @@ $success_message  = ( $form && ! empty( $form->settings['success_message'] ) ) ?
 	<?php endif; ?>
 
 	<form method="post" action="" id="smartforms-builder-form">
-		<?php wp_nonce_field( 'rt_fa_save_form', 'rt_fa_form_nonce' ); ?>
+		<?php wp_nonce_field( 'raztaifo_save_form', 'raztaifo_form_nonce' ); ?>
 
 		<div class="smartforms-builder-grid">
 			<div class="smartforms-builder-main">
@@ -168,7 +168,7 @@ $success_message  = ( $form && ! empty( $form->settings['success_message'] ) ) ?
 					<div id="smartforms-fields-container" class="smartforms-fields-container">
 						<?php if ( ! empty( $form_fields ) ) : ?>
 							<?php foreach ( $form_fields as $index => $field ) : ?>
-								<?php include RT_FA_PATH . 'admin/partials/field-template.php'; ?>
+								<?php include RAZTAIFO_PATH . 'admin/partials/field-template.php'; ?>
 							<?php endforeach; ?>
 						<?php else : ?>
 							<p class="smartforms-no-fields"><?php echo esc_html__( 'No fields added yet. Click a button above to add your first field.', 'raztech-form-architect' ); ?></p>
@@ -228,7 +228,7 @@ $success_message  = ( $form && ! empty( $form->settings['success_message'] ) ) ?
 					<h3><?php echo esc_html__( 'Publish', 'raztech-form-architect' ); ?></h3>
 
 					<div class="smartforms-publish-actions">
-						<input type="submit" name="rt_fa_save_form" class="button button-primary button-large" value="<?php echo $form_id ? esc_attr__( 'Update Form', 'raztech-form-architect' ) : esc_attr__( 'Create Form', 'raztech-form-architect' ); ?>" />
+						<input type="submit" name="raztaifo_save_form" class="button button-primary button-large" value="<?php echo $form_id ? esc_attr__( 'Update Form', 'raztech-form-architect' ) : esc_attr__( 'Create Form', 'raztech-form-architect' ); ?>" />
 
 						<?php if ( $form_id ) : ?>
 							<p class="smartforms-form-id">
@@ -339,7 +339,7 @@ $success_message  = ( $form && ! empty( $form->settings['success_message'] ) ) ?
 	<?php
 	// PHASE 2: Include AI Form Generator Modal
 	if ( ! $form_id ) {
-		include RT_FA_PATH . 'admin/partials/ai-form-generator-modal.php';
+		include RAZTAIFO_PATH . 'admin/partials/ai-form-generator-modal.php';
 	}
 	?>
 </div>

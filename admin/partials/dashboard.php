@@ -12,20 +12,20 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get statistics
-$all_forms          = RT_FA_Form_Builder::get_forms();
+$all_forms          = RAZTAIFO_Form_Builder::get_forms();
 $total_forms        = count( $all_forms );
-$total_submissions  = count( RT_FA_Form_Builder::get_submissions() );
-$recent_forms       = RT_FA_Form_Builder::get_forms( array( 'limit' => 5 ) );
-$recent_submissions = RT_FA_Form_Builder::get_submissions( 0, array( 'limit' => 10 ) );
+$total_submissions  = count( RAZTAIFO_Form_Builder::get_submissions() );
+$recent_forms       = RAZTAIFO_Form_Builder::get_forms( array( 'limit' => 5 ) );
+$recent_submissions = RAZTAIFO_Form_Builder::get_submissions( 0, array( 'limit' => 10 ) );
 
 // PHASE 3: Calculate average lead score efficiently
-$average_score = RT_FA_Lead_Scorer::get_average_score();
+$average_score = RAZTAIFO_Lead_Scorer::get_average_score();
 
 // PHASE 7: Get additional statistics
-$auto_response_count = get_option( 'rt_fa_autoresponse_count', 0 );
+$auto_response_count = get_option( 'raztaifo_autoresponse_count', 0 );
 
 // PHASE 5: Calculate spam statistics
-$all_submissions = RT_FA_Form_Builder::get_submissions();
+$all_submissions = RAZTAIFO_Form_Builder::get_submissions();
 $spam_count      = 0;
 foreach ( $all_submissions as $submission ) {
 	if ( ! empty( $submission->is_spam ) ) {
@@ -52,7 +52,7 @@ foreach ( $all_submissions as $submission ) {
 					$total_forms === 1 ? esc_html__( 'form', 'raztech-form-architect' ) : esc_html__( 'forms', 'raztech-form-architect' ),
 					$total_submissions,
 					$total_submissions === 1 ? esc_html__( 'submission', 'raztech-form-architect' ) : esc_html__( 'submissions', 'raztech-form-architect' )
-				);
+				) );
 				?>
 			</p>
 		<?php endif; ?>
@@ -108,7 +108,7 @@ foreach ( $all_submissions as $submission ) {
 			<div class="smartforms-stat-content">
 				<?php
 				// PHASE 3: Display average score with color indicator
-				$avg_score_color = RT_FA_Lead_Scorer::get_score_color( $average_score );
+				$avg_score_color = RAZTAIFO_Lead_Scorer::get_score_color( $average_score );
 				?>
 				<h3>
 					<span class="smartforms-score-badge smartforms-score-<?php echo esc_attr( $avg_score_color ); ?>" style="font-size: 28px; padding: 8px 16px;">
@@ -157,7 +157,7 @@ foreach ( $all_submissions as $submission ) {
 	</div>
 
 	<!-- PHASE 7: AI Insights Section -->
-	<?php $insights = RT_FA_Admin::get_ai_insights(); ?>
+	<?php $insights = RAZTAIFO_Admin::get_ai_insights(); ?>
 	<?php if ( ! empty( $insights ) ) : ?>
 	<div class="smartforms-card" style="margin-top: 20px;">
 		<h2><?php echo esc_html__( 'AI-Powered Insights', 'raztech-form-architect' ); ?></h2>
@@ -203,7 +203,7 @@ foreach ( $all_submissions as $submission ) {
 			</thead>
 			<tbody>
 				<?php foreach ( $all_forms as $form ) : ?>
-					<?php $stats = RT_FA_Admin::get_form_stats( $form->id ); ?>
+					<?php $stats = RAZTAIFO_Admin::get_form_stats( $form->id ); ?>
 					<tr>
 						<td><strong><?php echo esc_html( $form->form_name ); ?></strong></td>
 						<td><?php echo esc_html( number_format( $stats['views'] ) ); ?></td>
@@ -215,7 +215,7 @@ foreach ( $all_submissions as $submission ) {
 						</td>
 						<td>
 							<?php
-							$score_color = RT_FA_Lead_Scorer::get_score_color( $stats['avg_lead_score'] );
+							$score_color = RAZTAIFO_Lead_Scorer::get_score_color( $stats['avg_lead_score'] );
 							?>
 							<span class="smartforms-score-badge smartforms-score-<?php echo esc_attr( $score_color ); ?>" style="font-size: 13px; padding: 4px 10px;">
 								<?php echo esc_html( $stats['avg_lead_score'] ); ?>
@@ -291,7 +291,7 @@ foreach ( $all_submissions as $submission ) {
 						</thead>
 						<tbody>
 							<?php foreach ( $recent_submissions as $submission ) : ?>
-								<?php $form = RT_FA_Form_Builder::get_form( $submission->form_id ); ?>
+								<?php $form = RAZTAIFO_Form_Builder::get_form( $submission->form_id ); ?>
 								<tr>
 									<td>
 										<?php echo $form ? esc_html( $form->form_name ) : esc_html__( 'Unknown', 'raztech-form-architect' ); ?>
@@ -302,7 +302,7 @@ foreach ( $all_submissions as $submission ) {
 									<td>
 										<?php
 										// PHASE 3: Get score color class for visual display
-										$score_color = RT_FA_Lead_Scorer::get_score_color( $submission->lead_score );
+										$score_color = RAZTAIFO_Lead_Scorer::get_score_color( $submission->lead_score );
 										?>
 										<span class="smartforms-score-badge smartforms-score-<?php echo esc_attr( $score_color ); ?>">
 											<?php echo esc_html( $submission->lead_score ); ?>

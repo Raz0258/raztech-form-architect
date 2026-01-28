@@ -12,7 +12,7 @@
  * Handles intelligent lead scoring based on submission quality indicators.
  * Analyzes email domain, response completeness, content quality, and business indicators.
  */
-class RT_FA_Lead_Scorer {
+class RAZTAIFO_Lead_Scorer {
 
 	/**
 	 * Calculate lead score for a submission
@@ -432,7 +432,7 @@ class RT_FA_Lead_Scorer {
 	public static function get_submissions_by_score( $range = 'all', $form_id = 0, $args = array() ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		// Sanitize and validate range parameter
 		$range          = sanitize_text_field( $range );
@@ -450,7 +450,11 @@ class RT_FA_Lead_Scorer {
 		);
 		$args     = wp_parse_args( $args, $defaults );
 
-		$orderby = sanitize_text_field( $args['orderby'] );
+		// Whitelist valid orderby columns
+		$allowed_orderby = array( 'id', 'form_id', 'submitted_at', 'lead_score', 'spam_score', 'is_spam' );
+		$orderby         = in_array( $args['orderby'], $allowed_orderby, true ) ? $args['orderby'] : 'submitted_at';
+
+		// Validate order direction
 		$order   = strtoupper( $args['order'] ) === 'ASC' ? 'ASC' : 'DESC';
 		$limit   = intval( $args['limit'] );
 		$offset  = intval( $args['offset'] );
@@ -509,18 +513,18 @@ class RT_FA_Lead_Scorer {
 	 */
 	public static function get_average_score( $form_id = 0 ) {
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'rt_fa_submissions';
+		$table_name = $wpdb->prefix . 'raztaifo_submissions';
 
 		if ( $form_id > 0 ) {
 			$average = $wpdb->get_var(
 				$wpdb->prepare(
-					"SELECT AVG(lead_score) FROM {$wpdb->prefix}rt_fa_submissions WHERE form_id = %d",
+					"SELECT AVG(lead_score) FROM {$wpdb->prefix}raztaifo_submissions WHERE form_id = %d",
 					$form_id
 				)
 			);
 		} else {
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is safe, comes from $wpdb->prefix
-			$average = $wpdb->get_var( "SELECT AVG(lead_score) FROM {$wpdb->prefix}rt_fa_submissions" );
+			$average = $wpdb->get_var( "SELECT AVG(lead_score) FROM {$wpdb->prefix}raztaifo_submissions" );
 		}
 
 		return $average ? intval( round( $average ) ) : 0;

@@ -4,17 +4,17 @@
  *
  * Handles the Form Templates admin interface and AJAX operations.
  *
- * @package    RT_FA_AI
- * @subpackage RT_FA_AI/admin
+ * @package    RAZTAIFO_AI
+ * @subpackage RAZTAIFO_AI/admin
  * @since      1.0.0
  */
 
-class RT_FA_Templates_Admin {
+class RAZTAIFO_Templates_Admin {
 
     /**
      * Templates manager instance
      *
-     * @var RT_FA_Templates
+     * @var RAZTAIFO_Templates
      */
     private $templates_manager;
 
@@ -22,7 +22,7 @@ class RT_FA_Templates_Admin {
      * Initialize the class
      */
     public function __construct() {
-        $this->templates_manager = new RT_FA_Templates();
+        $this->templates_manager = new RAZTAIFO_Templates();
         $this->register_hooks();
     }
 
@@ -37,9 +37,9 @@ class RT_FA_Templates_Admin {
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
         
         // AJAX handlers
-        add_action('wp_ajax_rt_fa_install_templates', array($this, 'ajax_install_templates'));
-        add_action('wp_ajax_rt_fa_delete_sample_data', array($this, 'ajax_delete_sample_data'));
-        add_action('wp_ajax_rt_fa_get_template_preview', array($this, 'ajax_get_template_preview'));
+        add_action('wp_ajax_raztaifo_install_templates', array($this, 'ajax_install_templates'));
+        add_action('wp_ajax_raztaifo_delete_sample_data', array($this, 'ajax_delete_sample_data'));
+        add_action('wp_ajax_raztaifo_get_template_preview', array($this, 'ajax_get_template_preview'));
     }
 
     /**
@@ -85,7 +85,7 @@ class RT_FA_Templates_Admin {
         // Localize script with AJAX URL and nonces
         wp_localize_script('raztech-form-architect-templates-admin', 'smartformsTemplates', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('rt_fa_templates_nonce'),
+            'nonce' => wp_create_nonce('raztaifo_templates_nonce'),
             'strings' => array(
                 'installing' => __('Installing templates...', 'raztech-form-architect'),
                 'success' => __('Templates installed successfully!', 'raztech-form-architect'),
@@ -121,7 +121,7 @@ class RT_FA_Templates_Admin {
      */
     public function ajax_install_templates() {
         // Verify nonce
-        check_ajax_referer('rt_fa_templates_nonce', 'nonce');
+        check_ajax_referer('raztaifo_templates_nonce', 'nonce');
 
         // Check permissions
         if (!current_user_can('manage_options')) {
@@ -218,7 +218,7 @@ class RT_FA_Templates_Admin {
      */
     public function ajax_delete_sample_data() {
         // Verify nonce
-        check_ajax_referer('rt_fa_templates_nonce', 'nonce');
+        check_ajax_referer('raztaifo_templates_nonce', 'nonce');
 
         // Check permissions
         if (!current_user_can('manage_options')) {
@@ -244,7 +244,7 @@ class RT_FA_Templates_Admin {
      */
     public function ajax_get_template_preview() {
         // Verify nonce
-        check_ajax_referer('rt_fa_templates_nonce', 'nonce');
+        check_ajax_referer('raztaifo_templates_nonce', 'nonce');
 
         // Check permissions
         if (!current_user_can('manage_options')) {

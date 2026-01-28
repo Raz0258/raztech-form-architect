@@ -10,11 +10,11 @@
  * @wordpress-plugin
  * Plugin Name:       RazTech AI Form Architect
  * Description:       Create optimized forms in seconds using AI, automatically score lead quality, and provide conversational form experiences—all without coding.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            Raz Technologies
- * Author URI:        https://raztechnologies.com
+ * Author URI:        https://raz-technologies.com
  * Text Domain:       raztech-form-architect
  * Domain Path:       /languages
  * License:           GPL v2 or later
@@ -29,54 +29,54 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'RT_FA_VERSION', '1.0.1' );
+define( 'RAZTAIFO_VERSION', '1.0.2' );
 
 /**
  * Plugin directory path
  */
-define( 'RT_FA_PATH', plugin_dir_path( __FILE__ ) );
+define( 'RAZTAIFO_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
  * Plugin directory URL
  */
-define( 'RT_FA_URL', plugin_dir_url( __FILE__ ) );
+define( 'RAZTAIFO_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * Plugin basename
  */
-define( 'RT_FA_BASENAME', plugin_basename( __FILE__ ) );
+define( 'RAZTAIFO_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
  * The code that runs during plugin activation.
  */
-function rt_fa_activate() {
-	require_once RT_FA_PATH . 'includes/class-rt-fa-activator.php';
-	RT_FA_Activator::activate();
+function raztaifo_activate() {
+	require_once RAZTAIFO_PATH . 'includes/class-raztaifo-activator.php';
+	RAZTAIFO_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  */
-function rt_fa_deactivate() {
-	require_once RT_FA_PATH . 'includes/class-rt-fa-deactivator.php';
-	RT_FA_Deactivator::deactivate();
+function raztaifo_deactivate() {
+	require_once RAZTAIFO_PATH . 'includes/class-raztaifo-deactivator.php';
+	RAZTAIFO_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'rt_fa_activate' );
-register_deactivation_hook( __FILE__, 'rt_fa_deactivate' );
+register_activation_hook( __FILE__, 'raztaifo_activate' );
+register_deactivation_hook( __FILE__, 'raztaifo_deactivate' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require_once RT_FA_PATH . 'includes/class-rt-fa.php';
+require_once RAZTAIFO_PATH . 'includes/class-raztaifo.php';
 
 /**
  * Begins execution of the plugin.
  */
-function rt_fa_run() {
-	$plugin = new RT_FA();
+function raztaifo_run() {
+	$plugin = new RAZTAIFO();
 	$plugin->run();
 }
 
-rt_fa_run();
+raztaifo_run();

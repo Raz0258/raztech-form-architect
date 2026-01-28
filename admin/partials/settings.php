@@ -12,9 +12,9 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get current settings
-$api_provider = get_option( 'rt_fa_api_provider', 'openai' );
-$api_key      = get_option( 'rt_fa_api_key', '' );
-$rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
+$api_provider = get_option( 'raztaifo_api_provider', 'openai' );
+$api_key      = get_option( 'raztaifo_api_key', '' );
+$rate_limit   = get_option( 'raztaifo_rate_limit', 50 );
 ?>
 
 <div class="wrap smartforms-settings">
@@ -27,7 +27,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 	<?php endif; ?>
 
 	<form method="post" action="">
-		<?php wp_nonce_field( 'rt_fa_save_settings', 'rt_fa_settings_nonce' ); ?>
+		<?php wp_nonce_field( 'raztaifo_save_settings', 'raztaifo_settings_nonce' ); ?>
 
 		<div class="smartforms-settings-grid">
 			<div class="smartforms-settings-main">
@@ -115,7 +115,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 							<a href="<?php echo esc_url( admin_url( 'plugin-install.php?s=WP+Mail+SMTP&tab=search&type=term' ) ); ?>" class="button">
 								<?php esc_html_e( 'Install WP Mail SMTP', 'raztech-form-architect' ); ?>
 							</a>
-							<a href="<?php echo esc_url( RT_FA_URL . 'docs/email-setup-guide.md' ); ?>" target="_blank" class="button">
+							<a href="<?php echo esc_url( RAZTAIFO_URL . 'docs/email-setup-guide.md' ); ?>" target="_blank" class="button">
 								<?php esc_html_e( 'Setup Guide', 'raztech-form-architect' ); ?>
 							</a>
 						</p>
@@ -128,7 +128,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 							</th>
 							<td>
 								<label>
-									<input type="checkbox" id="auto_response" name="auto_response" value="1" <?php checked( get_option( 'rt_fa_auto_response', 0 ), 1 ); ?> />
+									<input type="checkbox" id="auto_response" name="auto_response" value="1" <?php checked( get_option( 'raztaifo_auto_response', 0 ), 1 ); ?> />
 									<?php echo esc_html__( 'Enable auto-responses', 'raztech-form-architect' ); ?>
 								</label>
 								<p class="description">
@@ -141,7 +141,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 								<label for="from_name"><?php echo esc_html__( 'From Name', 'raztech-form-architect' ); ?></label>
 							</th>
 							<td>
-								<input type="text" id="from_name" name="from_name" value="<?php echo esc_attr( get_option( 'rt_fa_from_name', get_bloginfo( 'name' ) ) ); ?>" class="regular-text" />
+								<input type="text" id="from_name" name="from_name" value="<?php echo esc_attr( get_option( 'raztaifo_from_name', get_bloginfo( 'name' ) ) ); ?>" class="regular-text" />
 								<p class="description">
 									<?php echo esc_html__( 'The name that appears in auto-response emails.', 'raztech-form-architect' ); ?>
 								</p>
@@ -152,7 +152,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 								<label for="from_email"><?php echo esc_html__( 'From Email', 'raztech-form-architect' ); ?></label>
 							</th>
 							<td>
-								<input type="email" id="from_email" name="from_email" value="<?php echo esc_attr( get_option( 'rt_fa_from_email', get_option( 'admin_email' ) ) ); ?>" class="regular-text" />
+								<input type="email" id="from_email" name="from_email" value="<?php echo esc_attr( get_option( 'raztaifo_from_email', get_option( 'admin_email' ) ) ); ?>" class="regular-text" />
 								<p class="description">
 									<?php echo esc_html__( 'The email address that auto-responses are sent from.', 'raztech-form-architect' ); ?>
 								</p>
@@ -163,7 +163,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 								<label for="reply_to_email"><?php echo esc_html__( 'Reply-To Email', 'raztech-form-architect' ); ?></label>
 							</th>
 							<td>
-								<input type="email" id="reply_to_email" name="reply_to_email" value="<?php echo esc_attr( get_option( 'rt_fa_reply_to_email', get_option( 'admin_email' ) ) ); ?>" class="regular-text" />
+								<input type="email" id="reply_to_email" name="reply_to_email" value="<?php echo esc_attr( get_option( 'raztaifo_reply_to_email', get_option( 'admin_email' ) ) ); ?>" class="regular-text" />
 								<p class="description">
 									<?php echo esc_html__( 'The email address where replies should be sent.', 'raztech-form-architect' ); ?>
 								</p>
@@ -175,7 +175,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 							</th>
 							<td>
 								<label>
-									<input type="checkbox" id="skip_low_scores" name="skip_low_scores" value="1" <?php checked( get_option( 'rt_fa_skip_low_scores', 0 ), 1 ); ?> />
+									<input type="checkbox" id="skip_low_scores" name="skip_low_scores" value="1" <?php checked( get_option( 'raztaifo_skip_low_scores', 0 ), 1 ); ?> />
 									<?php echo esc_html__( 'Don\'t send auto-responses to leads scoring below 30', 'raztech-form-architect' ); ?>
 								</label>
 								<p class="description">
@@ -193,7 +193,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 							</th>
 							<td>
 								<label>
-									<input type="checkbox" id="spam_detection" name="spam_detection" value="1" <?php checked( get_option( 'rt_fa_spam_detection', 1 ), 1 ); ?> />
+									<input type="checkbox" id="spam_detection" name="spam_detection" value="1" <?php checked( get_option( 'raztaifo_spam_detection', 1 ), 1 ); ?> />
 									<?php echo esc_html__( 'Enable spam detection', 'raztech-form-architect' ); ?>
 								</label>
 								<p class="description">
@@ -206,7 +206,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 								<label for="spam_threshold"><?php echo esc_html__( 'Spam Threshold', 'raztech-form-architect' ); ?></label>
 							</th>
 							<td>
-								<input type="number" id="spam_threshold" name="spam_threshold" value="<?php echo esc_attr( get_option( 'rt_fa_spam_threshold', 60 ) ); ?>" class="small-text" min="0" max="100" />
+								<input type="number" id="spam_threshold" name="spam_threshold" value="<?php echo esc_attr( get_option( 'raztaifo_spam_threshold', 60 ) ); ?>" class="small-text" min="0" max="100" />
 								<span><?php echo esc_html__( '(0-100)', 'raztech-form-architect' ); ?></span>
 								<p class="description">
 									<?php echo esc_html__( 'Submissions scoring above this threshold are marked as spam. Default: 60 (recommended 50-70)', 'raztech-form-architect' ); ?>
@@ -219,7 +219,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 							</th>
 							<td>
 								<label>
-									<input type="checkbox" id="spam_ai_check" name="spam_ai_check" value="1" <?php checked( get_option( 'rt_fa_spam_ai_check', 0 ), 1 ); ?> />
+									<input type="checkbox" id="spam_ai_check" name="spam_ai_check" value="1" <?php checked( get_option( 'raztaifo_spam_ai_check', 0 ), 1 ); ?> />
 									<?php echo esc_html__( 'Use AI for advanced spam detection', 'raztech-form-architect' ); ?>
 								</label>
 								<p class="description">
@@ -239,7 +239,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 								<?php echo esc_html__( 'Plugin Version', 'raztech-form-architect' ); ?>
 							</th>
 							<td>
-								<strong><?php echo esc_html( RT_FA_VERSION ); ?></strong>
+								<strong><?php echo esc_html( RAZTAIFO_VERSION ); ?></strong>
 							</td>
 						</tr>
 						<tr>
@@ -250,9 +250,9 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 								<?php
 								global $wpdb;
 								$tables = array(
-									$wpdb->prefix . 'rt_fa_forms',
-									$wpdb->prefix . 'rt_fa_submissions',
-									$wpdb->prefix . 'rt_fa_analytics',
+									$wpdb->prefix . 'raztaifo_forms',
+									$wpdb->prefix . 'raztaifo_submissions',
+									$wpdb->prefix . 'raztaifo_analytics',
 								);
 
 								$all_exist = true;
@@ -279,7 +279,7 @@ $rate_limit   = get_option( 'rt_fa_rate_limit', 50 );
 			<div class="smartforms-settings-sidebar">
 				<div class="smartforms-card">
 					<h3><?php echo esc_html__( 'Save Settings', 'raztech-form-architect' ); ?></h3>
-					<input type="submit" name="rt_fa_save_settings" class="button button-primary button-large" value="<?php echo esc_attr__( 'Save Changes', 'raztech-form-architect' ); ?>" />
+					<input type="submit" name="raztaifo_save_settings" class="button button-primary button-large" value="<?php echo esc_attr__( 'Save Changes', 'raztech-form-architect' ); ?>" />
 				</div>
 
 				<div class="smartforms-card">
