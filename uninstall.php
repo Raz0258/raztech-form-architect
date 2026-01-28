@@ -21,22 +21,12 @@ if ( $remove_data ) {
 	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}raztaifo_submissions" );
 	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}raztaifo_analytics" );
 
-	// Delete all plugin options
-	delete_option( 'raztaifo_version' );
-	delete_option( 'raztaifo_api_provider' );
-	delete_option( 'raztaifo_api_key' );
-	delete_option( 'raztaifo_anthropic_api_key' );
-	delete_option( 'raztaifo_spam_detection_enabled' );
-	delete_option( 'raztaifo_ai_spam_detection_enabled' );
-	delete_option( 'raztaifo_lead_scoring_enabled' );
-	delete_option( 'raztaifo_auto_response_enabled' );
-	delete_option( 'raztaifo_rate_limit' );
-	delete_option( 'raztaifo_notification_email' );
-	delete_option( 'raztaifo_remove_data_on_uninstall' );
+	// Delete all plugin options (wildcard delete for future-proofing)
+	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'raztaifo_%'" );
 
-	// Delete transients
-	delete_transient( 'raztaifo_analytics_cache' );
-	delete_transient( 'raztaifo_dashboard_cache' );
+	// Delete all transients (both regular and site transients)
+	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_raztaifo_%' OR option_name LIKE '_transient_timeout_raztaifo_%'" );
+	$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_site_transient_raztaifo_%' OR option_name LIKE '_site_transient_timeout_raztaifo_%'" );
 
 	// Delete user meta
 	$wpdb->query( "DELETE FROM {$wpdb->usermeta} WHERE meta_key = 'raztaifo_smtp_notice_dismissed'" );
