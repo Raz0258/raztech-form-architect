@@ -6,6 +6,11 @@
  *
  * @package    RAZTAIFO_AI
  * @subpackage RAZTAIFO_AI/includes
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
  * @since      1.0.0
  */
 

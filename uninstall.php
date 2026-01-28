@@ -38,6 +38,9 @@ if ( $remove_data ) {
 	delete_transient( 'raztaifo_analytics_cache' );
 	delete_transient( 'raztaifo_dashboard_cache' );
 
+	// Delete user meta
+	$wpdb->query( "DELETE FROM {$wpdb->usermeta} WHERE meta_key = 'raztaifo_smtp_notice_dismissed'" );
+
 	// Clear any cached data
 	wp_cache_flush();
 }

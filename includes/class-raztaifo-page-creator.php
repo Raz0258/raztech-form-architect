@@ -6,6 +6,11 @@
  * Creates professional pages with form shortcodes automatically.
  *
  * @package    RAZTAIFO_AI
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
  * @subpackage RAZTAIFO_AI/includes
  * @since      1.0.0
  */

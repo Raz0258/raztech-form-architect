@@ -12,7 +12,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get all forms
-$forms = RAZTAIFO_Form_Builder::get_forms();
+$raztaifo_forms = RAZTAIFO_Form_Builder::get_forms();
 ?>
 
 <div class="wrap smartforms-all-forms">
@@ -50,7 +50,7 @@ $forms = RAZTAIFO_Form_Builder::get_forms();
 		</div>
 	<?php endif; ?>
 
-	<?php if ( ! empty( $forms ) ) : ?>
+	<?php if ( ! empty( $raztaifo_forms ) ) : ?>
 		<table class="wp-list-table widefat fixed striped">
 			<thead>
 				<tr>
@@ -63,40 +63,40 @@ $forms = RAZTAIFO_Form_Builder::get_forms();
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ( $forms as $form ) : ?>
+				<?php foreach ( $raztaifo_forms as $raztaifo_form ) : ?>
 					<?php
-					$submissions_count = count( RAZTAIFO_Form_Builder::get_submissions( $form->id ) );
+					$submissions_count = count( RAZTAIFO_Form_Builder::get_submissions( $raztaifo_form->id ) );
 					?>
 					<tr>
-						<td><?php echo esc_html( $form->id ); ?></td>
+						<td><?php echo esc_html( $raztaifo_form->id ); ?></td>
 						<td>
 							<strong>
-								<a href="<?php echo esc_url( admin_url( 'admin.php?page=raztech-form-architect-new-form&form_id=' . $form->id ) ); ?>">
-									<?php echo esc_html( $form->form_name ); ?>
+								<a href="<?php echo esc_url( admin_url( 'admin.php?page=raztech-form-architect-new-form&form_id=' . $raztaifo_form->id ) ); ?>">
+									<?php echo esc_html( $raztaifo_form->form_name ); ?>
 								</a>
 							</strong>
-							<?php if ( ! empty( $form->form_description ) ) : ?>
+							<?php if ( ! empty( $raztaifo_form->form_description ) ) : ?>
 								<br>
-								<small><?php echo esc_html( wp_trim_words( $form->form_description, 10 ) ); ?></small>
+								<small><?php echo esc_html( wp_trim_words( $raztaifo_form->form_description, 10 ) ); ?></small>
 							<?php endif; ?>
 						</td>
 						<td>
-							<code>[smartform id="<?php echo esc_attr( $form->id ); ?>"]</code>
-							<button class="button button-small smartforms-copy-shortcode" data-shortcode='[smartform id="<?php echo esc_attr( $form->id ); ?>"]'>
+							<code>[smartform id="<?php echo esc_attr( $raztaifo_form->id ); ?>"]</code>
+							<button class="button button-small smartforms-copy-shortcode" data-shortcode='[smartform id="<?php echo esc_attr( $raztaifo_form->id ); ?>"]'>
 								<?php echo esc_html__( 'Copy', 'raztech-form-architect' ); ?>
 							</button>
 						</td>
 						<td><?php echo esc_html( $submissions_count ); ?></td>
-						<td><?php echo esc_html( human_time_diff( strtotime( $form->created_at ), current_time( 'timestamp' ) ) . ' ago' ); ?></td>
+						<td><?php echo esc_html( human_time_diff( strtotime( $raztaifo_form->created_at ), current_time( 'timestamp' ) ) . ' ago' ); ?></td>
 						<td>
-							<a href="<?php echo esc_url( admin_url( 'admin.php?page=raztech-form-architect-new-form&form_id=' . $form->id ) ); ?>" class="button button-small">
+							<a href="<?php echo esc_url( admin_url( 'admin.php?page=raztech-form-architect-new-form&form_id=' . $raztaifo_form->id ) ); ?>" class="button button-small">
 								<?php echo esc_html__( 'Edit', 'raztech-form-architect' ); ?>
 							</a>
 							<a href="#"
 							   class="button button-small button-link-delete smartforms-delete-form"
-							   data-form-id="<?php echo esc_attr( $form->id ); ?>"
-							   data-form-name="<?php echo esc_attr( $form->form_name ); ?>"
-							   data-nonce="<?php echo esc_attr( wp_create_nonce( 'raztaifo_delete_form_' . $form->id ) ); ?>">
+							   data-form-id="<?php echo esc_attr( $raztaifo_form->id ); ?>"
+							   data-form-name="<?php echo esc_attr( $raztaifo_form->form_name ); ?>"
+							   data-nonce="<?php echo esc_attr( wp_create_nonce( 'raztaifo_delete_form_' . $raztaifo_form->id ) ); ?>">
 								<?php echo esc_html__( 'Delete', 'raztech-form-architect' ); ?>
 							</a>
 						</td>

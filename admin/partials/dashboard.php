@@ -12,24 +12,24 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get statistics
-$all_forms          = RAZTAIFO_Form_Builder::get_forms();
-$total_forms        = count( $all_forms );
-$total_submissions  = count( RAZTAIFO_Form_Builder::get_submissions() );
-$recent_forms       = RAZTAIFO_Form_Builder::get_forms( array( 'limit' => 5 ) );
-$recent_submissions = RAZTAIFO_Form_Builder::get_submissions( 0, array( 'limit' => 10 ) );
+$raztaifo_all_forms          = RAZTAIFO_Form_Builder::get_forms();
+$raztaifo_total_forms        = count( $raztaifo_all_forms );
+$raztaifo_total_submissions  = count( RAZTAIFO_Form_Builder::get_submissions() );
+$raztaifo_recent_forms       = RAZTAIFO_Form_Builder::get_forms( array( 'limit' => 5 ) );
+$raztaifo_recent_submissions = RAZTAIFO_Form_Builder::get_submissions( 0, array( 'limit' => 10 ) );
 
 // PHASE 3: Calculate average lead score efficiently
-$average_score = RAZTAIFO_Lead_Scorer::get_average_score();
+$raztaifo_average_score = RAZTAIFO_Lead_Scorer::get_average_score();
 
 // PHASE 7: Get additional statistics
-$auto_response_count = get_option( 'raztaifo_autoresponse_count', 0 );
+$raztaifo_auto_response_count = get_option( 'raztaifo_autoresponse_count', 0 );
 
 // PHASE 5: Calculate spam statistics
-$all_submissions = RAZTAIFO_Form_Builder::get_submissions();
-$spam_count      = 0;
-foreach ( $all_submissions as $submission ) {
-	if ( ! empty( $submission->is_spam ) ) {
-		$spam_count++;
+$raztaifo_all_submissions = RAZTAIFO_Form_Builder::get_submissions();
+$raztaifo_spam_count      = 0;
+foreach ( $raztaifo_all_submissions as $raztaifo_submission ) {
+	if ( ! empty( $raztaifo_submission->is_spam ) ) {
+		$raztaifo_spam_count++;
 	}
 }
 ?>
@@ -38,7 +38,7 @@ foreach ( $all_submissions as $submission ) {
 	<h1><?php echo esc_html__( 'RazTech Form Architect Dashboard', 'raztech-form-architect' ); ?></h1>
 
 	<div class="smartforms-welcome-panel">
-		<?php if ( $total_forms === 0 ) : ?>
+		<?php if ( $raztaifo_total_forms === 0 ) : ?>
 			<h2><?php echo esc_html__( 'Welcome to RazTech Form Architect', 'raztech-form-architect' ); ?></h2>
 			<p><?php echo esc_html__( 'Create optimized forms in seconds using AI, automatically score lead quality, and provide conversational form experiences—all without coding.', 'raztech-form-architect' ); ?></p>
 		<?php else : ?>
@@ -49,9 +49,9 @@ foreach ( $all_submissions as $submission ) {
 					/* translators: 1: Number of forms, 2: Number of submissions */
 					__( 'You have %1$d %2$s and %3$d %4$s. Keep up the great work!', 'raztech-form-architect' ),
 					$total_forms,
-					$total_forms === 1 ? esc_html__( 'form', 'raztech-form-architect' ) : esc_html__( 'forms', 'raztech-form-architect' ),
+					$raztaifo_total_forms === 1 ? esc_html__( 'form', 'raztech-form-architect' ) : esc_html__( 'forms', 'raztech-form-architect' ),
 					$total_submissions,
-					$total_submissions === 1 ? esc_html__( 'submission', 'raztech-form-architect' ) : esc_html__( 'submissions', 'raztech-form-architect' )
+					$raztaifo_total_submissions === 1 ? esc_html__( 'submission', 'raztech-form-architect' ) : esc_html__( 'submissions', 'raztech-form-architect' )
 				) );
 				?>
 			</p>
@@ -60,7 +60,7 @@ foreach ( $all_submissions as $submission ) {
 		<div class="smartforms-quick-links">
 			<a href="<?php echo esc_url( admin_url( 'admin.php?page=raztech-form-architect-new-form' ) ); ?>" class="button button-primary button-hero">
 				<?php
-				if ( $total_forms === 0 ) {
+				if ( $raztaifo_total_forms === 0 ) {
 					echo esc_html__( 'Create Your First Form', 'raztech-form-architect' );
 				} else {
 					echo esc_html__( 'Add New Form', 'raztech-form-architect' );
@@ -82,7 +82,7 @@ foreach ( $all_submissions as $submission ) {
 		<div class="smartforms-stat-card">
 			<div class="smartforms-stat-icon">📝</div>
 			<div class="smartforms-stat-content">
-				<h3><?php echo esc_html( $total_forms ); ?></h3>
+				<h3><?php echo esc_html( $raztaifo_total_forms ); ?></h3>
 				<p><?php echo esc_html__( 'Total Forms', 'raztech-form-architect' ); ?></p>
 			</div>
 		</div>
@@ -90,7 +90,7 @@ foreach ( $all_submissions as $submission ) {
 		<div class="smartforms-stat-card">
 			<div class="smartforms-stat-icon">📊</div>
 			<div class="smartforms-stat-content">
-				<h3><?php echo esc_html( $total_submissions ); ?></h3>
+				<h3><?php echo esc_html( $raztaifo_total_submissions ); ?></h3>
 				<p><?php echo esc_html__( 'Total Submissions', 'raztech-form-architect' ); ?></p>
 			</div>
 		</div>
@@ -108,11 +108,11 @@ foreach ( $all_submissions as $submission ) {
 			<div class="smartforms-stat-content">
 				<?php
 				// PHASE 3: Display average score with color indicator
-				$avg_score_color = RAZTAIFO_Lead_Scorer::get_score_color( $average_score );
+				$avg_score_color = RAZTAIFO_Lead_Scorer::get_score_color( $raztaifo_average_score );
 				?>
 				<h3>
 					<span class="smartforms-score-badge smartforms-score-<?php echo esc_attr( $avg_score_color ); ?>" style="font-size: 28px; padding: 8px 16px;">
-						<?php echo esc_html( $average_score ); ?>
+						<?php echo esc_html( $raztaifo_average_score ); ?>
 					</span>
 				</h3>
 				<p><?php echo esc_html__( 'Average Lead Score', 'raztech-form-architect' ); ?></p>
@@ -122,7 +122,7 @@ foreach ( $all_submissions as $submission ) {
 		<div class="smartforms-stat-card">
 			<div class="smartforms-stat-icon">🛡️</div>
 			<div class="smartforms-stat-content">
-				<h3><?php echo esc_html( $spam_count ); ?></h3>
+				<h3><?php echo esc_html( $raztaifo_spam_count ); ?></h3>
 				<p><?php echo esc_html__( 'Spam Blocked', 'raztech-form-architect' ); ?></p>
 			</div>
 		</div>
@@ -202,10 +202,10 @@ foreach ( $all_submissions as $submission ) {
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ( $all_forms as $form ) : ?>
-					<?php $stats = RAZTAIFO_Admin::get_form_stats( $form->id ); ?>
+				<?php foreach ( $raztaifo_all_forms as $raztaifo_form ) : ?>
+					<?php $stats = RAZTAIFO_Admin::get_form_stats( $raztaifo_form->id ); ?>
 					<tr>
-						<td><strong><?php echo esc_html( $form->form_name ); ?></strong></td>
+						<td><strong><?php echo esc_html( $raztaifo_form->form_name ); ?></strong></td>
 						<td><?php echo esc_html( number_format( $stats['views'] ) ); ?></td>
 						<td><?php echo esc_html( number_format( $stats['submissions'] ) ); ?></td>
 						<td>
@@ -244,16 +244,16 @@ foreach ( $all_submissions as $submission ) {
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach ( $recent_forms as $form ) : ?>
+							<?php foreach ( $raztaifo_recent_forms as $raztaifo_form ) : ?>
 								<tr>
 									<td>
-										<strong><?php echo esc_html( $form->form_name ); ?></strong>
+										<strong><?php echo esc_html( $raztaifo_form->form_name ); ?></strong>
 									</td>
 									<td>
-										<?php echo esc_html( human_time_diff( strtotime( $form->created_at ), current_time( 'timestamp' ) ) . ' ago' ); ?>
+										<?php echo esc_html( human_time_diff( strtotime( $raztaifo_form->created_at ), current_time( 'timestamp' ) ) . ' ago' ); ?>
 									</td>
 									<td>
-										<a href="<?php echo esc_url( admin_url( 'admin.php?page=raztech-form-architect-new-form&form_id=' . $form->id ) ); ?>" class="button button-small">
+										<a href="<?php echo esc_url( admin_url( 'admin.php?page=raztech-form-architect-new-form&form_id=' . $raztaifo_form->id ) ); ?>" class="button button-small">
 											<?php echo esc_html__( 'Edit', 'raztech-form-architect' ); ?>
 										</a>
 									</td>
@@ -290,22 +290,22 @@ foreach ( $all_submissions as $submission ) {
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach ( $recent_submissions as $submission ) : ?>
-								<?php $form = RAZTAIFO_Form_Builder::get_form( $submission->form_id ); ?>
+							<?php foreach ( $raztaifo_recent_submissions as $raztaifo_submission ) : ?>
+								<?php $raztaifo_form = RAZTAIFO_Form_Builder::get_form( $raztaifo_submission->form_id ); ?>
 								<tr>
 									<td>
-										<?php echo $form ? esc_html( $form->form_name ) : esc_html__( 'Unknown', 'raztech-form-architect' ); ?>
+										<?php echo $raztaifo_form ? esc_html( $raztaifo_form->form_name ) : esc_html__( 'Unknown', 'raztech-form-architect' ); ?>
 									</td>
 									<td>
-										<?php echo esc_html( human_time_diff( strtotime( $submission->submitted_at ), current_time( 'timestamp' ) ) . ' ago' ); ?>
+										<?php echo esc_html( human_time_diff( strtotime( $raztaifo_submission->submitted_at ), current_time( 'timestamp' ) ) . ' ago' ); ?>
 									</td>
 									<td>
 										<?php
 										// PHASE 3: Get score color class for visual display
-										$score_color = RAZTAIFO_Lead_Scorer::get_score_color( $submission->lead_score );
+										$score_color = RAZTAIFO_Lead_Scorer::get_score_color( $raztaifo_submission->lead_score );
 										?>
 										<span class="smartforms-score-badge smartforms-score-<?php echo esc_attr( $score_color ); ?>">
-											<?php echo esc_html( $submission->lead_score ); ?>
+											<?php echo esc_html( $raztaifo_submission->lead_score ); ?>
 										</span>
 									</td>
 								</tr>

@@ -38,12 +38,12 @@
 			});
 
 			if (action === '-1') {
-				alert('Please select an action.');
+				alert(raztaifoStrings.selectAction);
 				return;
 			}
 
 			if (selectedIds.length === 0) {
-				alert('Please select at least one submission.');
+				alert(raztaifoStrings.selectSubmissions);
 				return;
 			}
 
@@ -51,13 +51,13 @@
 			let confirmMessage = '';
 			switch (action) {
 				case 'delete':
-					confirmMessage = 'Are you sure you want to delete ' + selectedIds.length + ' submission(s)? This action cannot be undone.';
+					confirmMessage = raztaifoStrings.deleteSubmissionsConfirm.replace('%d', selectedIds.length);
 					break;
 				case 'mark_spam':
-					confirmMessage = 'Are you sure you want to mark ' + selectedIds.length + ' submission(s) as spam?';
+					confirmMessage = raztaifoStrings.markSpamConfirm.replace('%d', selectedIds.length);
 					break;
 				case 'mark_clean':
-					confirmMessage = 'Are you sure you want to mark ' + selectedIds.length + ' submission(s) as clean?';
+					confirmMessage = raztaifoStrings.markCleanConfirm.replace('%d', selectedIds.length);
 					break;
 			}
 
@@ -87,12 +87,12 @@
 							(window.location.href.indexOf('?') > -1 ? '&' : '?') +
 							'bulk_action=success&count=' + selectedIds.length;
 					} else {
-						alert('Error: ' + (response.data ? response.data.message : 'Unknown error'));
+						alert(raztaifoStrings.errorPrefix + (response.data ? response.data.message : 'Unknown error'));
 						$submitBtn.prop('disabled', false).text(originalText);
 					}
 				},
 				error: function() {
-					alert('Error communicating with server. Please try again.');
+					alert(raztaifoStrings.serverError);
 					$submitBtn.prop('disabled', false).text(originalText);
 				}
 			});
@@ -217,7 +217,7 @@
 							.data('nonce', nonce);
 
 					} else {
-						alert('Error loading form information. Please try again.');
+						alert(raztaifoStrings.loadInfoError);
 						$('#rt_fa-delete-modal').fadeOut(200);
 					}
 				},
@@ -281,7 +281,7 @@
 						});
 					} else {
 						$('#rt_fa-delete-spinner').fadeOut(200);
-						alert('Error: ' + response.data.message);
+						alert(raztaifoStrings.errorPrefix + response.data.message);
 					}
 				},
 				error: function() {

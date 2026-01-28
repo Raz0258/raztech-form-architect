@@ -1,5 +1,10 @@
 <?php
 /**
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
  * SmartForms AI Templates Admin Page
  *
  * Handles the Form Templates admin interface and AJAX operations.
@@ -102,14 +107,14 @@ class RAZTAIFO_Templates_Admin {
      */
     public function render_templates_page() {
         // Get all templates organized by category
-        $categories = $this->templates_manager->get_all_templates();
+        $raztaifo_categories = $this->templates_manager->get_all_templates();
         
         // Get recommended template IDs
         $recommended_templates = $this->templates_manager->get_recommended_templates();
-        $recommended_ids = array_column($recommended_templates, 'template_id');
+        $raztaifo_recommended_ids = array_column($recommended_templates, 'template_id');
         
         // Get sample data statistics
-        $sample_stats = $this->templates_manager->get_sample_data_stats();
+        $raztaifo_sample_stats = $this->templates_manager->get_sample_data_stats();
         
         // Include the view
         include plugin_dir_path(__FILE__) . 'partials/templates-library.php';
@@ -129,14 +134,14 @@ class RAZTAIFO_Templates_Admin {
         }
 
         // Get POST data
-        $selected_templates = isset($_POST['templates']) ? (array) $_POST['templates'] : array();
-        $submissions_count = isset($_POST['submissions_count']) ? intval($_POST['submissions_count']) : 20;
-        $include_varied_scores = isset($_POST['include_varied_scores']) && $_POST['include_varied_scores'] === 'true';
-        $include_spam = isset($_POST['include_spam']) && $_POST['include_spam'] === 'true';
-        $spam_percentage = isset($_POST['spam_percentage']) ? intval($_POST['spam_percentage']) : 10;
-        $date_distribution = isset($_POST['date_distribution']) ? sanitize_text_field($_POST['date_distribution']) : 'last_30_days';
-        $create_pages = isset($_POST['create_pages']) && $_POST['create_pages'] === 'true';
-        $page_status = isset($_POST['page_status']) ? sanitize_text_field($_POST['page_status']) : 'publish';
+        $selected_templates = isset($_POST['templates']) ? array_map('sanitize_text_field', wp_unslash((array) $_POST['templates'])) : array();
+        $submissions_count = isset($_POST['submissions_count']) ? intval(wp_unslash($_POST['submissions_count'])) : 20;
+        $include_varied_scores = isset($_POST['include_varied_scores']) && wp_unslash($_POST['include_varied_scores']) === 'true';
+        $include_spam = isset($_POST['include_spam']) && wp_unslash($_POST['include_spam']) === 'true';
+        $spam_percentage = isset($_POST['spam_percentage']) ? intval(wp_unslash($_POST['spam_percentage'])) : 10;
+        $date_distribution = isset($_POST['date_distribution']) ? sanitize_text_field(wp_unslash($_POST['date_distribution'])) : 'last_30_days';
+        $create_pages = isset($_POST['create_pages']) && wp_unslash($_POST['create_pages']) === 'true';
+        $page_status = isset($_POST['page_status']) ? sanitize_text_field(wp_unslash($_POST['page_status'])) : 'publish';
 
         if (empty($selected_templates)) {
             wp_send_json_error(array('message' => __('Please select at least one template', 'raztech-form-architect')));
@@ -228,7 +233,8 @@ class RAZTAIFO_Templates_Admin {
         $result = $this->templates_manager->delete_all_sample_data();
 
         $message = sprintf(
-            __('Deleted %d forms and %d submissions.', 'raztech-form-architect'),
+            /* translators: 1: Number of forms deleted, 2: Number of submissions deleted */
+            __('Deleted %1$d forms and %2$d submissions.', 'raztech-form-architect'),
             $result['forms_deleted'],
             $result['submissions_deleted']
         );
@@ -251,7 +257,7 @@ class RAZTAIFO_Templates_Admin {
             wp_send_json_error(array('message' => __('Permission denied', 'raztech-form-architect')));
         }
 
-        $template_id = isset($_POST['template_id']) ? sanitize_text_field($_POST['template_id']) : '';
+        $template_id = isset($_POST['template_id']) ? sanitize_text_field(wp_unslash($_POST['template_id'])) : '';
 
         if (empty($template_id)) {
             wp_send_json_error(array('message' => __('Template ID required', 'raztech-form-architect')));

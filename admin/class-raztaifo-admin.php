@@ -6,6 +6,11 @@
  * @subpackage RazTechFormArchitect/admin
  */
 
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * The admin-specific functionality of the plugin.
  */
@@ -96,6 +101,12 @@ class RAZTAIFO_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
+		// Only load on plugin pages
+		$screen = get_current_screen();
+		if ( ! $screen || strpos( $screen->id, 'raztech-form-architect' ) === false ) {
+			return;
+		}
+
 		wp_enqueue_style(
 			$this->plugin_name,
 			RAZTAIFO_URL . 'admin/css/admin-styles.css',
@@ -105,7 +116,7 @@ class RAZTAIFO_Admin {
 		);
 
 		// Enqueue welcome page styles
-		if ( isset( $_GET['page'] ) && $_GET['page'] === 'raztech-form-architect-welcome' ) {
+		if ( isset( $_GET['page'] ) && sanitize_key( $_GET['page'] ) === 'raztech-form-architect-welcome' ) {
 			wp_enqueue_style(
 				$this->plugin_name . '-welcome',
 				RAZTAIFO_URL . 'admin/css/welcome.css',
@@ -122,6 +133,12 @@ class RAZTAIFO_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
+		// Only load on plugin pages
+		$screen = get_current_screen();
+		if ( ! $screen || strpos( $screen->id, 'raztech-form-architect' ) === false ) {
+			return;
+		}
+
 		wp_enqueue_script(
 			$this->plugin_name . '-admin',
 			RAZTAIFO_URL . 'admin/js/admin-dashboard.js',
@@ -130,7 +147,46 @@ class RAZTAIFO_Admin {
 			false
 		);
 
-		// Add inline script for notice dismissal
+		// Centralized translation strings for JavaScript
+		$translation_strings = array(
+			// Form builder strings
+			'deleteFieldConfirm' => __( 'Are you sure you want to delete this field?', 'raztech-form-architect' ),
+			'shortcodeCopied'    => __( 'Shortcode copied to clipboard!', 'raztech-form-architect' ),
+
+			// Admin dashboard strings
+			'selectAction'            => __( 'Please select an action.', 'raztech-form-architect' ),
+			'selectSubmissions'       => __( 'Please select at least one submission.', 'raztech-form-architect' ),
+			'deleteSubmissionsConfirm' => __( 'Are you sure you want to delete %d submission(s)? This action cannot be undone.', 'raztech-form-architect' ),
+			'markSpamConfirm'         => __( 'Are you sure you want to mark %d submission(s) as spam?', 'raztech-form-architect' ),
+			'markCleanConfirm'        => __( 'Are you sure you want to mark %d submission(s) as clean?', 'raztech-form-architect' ),
+			'errorPrefix'             => __( 'Error: ', 'raztech-form-architect' ),
+			'serverError'             => __( 'Error communicating with server. Please try again.', 'raztech-form-architect' ),
+			'loadInfoError'           => __( 'Error loading form information. Please try again.', 'raztech-form-architect' ),
+
+			// Templates admin strings
+			'confirmDelete'           => __( 'Are you sure you want to delete all sample data? This cannot be undone.', 'raztech-form-architect' ),
+
+			// Notice dismissal nonce
+			'dismissNonce'            => wp_create_nonce( 'raztaifo_dismiss_notice' ),
+		);
+
+		// Localize scripts with translations and AJAX data
+		wp_localize_script(
+			$this->plugin_name . '-admin',
+			'raztaifoStrings',
+			$translation_strings
+		);
+
+		wp_localize_script(
+			$this->plugin_name . '-admin',
+			'raztaifo_ajax',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'nonce'    => wp_create_nonce( 'raztaifo_admin_nonce' ),
+			)
+		);
+
+		// Add inline script for notice dismissal (now using localized nonce)
 		$inline_script = "
 		jQuery(document).ready(function($) {
 			$('.smartforms-dismiss-notice').on('click', function(e) {
@@ -143,7 +199,7 @@ class RAZTAIFO_Admin {
 					data: {
 						action: 'raztaifo_dismiss_notice',
 						notice: notice,
-						nonce: '" . wp_create_nonce( 'raztaifo_dismiss_notice' ) . "'
+						nonce: raztaifoStrings.dismissNonce
 					}
 				});
 
@@ -161,6 +217,13 @@ class RAZTAIFO_Admin {
 			false
 		);
 
+		// Pass translation strings to form builder
+		wp_localize_script(
+			$this->plugin_name . '-form-builder',
+			'raztaifoStrings',
+			$translation_strings
+		);
+
 		// PHASE 2: Enqueue AI generator script
 		wp_enqueue_script(
 			$this->plugin_name . '-ai-generator',
@@ -168,6 +231,16 @@ class RAZTAIFO_Admin {
 			array( 'jquery', $this->plugin_name . '-form-builder' ),
 			$this->version,
 			false
+		);
+
+		// PHASE 2: Localize script for AI generator
+		wp_localize_script(
+			$this->plugin_name . '-ai-generator',
+			'raztaifo_ajax',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'nonce'    => wp_create_nonce( 'raztaifo_admin_nonce' ),
+			)
 		);
 
 		// PHASE 7: Enqueue Chart.js for analytics dashboard (local copy)
@@ -186,26 +259,6 @@ class RAZTAIFO_Admin {
 			array( 'jquery', 'chartjs' ),
 			$this->version,
 			true
-		);
-
-		// Localize script for admin dashboard
-		wp_localize_script(
-			$this->plugin_name . '-admin',
-			'raztaifo_ajax',
-			array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'raztaifo_admin_nonce' ),
-			)
-		);
-
-		// PHASE 2: Localize script for AI generator
-		wp_localize_script(
-			$this->plugin_name . '-ai-generator',
-			'raztaifo_ajax',
-			array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'raztaifo_admin_nonce' ),
-			)
 		);
 
 		// Add AI example prompts data

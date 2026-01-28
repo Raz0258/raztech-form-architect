@@ -6,6 +6,11 @@
  * @subpackage RazTechFormArchitect/admin
  */
 
+
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Export class for SmartForms AI.
  *

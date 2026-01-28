@@ -12,15 +12,15 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get current settings
-$api_provider = get_option( 'raztaifo_api_provider', 'openai' );
-$api_key      = get_option( 'raztaifo_api_key', '' );
-$rate_limit   = get_option( 'raztaifo_rate_limit', 50 );
+$raztaifo_api_provider = get_option( 'raztaifo_api_provider', 'openai' );
+$raztaifo_api_key      = get_option( 'raztaifo_api_key', '' );
+$raztaifo_rate_limit   = get_option( 'raztaifo_rate_limit', 50 );
 ?>
 
 <div class="wrap smartforms-settings">
 	<h1><?php echo esc_html__( 'RazTech Form Architect Settings', 'raztech-form-architect' ); ?></h1>
 
-	<?php if ( isset( $_GET['updated'] ) ) : ?>
+	<?php if ( isset( $_GET['updated'] ) && '1' === $_GET['updated'] ) : ?>
 		<div class="notice notice-success is-dismissible">
 			<p><?php echo esc_html__( 'Settings saved successfully!', 'raztech-form-architect' ); ?></p>
 		</div>
@@ -35,6 +35,39 @@ $rate_limit   = get_option( 'raztaifo_rate_limit', 50 );
 					<h2><?php echo esc_html__( 'AI API Configuration', 'raztech-form-architect' ); ?></h2>
 					<p><?php echo esc_html__( 'Configure your AI provider to enable AI-powered features like form generation, lead scoring, and conversational forms.', 'raztech-form-architect' ); ?></p>
 
+					<!-- Privacy & Data Transmission Notice -->
+					<div class="notice notice-warning inline" style="margin: 20px 0; padding: 12px;">
+						<h3 style="margin-top: 0;">
+							<span class="dashicons dashicons-privacy" style="color: #f0b849;"></span>
+							<?php esc_html_e( 'Privacy & Data Transmission Notice', 'raztech-form-architect' ); ?>
+						</h3>
+						<p>
+							<strong><?php esc_html_e( 'Important:', 'raztech-form-architect' ); ?></strong>
+							<?php esc_html_e( 'When you use AI-powered features (form generation, AI spam detection, auto-responses), your data will be transmitted to external AI providers for processing. This data leaves your WordPress server and is sent to:', 'raztech-form-architect' ); ?>
+						</p>
+						<ul style="margin-left: 20px;">
+							<li>
+								<strong><?php esc_html_e( 'OpenAI (GPT-4):', 'raztech-form-architect' ); ?></strong>
+								<?php esc_html_e( 'Form descriptions, generation prompts, submission content (when AI features enabled)', 'raztech-form-architect' ); ?>
+								<br>
+								<a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer">
+									<?php esc_html_e( 'OpenAI Privacy Policy', 'raztech-form-architect' ); ?> ↗
+								</a>
+							</li>
+							<li>
+								<strong><?php esc_html_e( 'Anthropic (Claude):', 'raztech-form-architect' ); ?></strong>
+								<?php esc_html_e( 'Form descriptions and generation prompts (when AI features enabled)', 'raztech-form-architect' ); ?>
+								<br>
+								<a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener noreferrer">
+									<?php esc_html_e( 'Anthropic Privacy Policy', 'raztech-form-architect' ); ?> ↗
+								</a>
+							</li>
+						</ul>
+						<p>
+							<?php esc_html_e( 'Please review these privacy policies and update your own privacy policy to disclose the use of AI services if you enable these features. AI features are optional and the plugin works fully without them.', 'raztech-form-architect' ); ?>
+						</p>
+					</div>
+
 					<table class="form-table">
 						<tr>
 							<th scope="row">
@@ -42,10 +75,10 @@ $rate_limit   = get_option( 'raztaifo_rate_limit', 50 );
 							</th>
 							<td>
 								<select id="api_provider" name="api_provider" class="regular-text">
-									<option value="openai" <?php selected( $api_provider, 'openai' ); ?>>
+									<option value="openai" <?php selected( $raztaifo_api_provider, 'openai' ); ?>>
 										<?php echo esc_html__( 'OpenAI (GPT-4)', 'raztech-form-architect' ); ?>
 									</option>
-									<option value="claude" <?php selected( $api_provider, 'claude' ); ?>>
+									<option value="claude" <?php selected( $raztaifo_api_provider, 'claude' ); ?>>
 										<?php echo esc_html__( 'Anthropic (Claude)', 'raztech-form-architect' ); ?>
 									</option>
 								</select>
@@ -59,7 +92,7 @@ $rate_limit   = get_option( 'raztaifo_rate_limit', 50 );
 								<label for="api_key"><?php echo esc_html__( 'API Key', 'raztech-form-architect' ); ?></label>
 							</th>
 							<td>
-								<input type="password" id="api_key" name="api_key" value="<?php echo esc_attr( $api_key ); ?>" class="large-text" />
+								<input type="password" id="api_key" name="api_key" value="<?php echo esc_attr( $raztaifo_api_key ); ?>" class="large-text" />
 								<p class="description">
 									<?php
 									echo wp_kses(
@@ -85,7 +118,7 @@ $rate_limit   = get_option( 'raztaifo_rate_limit', 50 );
 								<label for="rate_limit"><?php echo esc_html__( 'Rate Limit', 'raztech-form-architect' ); ?></label>
 							</th>
 							<td>
-								<input type="number" id="rate_limit" name="rate_limit" value="<?php echo esc_attr( $rate_limit ); ?>" class="small-text" min="1" max="1000" />
+								<input type="number" id="rate_limit" name="rate_limit" value="<?php echo esc_attr( $raztaifo_rate_limit ); ?>" class="small-text" min="1" max="1000" />
 								<span><?php echo esc_html__( 'requests per hour', 'raztech-form-architect' ); ?></span>
 								<p class="description">
 									<?php echo esc_html__( 'Maximum number of AI API requests per user per hour. Helps control API costs.', 'raztech-form-architect' ); ?>

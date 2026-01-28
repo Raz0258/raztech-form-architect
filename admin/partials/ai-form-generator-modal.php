@@ -12,7 +12,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get rate limit status
-$rate_status = RAZTAIFO_Generator::get_rate_limit_status();
+$raztaifo_rate_status = RAZTAIFO_Generator::get_rate_limit_status();
 ?>
 
 <!-- AI Form Generator Modal -->
@@ -25,6 +25,17 @@ $rate_status = RAZTAIFO_Generator::get_rate_limit_status();
 			<p class="smartforms-ai-subtitle">
 				<?php echo esc_html__( 'Describe your form in natural language and let AI create it for you.', 'raztech-form-architect' ); ?>
 			</p>
+
+			<!-- Privacy Notice -->
+			<div class="notice notice-warning inline" style="margin: 15px 0; padding: 10px; background: #fff3cd; border-left: 4px solid #f0b849;">
+				<p style="margin: 0;">
+					<strong><span class="dashicons dashicons-privacy" style="color: #f0b849;"></span> <?php esc_html_e( 'Privacy Notice:', 'raztech-form-architect' ); ?></strong>
+					<?php esc_html_e( 'Your form description will be sent to your configured AI provider (OpenAI or Anthropic) for processing. By clicking "Generate Form", you acknowledge that this data will be transmitted to an external service.', 'raztech-form-architect' ); ?>
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=raztech-form-architect-settings' ) ); ?>" target="_blank" style="white-space: nowrap;">
+						<?php esc_html_e( 'Review Privacy Policies', 'raztech-form-architect' ); ?> ↗
+					</a>
+				</p>
+			</div>
 		</div>
 
 		<div class="smartforms-ai-body">
@@ -173,18 +184,18 @@ $rate_status = RAZTAIFO_Generator::get_rate_limit_status();
 					echo esc_html( sprintf(
 						/* translators: 1: Used requests, 2: Total limit */
 						__( 'API Usage: %1$d / %2$d requests this hour', 'raztech-form-architect' ),
-						$rate_status['used'],
-						$rate_status['limit']
+						$raztaifo_rate_status['used'],
+						$raztaifo_rate_status['limit']
 					) );
 					?>
 				</span>
-				<?php if ( $rate_status['remaining'] <= 5 && $rate_status['remaining'] > 0 ) : ?>
+				<?php if ( $raztaifo_rate_status['remaining'] <= 5 && $raztaifo_rate_status['remaining'] > 0 ) : ?>
 					<span class="smartforms-ai-rate-warning">
 						<?php
 						echo esc_html( sprintf(
 							/* translators: %d: Remaining requests */
 							__( '⚠️ Only %d requests remaining', 'raztech-form-architect' ),
-							$rate_status['remaining']
+							$raztaifo_rate_status['remaining']
 						) );
 						?>
 					</span>

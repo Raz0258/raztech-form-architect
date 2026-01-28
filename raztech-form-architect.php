@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name:       RazTech AI Form Architect
  * Description:       Create optimized forms in seconds using AI, automatically score lead quality, and provide conversational form experiences—all without coding.
- * Version:           1.0.2
+ * Version: 1.0.3
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            Raz Technologies
@@ -29,7 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'RAZTAIFO_VERSION', '1.0.2' );
+define( 'RAZTAIFO_VERSION', '1.0.3' );
 
 /**
  * Plugin directory path

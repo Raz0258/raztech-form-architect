@@ -5,7 +5,7 @@ Tags: forms, ai form builder, contact form, lead scoring, ai generator
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 8.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -132,6 +132,12 @@ Yes. All data stored in your WordPress database. Disclose AI usage in your priva
 5. Settings panel
 
 == Changelog ==
+
+= 1.0.3 =
+* Enhancement: Prefixed all global variables in partial templates with raztaifo_ for namespace isolation
+* Enhancement: Verified all script/style handles use proper plugin prefix
+* Enhancement: Completed final audit for WordPress.org compliance
+* Code Quality: Improved variable namespacing across all template files
 
 = 1.0.2 =
 * Security: Added SQL query whitelisting for orderby parameters

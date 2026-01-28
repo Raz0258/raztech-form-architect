@@ -45,7 +45,7 @@
 		// Delete field
 		$(document).on('click', '.rt_fa-field-delete', function(e) {
 			e.stopPropagation();
-			if (confirm('Are you sure you want to delete this field?')) {
+			if (confirm(raztaifoStrings.deleteFieldConfirm)) {
 				$(this).closest('.rt_fa-field-item').fadeOut(300, function() {
 					$(this).remove();
 					updateNoFieldsMessage();
@@ -86,7 +86,7 @@
 		$('.rt_fa-copy-btn, .rt_fa-copy-shortcode').on('click', function() {
 			const shortcode = $(this).data('shortcode');
 			copyToClipboard(shortcode);
-			alert('Shortcode copied to clipboard!');
+			alert(raztaifoStrings.shortcodeCopied);
 		});
 
 		// Initialize existing fields

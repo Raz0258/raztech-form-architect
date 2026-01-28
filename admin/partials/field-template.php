@@ -11,15 +11,15 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$field_type        = isset( $field['type'] ) ? $field['type'] : 'text';
-$field_label       = isset( $field['label'] ) ? $field['label'] : '';
-$field_name        = isset( $field['name'] ) ? $field['name'] : '';
-$field_placeholder = isset( $field['placeholder'] ) ? $field['placeholder'] : '';
-$field_required    = isset( $field['required'] ) && $field['required'] ? 'checked' : '';
-$field_options     = isset( $field['options'] ) && is_array( $field['options'] ) ? implode( "\n", $field['options'] ) : '';
+$raztaifo_field_type        = isset( $raztaifo_field['type'] ) ? $raztaifo_field['type'] : 'text';
+$raztaifo_field_label       = isset( $raztaifo_field['label'] ) ? $raztaifo_field['label'] : '';
+$raztaifo_field_name        = isset( $raztaifo_field['name'] ) ? $raztaifo_field['name'] : '';
+$raztaifo_field_placeholder = isset( $raztaifo_field['placeholder'] ) ? $raztaifo_field['placeholder'] : '';
+$raztaifo_field_required    = isset( $raztaifo_field['required'] ) && $raztaifo_field['required'] ? 'checked' : '';
+$raztaifo_field_options     = isset( $raztaifo_field['options'] ) && is_array( $raztaifo_field['options'] ) ? implode( "\n", $raztaifo_field['options'] ) : '';
 ?>
 
-<div class="smartforms-field-item" data-index="<?php echo esc_attr( $index ); ?>">
+<div class="smartforms-field-item" data-index="<?php echo esc_attr( $raztaifo_index ); ?>">
 	<div class="smartforms-field-header">
 		<span class="smartforms-field-drag">☰</span>
 		<span class="smartforms-field-title"><?php echo esc_html( $field_label ? $field_label : ucfirst( $field_type ) . ' Field' ); ?></span>
@@ -55,7 +55,7 @@ $field_options     = isset( $field['options'] ) && is_array( $field['options'] )
 					<label><?php echo esc_html__( 'Label', 'raztech-form-architect' ); ?></label>
 				</th>
 				<td>
-					<input type="text" class="regular-text smartforms-field-input" data-field="label" value="<?php echo esc_attr( $field_label ); ?>" />
+					<input type="text" class="regular-text smartforms-field-input" data-field="label" value="<?php echo esc_attr( $raztaifo_field_label ); ?>" />
 				</td>
 			</tr>
 			<tr>
@@ -63,7 +63,7 @@ $field_options     = isset( $field['options'] ) && is_array( $field['options'] )
 					<label><?php echo esc_html__( 'Field Name', 'raztech-form-architect' ); ?></label>
 				</th>
 				<td>
-					<input type="text" class="regular-text smartforms-field-input" data-field="name" value="<?php echo esc_attr( $field_name ); ?>" />
+					<input type="text" class="regular-text smartforms-field-input" data-field="name" value="<?php echo esc_attr( $raztaifo_field_name ); ?>" />
 					<p class="description"><?php echo esc_html__( 'Unique field identifier (lowercase, no spaces).', 'raztech-form-architect' ); ?></p>
 				</td>
 			</tr>
@@ -72,7 +72,7 @@ $field_options     = isset( $field['options'] ) && is_array( $field['options'] )
 					<label><?php echo esc_html__( 'Placeholder', 'raztech-form-architect' ); ?></label>
 				</th>
 				<td>
-					<input type="text" class="regular-text smartforms-field-input" data-field="placeholder" value="<?php echo esc_attr( $field_placeholder ); ?>" />
+					<input type="text" class="regular-text smartforms-field-input" data-field="placeholder" value="<?php echo esc_attr( $raztaifo_field_placeholder ); ?>" />
 				</td>
 			</tr>
 			<tr class="smartforms-options-row" style="<?php echo esc_attr( in_array( $field_type, array( 'select', 'radio', 'checkbox' ) ) ? '' : 'display:none;' ); ?>">
@@ -80,7 +80,7 @@ $field_options     = isset( $field['options'] ) && is_array( $field['options'] )
 					<label><?php echo esc_html__( 'Options', 'raztech-form-architect' ); ?></label>
 				</th>
 				<td>
-					<textarea class="large-text smartforms-field-textarea" data-field="options" rows="5"><?php echo esc_textarea( $field_options ); ?></textarea>
+					<textarea class="large-text smartforms-field-textarea" data-field="options" rows="5"><?php echo esc_textarea( $raztaifo_field_options ); ?></textarea>
 					<p class="description"><?php echo esc_html__( 'One option per line.', 'raztech-form-architect' ); ?></p>
 				</td>
 			</tr>
@@ -90,7 +90,7 @@ $field_options     = isset( $field['options'] ) && is_array( $field['options'] )
 				</th>
 				<td>
 					<label>
-						<input type="checkbox" class="smartforms-field-checkbox" data-field="required" <?php echo esc_attr( $field_required ); ?> />
+						<input type="checkbox" class="smartforms-field-checkbox" data-field="required" <?php echo esc_attr( $raztaifo_field_required ); ?> />
 						<?php echo esc_html__( 'Make this field required', 'raztech-form-architect' ); ?>
 					</label>
 				</td>

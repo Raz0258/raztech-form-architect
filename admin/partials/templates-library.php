@@ -60,24 +60,24 @@ if (!defined('ABSPATH')) {
 
         <!-- Templates Grid -->
         <div class="raztech-form-architect-templates-grid">
-            <?php foreach ($categories as $category_id => $category): ?>
-                <div class="category-section" data-category="<?php echo esc_attr($category_id); ?>">
+            <?php foreach ($raztaifo_categories as $raztaifo_category_id => $raztaifo_category): ?>
+                <div class="category-section" data-category="<?php echo esc_attr($raztaifo_category_id); ?>">
                     <div class="category-header">
                         <h3>
-                            <span class="category-icon"><?php echo esc_html($category['icon']); ?></span>
-                            <?php echo esc_html($category['name']); ?>
+                            <span class="category-icon"><?php echo esc_html($raztaifo_category['icon']); ?></span>
+                            <?php echo esc_html($raztaifo_category['name']); ?>
                         </h3>
-                        <p class="category-description"><?php echo esc_html($category['description']); ?></p>
+                        <p class="category-description"><?php echo esc_html($raztaifo_category['description']); ?></p>
                     </div>
 
                     <div class="templates-row">
-                        <?php foreach ($category['templates'] as $template):
-                            $is_recommended = in_array($template['template_id'], $recommended_ids);
+                        <?php foreach ($raztaifo_category['templates'] as $raztaifo_template):
+                            $raztaifo_is_recommended = in_array($raztaifo_template['template_id'], $raztaifo_recommended_ids);
                         ?>
-                            <div class="template-card <?php echo esc_attr( $is_recommended ? 'recommended' : '' ); ?>"
-                                 data-template-id="<?php echo esc_attr($template['template_id']); ?>">
+                            <div class="template-card <?php echo esc_attr( $raztaifo_is_recommended ? 'recommended' : '' ); ?>"
+                                 data-template-id="<?php echo esc_attr($raztaifo_template['template_id']); ?>">
 
-                                <?php if ($is_recommended): ?>
+                                <?php if ($raztaifo_is_recommended): ?>
                                     <span class="recommended-badge">⭐ <?php esc_html_e('Recommended', 'raztech-form-architect'); ?></span>
                                 <?php endif; ?>
 
@@ -85,27 +85,27 @@ if (!defined('ABSPATH')) {
                                     <input type="checkbox"
                                            class="template-checkbox"
                                            name="templates[]"
-                                           value="<?php echo esc_attr($template['template_id']); ?>"
-                                           <?php checked( $is_recommended, true ); ?>>
+                                           value="<?php echo esc_attr($raztaifo_template['template_id']); ?>"
+                                           <?php checked( $raztaifo_is_recommended, true ); ?>>
 
                                     <div class="template-icon-wrapper">
-                                        <span class="template-icon"><?php echo esc_html($template['icon']); ?></span>
+                                        <span class="template-icon"><?php echo esc_html($raztaifo_template['icon']); ?></span>
                                     </div>
 
                                     <div class="template-info">
-                                        <h4 class="template-name"><?php echo esc_html($template['name']); ?></h4>
+                                        <h4 class="template-name"><?php echo esc_html($raztaifo_template['name']); ?></h4>
                                         <p class="template-description">
-                                            <?php echo esc_html($template['description']); ?>
+                                            <?php echo esc_html($raztaifo_template['description']); ?>
                                         </p>
                                         <div class="template-meta">
                                             <span class="meta-item">
                                                 <span class="dashicons dashicons-edit"></span>
-                                                <?php echo count($template['fields']); ?> <?php esc_html_e('fields', 'raztech-form-architect'); ?>
+                                                <?php echo count($raztaifo_template['fields']); ?> <?php esc_html_e('fields', 'raztech-form-architect'); ?>
                                             </span>
-                                            <?php if (!empty($template['industry']) && $template['industry'] !== 'general'): ?>
+                                            <?php if (!empty($raztaifo_template['industry']) && $raztaifo_template['industry'] !== 'general'): ?>
                                                 <span class="meta-item">
                                                     <span class="dashicons dashicons-building"></span>
-                                                    <?php echo esc_html(ucfirst($template['industry'])); ?>
+                                                    <?php echo esc_html(ucfirst($raztaifo_template['industry'])); ?>
                                                 </span>
                                             <?php endif; ?>
                                         </div>
@@ -119,7 +119,7 @@ if (!defined('ABSPATH')) {
                                 <div class="template-card-footer">
                                     <button type="button"
                                             class="button-link preview-template-btn"
-                                            data-template-id="<?php echo esc_attr($template['template_id']); ?>">
+                                            data-template-id="<?php echo esc_attr($raztaifo_template['template_id']); ?>">
                                         <span class="dashicons dashicons-visibility"></span>
                                         <?php esc_html_e('Preview Fields', 'raztech-form-architect'); ?>
                                     </button>
@@ -443,7 +443,7 @@ if (!defined('ABSPATH')) {
     </div>
 
     <!-- Sample Data Management -->
-    <?php if ($sample_stats['has_sample_data']): ?>
+    <?php if ($raztaifo_sample_stats['has_sample_data']): ?>
         <div class="smartforms-sample-data-management">
             <div class="management-header">
                 <span class="dashicons dashicons-admin-tools"></span>
@@ -458,16 +458,16 @@ if (!defined('ABSPATH')) {
                         sprintf(
                             /* translators: 1: Number of forms, 2: Number of submissions */
                             __('%d forms, %d submissions', 'raztech-form-architect'),
-                            $sample_stats['forms_count'],
-                            $sample_stats['submissions_count']
+                            $raztaifo_sample_stats['forms_count'],
+                            $raztaifo_sample_stats['submissions_count']
                         )
                     );
                     ?>
                 </div>
-                <?php if ($sample_stats['last_installed']): ?>
+                <?php if ($raztaifo_sample_stats['last_installed']): ?>
                     <div class="management-stat">
                         <strong><?php esc_html_e('Last installed:', 'raztech-form-architect'); ?></strong>
-                        <?php echo esc_html( date_i18n( get_option('date_format') . ' ' . get_option('time_format'), strtotime( $sample_stats['last_installed'] ) ) ); ?>
+                        <?php echo esc_html( date_i18n( get_option('date_format') . ' ' . get_option('time_format'), strtotime( $raztaifo_sample_stats['last_installed'] ) ) ); ?>
                     </div>
                 <?php endif; ?>
             </div>
